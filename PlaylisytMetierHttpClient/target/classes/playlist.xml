@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xspf:playlist version="" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xspf="http://xspf.org/ns/0/" xsi:schemaLocation="http://xspf.org/ns/0/ playlist.xsd ">
+  <xspf:title>xspf:title</xspf:title>
+  <xspf:creator>xspf:creator</xspf:creator>
+  <xspf:annotation>xspf:annotation</xspf:annotation>
+  <xspf:info>http://tempuri.org</xspf:info>
+  <xspf:location>http://tempuri.org</xspf:location>
+  <xspf:identifier>http://tempuri.org</xspf:identifier>
+  <xspf:image>http://tempuri.org</xspf:image>
+  <xspf:date>2001-12-31T12:00:00</xspf:date>
+  <xspf:license>http://tempuri.org</xspf:license>
+  <xspf:attribution>
+    <xspf:identifier>http://tempuri.org</xspf:identifier>
+  </xspf:attribution>
+  <xspf:link rel="http://tempuri.org">http://tempuri.org</xspf:link>
+  <xspf:meta rel="http://tempuri.org">xspf:meta</xspf:meta>
+  <xspf:extension application="http://tempuri.org"/>
+  <xspf:trackList>
+    <xspf:track/>
+  </xspf:trackList>
+</xspf:playlist>
