@@ -1,4 +1,4 @@
-package org.kgj.pds.playlist.presentation.webapp;
+package org.kgj.pds.playlist.presentation.PlaylistPresentationWebapp;
 
 /**
  * Hello world!
