@@ -25,11 +25,6 @@ public class ClientHttpBoot {
 	 */
 	private static void startLoggerService() {
 		BasicConfigurator.configure();
-		logger.debug("Hello World!");
-		logger.info("Info");
-		logger.warn("warning!");
-		logger.error("error");
-
 	}
 
 	/**
