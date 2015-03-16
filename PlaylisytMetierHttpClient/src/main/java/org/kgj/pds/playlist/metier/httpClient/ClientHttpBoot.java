@@ -1,6 +1,4 @@
 package org.kgj.pds.playlist.metier.httpClient;
-
-import org.kgj.pds.playlist.metier.messagingService.ClientHttpMessagingServiceConsumer;
 import org.kgj.pds.playlist.metier.messagingService.ClientHttpMessagingServiceManager;
 
 /**
@@ -15,7 +13,6 @@ public class ClientHttpBoot
     {
         startMessagingService();
         //...
-        
     }
     
     /**
@@ -23,7 +20,6 @@ public class ClientHttpBoot
      */
 	private static void startMessagingService() {
 		ClientHttpMessagingServiceManager.getInstance();
-		ClientHttpMessagingServiceConsumer.getInstance();
 	}
 
 

@@ -12,14 +12,11 @@ import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
-abstract class GenericMessageManager {
+abstract class GenericMessageManager{
 
-    protected TriggerReceptionOfMessage target;
-
-    protected MessageProducer producer;
-    protected MessageConsumer consumer;
-    protected Session session;
-    protected Destination destination;
+    private MessageProducer producer;
+    private MessageConsumer consumer;
+    private Session session;
 
     public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
         initialize(url);
@@ -34,7 +31,7 @@ abstract class GenericMessageManager {
 
             consumer.setMessageListener(new MessageListener() {
                 public void onMessage(Message message) {
-                    target.messageReceived(message);
+                	GenericMessageManager.this.messageReceived(message);
                 }
             });
 
@@ -64,18 +61,6 @@ abstract class GenericMessageManager {
         }
     }
 
-    public void setMessageTarget(TriggerReceptionOfMessage target) {
-        this.target = target;
-    }
-
-    protected void send(Message message) {
-        try {
-            producer.send(message);
-        } catch (JMSException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void send(String message) {
         TextMessage textMessage;
         try {
@@ -85,8 +70,9 @@ abstract class GenericMessageManager {
             e.printStackTrace();
         }
     }
-
-    protected Session getSession() {
+    public Session getSession() {
         return session;
     }
+
+	public abstract void messageReceived(Message message);
 }

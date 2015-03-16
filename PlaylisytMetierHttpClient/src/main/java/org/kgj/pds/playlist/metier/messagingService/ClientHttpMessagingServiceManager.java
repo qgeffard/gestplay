@@ -1,5 +1,7 @@
 package org.kgj.pds.playlist.metier.messagingService;
 
+import javax.jms.Message;
+
 public class ClientHttpMessagingServiceManager extends GenericMessageManager{
 	
 	private static ClientHttpMessagingServiceManager instance = new ClientHttpMessagingServiceManager("vm://127.0.0.1", "producerToView", "consumerFromView");
@@ -10,6 +12,12 @@ public class ClientHttpMessagingServiceManager extends GenericMessageManager{
 	
 	public static ClientHttpMessagingServiceManager getInstance(){
 		return instance;
+	}
+
+	@Override
+	public void messageReceived(Message message) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
