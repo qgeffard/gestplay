@@ -6,7 +6,7 @@
 	<display-name>Archetype Created Web Application</display-name>
 	<listener>
 		<listener-class>
-			org.kgj.pds.playlist.metier.serveurHttp.ServeurHttpBoot.java
+			org.kgj.pds.playlist.metier.serveurHttp.ServeurHttpBoot
 		</listener-class>
 	</listener>
 	<servlet>
