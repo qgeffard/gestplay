@@ -3,15 +3,20 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
-  <display-name>Archetype Created Web Application</display-name>
-  <servlet>
-  	<servlet-name>ServeurHttp</servlet-name>
-  	<display-name>ServeurHttp</display-name>
-  	<description></description>
-  	<servlet-class>org.kgj.pds.playlist.metier.serveurHttp.ServeurHttp</servlet-class>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>ServeurHttp</servlet-name>
-  	<url-pattern>/serveurHttp</url-pattern>
-  </servlet-mapping>
+	<display-name>Archetype Created Web Application</display-name>
+	<listener>
+		<listener-class>
+			org.kgj.pds.playlist.metier.serveurHttp.ServeurHttpBoot.java
+		</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>ServeurHttp</servlet-name>
+		<display-name>ServeurHttp</display-name>
+		<description></description>
+		<servlet-class>org.kgj.pds.playlist.metier.serveurHttp.ServeurHttp</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ServeurHttp</servlet-name>
+		<url-pattern>/serveurHttp</url-pattern>
+	</servlet-mapping>
 </web-app>
