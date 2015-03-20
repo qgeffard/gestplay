@@ -96,8 +96,8 @@
 					</xsd:complexType>
 				</xsd:element>
 				
-				<xsd:element name="data" minOccurs="1" maxOccurs="unbounded" type="xspf:PlaylistType"/>
-			</xsd:sequence>
+<!-- 				<xsd:element name="data" minOccurs="1" maxOccurs="unbounded" type="xspf:PlaylistType"/>
+ -->			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
 </xsd:schema>

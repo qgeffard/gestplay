@@ -22,7 +22,6 @@ public class ClientHttpBoot {
 	static Logger logger = Logger.getLogger(ClientHttpBoot.class);
 
 	public static void main(String[] args) {
-//		startLoggerService();
 		startMessagingService();
 		// ...
 		tryWSquery();
@@ -44,14 +43,7 @@ public class ClientHttpBoot {
 		}
 		
 	}
-
-	/**
-	 * Demarre le service de logging
-	 */
-	private static void startLoggerService() {
-		BasicConfigurator.configure();
-	}
-
+	
 	/**
 	 * Demarre le service de messagerie grace a la methode getInstance pour
 	 * creer le singleton
