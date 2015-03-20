@@ -22,16 +22,15 @@ public class ClientHttpBoot {
 	static Logger logger = Logger.getLogger(ClientHttpBoot.class);
 
 	public static void main(String[] args) {
-		startLoggerService();
+//		startLoggerService();
 		startMessagingService();
 		// ...
-		
 		tryWSquery();
 	}
 
 	private static void tryWSquery() {
 		// TODO Auto-generated method stub
-		
+		logger.info("LOL");
 		try {
 			URLConnection connection = new URL("http://localhost:8080/PlaylistMetierServeurHttp/serveurHttp").openConnection();
 			connection.setRequestProperty("Accept-Charset", "utf-8");
