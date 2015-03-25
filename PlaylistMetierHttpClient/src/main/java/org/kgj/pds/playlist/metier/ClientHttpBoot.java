@@ -24,7 +24,7 @@ public class ClientHttpBoot {
 	public static void main(String[] args) {
 		startMessagingService();
 		// ...
-		tryWSquery();
+//		tryWSquery();
 	}
 
 	private static void tryWSquery() {
