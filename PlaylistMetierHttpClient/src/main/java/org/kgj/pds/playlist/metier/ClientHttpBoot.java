@@ -29,7 +29,6 @@ public class ClientHttpBoot {
 
 	private static void tryWSquery() {
 		// TODO Auto-generated method stub
-		logger.info("LOL");
 		try {
 			URLConnection connection = new URL("http://localhost:8080/PlaylistMetierServeurHttp/serveurHttp").openConnection();
 			connection.setRequestProperty("Accept-Charset", "utf-8");

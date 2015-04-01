@@ -1,23 +1,26 @@
 package org.kgj.pds.playlist.metier.messagingService;
 
-import java.io.File;
+import java.io.StringReader;
+import java.util.Iterator;
 
+import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.TextMessage;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.metier.generated.Query;
-import org.w3c.dom.Node;
 
 public class ClientHttpMessagingServiceManager extends GenericMessageManager {
 
-	private static ClientHttpMessagingServiceManager instance = new ClientHttpMessagingServiceManager("vm://127.0.0.1", "producerToView", "consumerFromView");
-	private static final Logger logger = Logger.getLogger(ClientHttpMessagingServiceManager.class);
+	private static ClientHttpMessagingServiceManager instance = new ClientHttpMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView", true);
 
-	private ClientHttpMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
-		super(url, producerQueue, consumerQueue);
+	// private static final Logger logger =
+	// Logger.getLogger(ClientHttpMessagingServiceManager.class);
+
+	private ClientHttpMessagingServiceManager(String url, String producerQueue, String consumerQueue, boolean needBroker) {
+		super(url, producerQueue, consumerQueue, needBroker);
 	}
 
 	public static ClientHttpMessagingServiceManager getInstance() {
@@ -26,18 +29,23 @@ public class ClientHttpMessagingServiceManager extends GenericMessageManager {
 
 	@Override
 	public void messageReceived(Message message) {
-		// TODO Auto-generated method stub
 		logger.info("I receive a message from view !");
-		
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance("generated");
+			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.generated");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
-			Query query = (Query) unmarshaller.unmarshal((File) message); //lol
-			
+			String messageContent = ((TextMessage) message).getText();
+
+			Query query = (Query) unmarshaller.unmarshal(new StringReader(messageContent)); 
+
 			logger.info(query.toString());
-			
+			logger.info("----------------");
+			logger.info(query.getStatus().getSucced());
+			logger.info("----------------");
 		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
