@@ -22,26 +22,23 @@ abstract class GenericMessageManager {
 	protected Session session;
 	protected static final Logger logger = Logger.getLogger(ClientHttpMessagingServiceManager.class);
 
-	public GenericMessageManager(String url, String producerQueue, String consumerQueue, boolean needBroker) {
-		//Create the broker if needed
-		if (needBroker) {
-			try {
-				BrokerService broker = new BrokerService();
-				broker.setPersistent(false);
-				broker.setUseJmx(false);
-				broker.addConnector(url);
-				broker.start();
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+	public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
+		
+		try {
+			BrokerService broker = new BrokerService();
+			broker.setPersistent(false);
+			broker.setUseJmx(false);
+			broker.addConnector(url);
+			broker.start();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
 		//Connect to it and create producer / consumer
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
 		Connection connection;
 		try {
-
 			connection = connectionFactory.createConnection();
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
