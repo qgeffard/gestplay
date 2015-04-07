@@ -1,7 +1,6 @@
 package org.kgj.pds.playlist.metier.messagingService;
 
 import java.io.StringReader;
-import java.util.Iterator;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -16,11 +15,11 @@ import org.kgj.pds.playlist.metier.integrityAndDispatcher.IntegrityChecker;
 public class ClientHttpMessagingServiceManager extends GenericMessageManager {
 
 	private static ClientHttpMessagingServiceManager instance = new ClientHttpMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
-	private IntegrityChecker intChecker;
+	private IntegrityChecker integrityChecker;
 	
 	private ClientHttpMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
-		intChecker = new IntegrityChecker();
+		integrityChecker = new IntegrityChecker();
 	}
 
 	public static ClientHttpMessagingServiceManager getInstance() {
@@ -37,7 +36,7 @@ public class ClientHttpMessagingServiceManager extends GenericMessageManager {
 			String messageContent = ((TextMessage) message).getText();
 			Query query = (Query) unmarshaller.unmarshal(new StringReader(messageContent)); 
 			
-			intChecker.entryPointCheckIntegrity(query);
+			integrityChecker.entryPointCheckIntegrity(query);
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
