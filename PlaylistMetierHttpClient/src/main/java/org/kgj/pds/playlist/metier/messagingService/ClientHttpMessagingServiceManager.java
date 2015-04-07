@@ -15,11 +15,10 @@ import org.kgj.pds.playlist.metier.integrityAndDispatcher.IntegrityChecker;
 public class ClientHttpMessagingServiceManager extends GenericMessageManager {
 
 	private static ClientHttpMessagingServiceManager instance = new ClientHttpMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
-	private IntegrityChecker integrityChecker;
 	
 	private ClientHttpMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
-		integrityChecker = new IntegrityChecker();
+
 	}
 
 	public static ClientHttpMessagingServiceManager getInstance() {
@@ -29,6 +28,8 @@ public class ClientHttpMessagingServiceManager extends GenericMessageManager {
 	@Override
 	public void messageReceived(Message message) {
 		logger.debug("Message inc "+ message.toString());
+		IntegrityChecker integrityChecker  = new IntegrityChecker();
+		
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.generated");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();

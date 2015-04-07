@@ -1,5 +1,8 @@
 package org.kgj.pds.playlist.metier.messagingService;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
@@ -20,10 +23,14 @@ abstract class GenericMessageManager {
 	protected MessageProducer producer;
 	protected MessageConsumer consumer;
 	protected Session session;
-	protected static final Logger logger = Logger.getLogger(ClientHttpMessagingServiceManager.class);
+	protected static final Logger logger = Logger
+			.getLogger(ClientHttpMessagingServiceManager.class);
+	private int nbProc = Runtime.getRuntime().availableProcessors();
+	ExecutorService execute = Executors.newFixedThreadPool(nbProc);
 
-	public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
-		
+	public GenericMessageManager(String url, String producerQueue,
+			String consumerQueue) {
+
 		try {
 			BrokerService broker = new BrokerService();
 			broker.setPersistent(false);
@@ -34,9 +41,10 @@ abstract class GenericMessageManager {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
-		//Connect to it and create producer / consumer
-		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
+
+		// Connect to it and create producer / consumer
+		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
+				url);
 		Connection connection;
 		try {
 			connection = connectionFactory.createConnection();
@@ -59,9 +67,14 @@ abstract class GenericMessageManager {
 			consumer = session.createConsumer(destination);
 
 			consumer.setMessageListener(new MessageListener() {
-				public void onMessage(Message message) {
-					logger.info("trigger message");
-					GenericMessageManager.this.messageReceived(message);
+				public void onMessage(final Message message) {
+					logger.info("message triggered - thread start");
+					execute.execute(new Runnable() {
+
+						public void run() {
+							GenericMessageManager.this.messageReceived(message);
+						}
+					});
 				}
 			});
 

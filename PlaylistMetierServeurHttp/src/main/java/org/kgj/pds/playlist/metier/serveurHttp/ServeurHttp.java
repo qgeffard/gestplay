@@ -1,18 +1,22 @@
 package org.kgj.pds.playlist.metier.serveurHttp;
 
 import java.io.IOException;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 /**
  * Servlet implementation class ServeurHttp
  */
 public class ServeurHttp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static final Logger logger = Logger.getLogger(ServeurHttp.class);
+	
     /**
      * Default constructor. 
      */
@@ -25,7 +29,6 @@ public class ServeurHttp extends HttpServlet {
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
-		System.out.println("init");
 	}
 
 	/**
@@ -34,6 +37,10 @@ public class ServeurHttp extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("request received");
+		logger.info("Param : "+request.getParameter("action"));
+		
+		logger.info(request.getInputStream());
+		
 	}
 
 	/**
