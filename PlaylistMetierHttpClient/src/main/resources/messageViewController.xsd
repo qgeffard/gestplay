@@ -53,9 +53,9 @@
 				<xsd:element name="status">
 					<xsd:complexType>
 						<xsd:choice>
-							<xsd:element name="succed" type="xsd:string" />
-							<xsd:element name="progress" type="xsd:string" />
-							<xsd:element name="error">
+							<xsd:element name="succed" type="xsd:string" />   <!--  Retour -->
+							<xsd:element name="progress" type="xsd:string" /> <!--  Aller  -->
+							<xsd:element name="error"> 
 								<xsd:complexType>
 									<xsd:sequence>
 										<xsd:element name="message" type="xsd:string" />
