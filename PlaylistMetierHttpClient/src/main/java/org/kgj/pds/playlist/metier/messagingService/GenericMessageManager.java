@@ -15,7 +15,6 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.broker.BrokerService;
 import org.apache.log4j.Logger;
 
 abstract class GenericMessageManager {
@@ -23,28 +22,14 @@ abstract class GenericMessageManager {
 	protected MessageProducer producer;
 	protected MessageConsumer consumer;
 	protected Session session;
-	protected static final Logger logger = Logger
-			.getLogger(ClientHttpMessagingServiceManager.class);
+	protected static final Logger logger = Logger.getLogger(ClientHttpMessagingServiceManager.class);
 	private int nbProc = Runtime.getRuntime().availableProcessors();
 	ExecutorService execute = Executors.newFixedThreadPool(nbProc);
 
-	public GenericMessageManager(String url, String producerQueue,
-			String consumerQueue) {
-
-		try {
-			BrokerService broker = new BrokerService();
-			broker.setPersistent(false);
-			broker.setUseJmx(false);
-			broker.addConnector(url);
-			broker.start();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+	public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
 
 		// Connect to it and create producer / consumer
-		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
-				url);
+		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
 		Connection connection;
 		try {
 			connection = connectionFactory.createConnection();
