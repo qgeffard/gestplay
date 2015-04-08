@@ -1,5 +1,8 @@
 package org.kgj.pds.playlist.metier.messagingService;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
@@ -12,7 +15,6 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.activemq.broker.BrokerService;
 import org.apache.log4j.Logger;
 
 abstract class GenericMessageManager {
@@ -21,21 +23,13 @@ abstract class GenericMessageManager {
 	protected MessageConsumer consumer;
 	protected Session session;
 	protected static final Logger logger = Logger.getLogger(ClientHttpMessagingServiceManager.class);
+	private int nbProc = Runtime.getRuntime().availableProcessors();
+	ExecutorService execute = Executors.newFixedThreadPool(nbProc);
 
 	public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
-		
-		try {
-			BrokerService broker = new BrokerService();
-			broker.setPersistent(false);
-			broker.setUseJmx(false);
-			broker.addConnector(url);
-			broker.start();
-		} catch (Exception e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		//Connect to it and create producer / consumer
+		logger.info("------- ACTIVEMQ -------");
+		logger.info("Connection to broker starting...");
+		// Connect to it and create producer / consumer
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
 		Connection connection;
 		try {
@@ -46,11 +40,15 @@ abstract class GenericMessageManager {
 			consumer = createConsumer(consumerQueue);
 
 			connection.start();
-
+			logger.info("Connection to broker started");
+			
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
-
+		
+		logger.info("Producer queue = "+producerQueue);
+		logger.info("Consumer queue = "+consumerQueue);
+		logger.info("------------------------");
 	}
 
 	private MessageConsumer createConsumer(String queue) {
@@ -59,9 +57,14 @@ abstract class GenericMessageManager {
 			consumer = session.createConsumer(destination);
 
 			consumer.setMessageListener(new MessageListener() {
-				public void onMessage(Message message) {
-					logger.info("trigger message");
-					GenericMessageManager.this.messageReceived(message);
+				public void onMessage(final Message message) {
+					logger.info("message triggered - thread start");
+					execute.execute(new Runnable() {
+
+						public void run() {
+							GenericMessageManager.this.messageReceived(message);
+						}
+					});
 				}
 			});
 

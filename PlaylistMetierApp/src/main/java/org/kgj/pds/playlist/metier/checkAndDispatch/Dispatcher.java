@@ -23,7 +23,7 @@ public class Dispatcher {
 			
 			JAXBContext jaxbContext;
 			try {
-				jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.generated");
+				jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
 				Marshaller mar = jaxbContext.createMarshaller();
 				mar.marshal(query, connection.getOutputStream());
 			} catch (JAXBException e) {
