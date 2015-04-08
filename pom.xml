@@ -16,6 +16,13 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.kgj.pds.playlist.metier.messagingService</groupId>
+			<artifactId>message_manager</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/local-maven-repo/message_manager.jar</systemPath>
+		</dependency>
+		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
 			<version>2.2</version>
