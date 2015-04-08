@@ -1,6 +1,6 @@
-package org.kgj.pds.playlist.metier.integrityAndDispatcher;
+package org.kgj.pds.playlist.metier.checkAndDispatch;
 
-import org.kgj.pds.playlist.metier.generated.Query;
+import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 
 /**
  * Classe use to make the first check of integrity before dispatch (back to view or forward to webapp)

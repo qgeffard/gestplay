@@ -1,4 +1,4 @@
-package org.kgj.pds.playlist.metier.integrityAndDispatcher;
+package org.kgj.pds.playlist.metier.checkAndDispatch;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import org.kgj.pds.playlist.metier.generated.Query;
+import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 
 public class Dispatcher {
 

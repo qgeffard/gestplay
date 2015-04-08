@@ -6,7 +6,7 @@
 //
 
 
-package org.kgj.pds.playlist.metier.generated;
+package org.kgj.pds.playlist.metier.messagingProtocol;
 
 import java.util.ArrayList;
 import java.util.List;

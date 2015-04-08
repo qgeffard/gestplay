@@ -6,4 +6,4 @@
 //
 
 @javax.xml.bind.annotation.XmlSchema(namespace = "http://xspf.org/ns/0/", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-package org.kgj.pds.playlist.metier.generated;
+package org.kgj.pds.playlist.metier.messagingProtocol;

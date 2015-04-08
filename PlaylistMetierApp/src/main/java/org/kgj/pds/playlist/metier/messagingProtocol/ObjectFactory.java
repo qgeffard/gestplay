@@ -6,7 +6,7 @@
 //
 
 
-package org.kgj.pds.playlist.metier.generated;
+package org.kgj.pds.playlist.metier.messagingProtocol;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;

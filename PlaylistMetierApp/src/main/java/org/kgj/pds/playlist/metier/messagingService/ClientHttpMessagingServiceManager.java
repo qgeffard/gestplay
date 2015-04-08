@@ -9,8 +9,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.kgj.pds.playlist.metier.generated.Query;
-import org.kgj.pds.playlist.metier.integrityAndDispatcher.IntegrityChecker;
+import org.kgj.pds.playlist.metier.messagingProtocol.Query;
+import org.kgj.pds.playlist.metier.checkAndDispatch.IntegrityChecker;
 
 public class ClientHttpMessagingServiceManager extends GenericMessageManager {
 
