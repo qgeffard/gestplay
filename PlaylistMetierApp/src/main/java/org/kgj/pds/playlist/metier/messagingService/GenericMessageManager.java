@@ -27,7 +27,8 @@ abstract class GenericMessageManager {
 	ExecutorService execute = Executors.newFixedThreadPool(nbProc);
 
 	public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
-
+		logger.info("------- ACTIVEMQ -------");
+		logger.info("Connection to broker starting...");
 		// Connect to it and create producer / consumer
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
 		Connection connection;
@@ -39,11 +40,15 @@ abstract class GenericMessageManager {
 			consumer = createConsumer(consumerQueue);
 
 			connection.start();
-
+			logger.info("Connection to broker started");
+			
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
-
+		
+		logger.info("Producer queue = "+producerQueue);
+		logger.info("Consumer queue = "+consumerQueue);
+		logger.info("------------------------");
 	}
 
 	private MessageConsumer createConsumer(String queue) {

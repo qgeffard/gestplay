@@ -9,8 +9,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 import org.kgj.pds.playlist.metier.checkAndDispatch.IntegrityChecker;
+import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 
 public class ClientHttpMessagingServiceManager extends GenericMessageManager {
 
@@ -31,7 +31,7 @@ public class ClientHttpMessagingServiceManager extends GenericMessageManager {
 		IntegrityChecker integrityChecker  = new IntegrityChecker();
 		
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.generated");
+			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 			String messageContent = ((TextMessage) message).getText();

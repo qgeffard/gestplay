@@ -22,6 +22,7 @@ public class ClientHttpBoot {
 	static Logger logger = Logger.getLogger(ClientHttpBoot.class);
 
 	public static void main(String[] args) {
+		logger.info("Starting app metier");
 		startMessagingService();
 		// ...
 //		tryWSquery();
