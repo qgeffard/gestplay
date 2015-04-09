@@ -1,4 +1,4 @@
-package org.kgj.pds.playlist.persistance.jdbc;
+package org.kgj.pds.playlist.persistance.entity;
 
 public class Track {
 	private int id;

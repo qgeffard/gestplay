@@ -1,35 +1,37 @@
-package org.kgj.pds.playlist.persistance.jdbc;
+package org.kgj.pds.playlist.persistance.model;
 
 import java.util.List;
 
-public class PlaylistDAO implements IDAOService<Playlist> {
+import org.kgj.pds.playlist.persistance.entity.User;
+
+public class UserDAO implements IDAOService<User> {
 
 	@Override
-	public boolean create(Playlist e) {
+	public boolean create(User e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Playlist read(int id) {
+	public User read(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean update(Playlist e) {
+	public boolean update(User e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Playlist e) {
+	public boolean delete(User e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<Playlist> searchAll() {
+	public List<User> searchAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
