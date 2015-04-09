@@ -1,6 +1,6 @@
 package org.kgj.pds.playlist.persistance.PlaylistPersistance.jdbc;
 
-public class Tracktype {
+public class Track {
 	private int id;
 	private String location;
 	private String identifier;
