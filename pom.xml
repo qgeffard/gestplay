@@ -20,7 +20,7 @@
 			<artifactId>message_manager</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>/home/geffardq/workspace/gestplay/local-maven-repo/message_manager.jar</systemPath>
+			<systemPath>${basedir}/local-maven-repo/message_manager.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
