@@ -1,4 +1,4 @@
-package org.kgj.pds.playlist.persistance.PlaylistPersistance.jdbc;
+package org.kgj.pds.playlist.persistance.jdbc;
 
 public class User {
 	private String nom;

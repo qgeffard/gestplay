@@ -1,35 +1,35 @@
-package org.kgj.pds.playlist.persistance.PlaylistPersistance.jdbc;
+package org.kgj.pds.playlist.persistance.jdbc;
 
 import java.util.List;
 
-public class TrackDAO implements IDAOService<Track> {
+public class UserDAO implements IDAOService<User> {
 
 	@Override
-	public boolean create(Track e) {
+	public boolean create(User e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Track read(int id) {
+	public User read(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean update(Track e) {
+	public boolean update(User e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Track e) {
+	public boolean delete(User e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<Track> searchAll() {
+	public List<User> searchAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
