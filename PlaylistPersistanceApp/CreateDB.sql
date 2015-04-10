@@ -34,8 +34,10 @@ CREATE TABLE playlist (
 	playlist_version VARCHAR(64),
 );
 CREATE TABLE playlist_track_bridge (
-	FOREIGN KEY(playlist_track_bridge) REFERENCES track(track_id);
-	FOREIGN KEY(playlist_track_bridge) REFERENCES playlist(playlist_id);
+	playlist_track_bridge_track_id
+	playlist_track_bridge_playlist_id
+	FOREIGN KEY(playlist_track_bridge_track_id) REFERENCES track(track_id);
+	FOREIGN KEY(playlist_track_bridge_playlist_id) REFERENCES playlist(playlist_id);
 );
 CREATE TABLE users (
 	user_id INT PRIMARY KEY,
