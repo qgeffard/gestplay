@@ -1,5 +1,5 @@
 CREATE DATABASE "Playlist"
-CREATE TABLE trackentity (
+CREATE TABLE track (
 	track_id INT PRIMARY KEY,
 	track_location VARCHAR(64),
 	tracl_identifier VARCHAR(64),
@@ -15,7 +15,7 @@ CREATE TABLE trackentity (
 	track_meta VARCHAR(64),
 	track_extension VARCHAR(64),
 );
-CREATE TABLE playlistentity (
+CREATE TABLE playlist (
 	playlist_id INT PRIMARY KEY,
 	playlist_title VARCHAR(64),
 	playlist_creator VARCHAR(64),
@@ -33,7 +33,11 @@ CREATE TABLE playlistentity (
 	playlist_tracklist VARCHAR(64),
 	playlist_version VARCHAR(64),
 );
-CREATE TABLE userentity (
+CREATE TABLE playlist_track_bridge (
+	FOREIGN KEY(playlist_track_bridge) REFERENCES track(track_id);
+	FOREIGN KEY(playlist_track_bridge) REFERENCES playlist(playlist_id);
+);
+CREATE TABLE users (
 	user_id INT PRIMARY KEY,
 	user_name VARCHAR(64),
 	user_password VARCHAR(64),

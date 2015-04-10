@@ -1,6 +1,6 @@
 package org.kgj.pds.playlist.persistance.entity;
 
-public class User {
+public class UsersEntity {
 	private String nom;
 	private String prenom;
 	private String login;

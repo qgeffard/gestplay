@@ -22,7 +22,7 @@ abstract class GenericMessageManager {
 	protected MessageProducer producer;
 	protected MessageConsumer consumer;
 	protected Session session;
-	protected static final Logger logger = Logger.getLogger(ClientHttpMessagingServiceManager.class);
+	protected static final Logger logger = Logger.getLogger(ClientAppMessagingServiceManager.class);
 	private int nbProc = Runtime.getRuntime().availableProcessors();
 	ExecutorService execute = Executors.newFixedThreadPool(nbProc);
 

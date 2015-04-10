@@ -2,36 +2,36 @@ package org.kgj.pds.playlist.persistance.model;
 
 import java.util.List;
 
-import org.kgj.pds.playlist.persistance.entity.Track;
+import org.kgj.pds.playlist.persistance.entity.TrackEntity;
 
-public class TrackDAO implements IDAOService<Track> {
+public class TrackDAO implements IDAOService<TrackEntity> {
 
 	@Override
-	public boolean create(Track e) {
+	public boolean create(TrackEntity e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public Track read(int id) {
+	public TrackEntity read(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean update(Track e) {
+	public boolean update(TrackEntity e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(Track e) {
+	public boolean delete(TrackEntity e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<Track> searchAll() {
+	public List<TrackEntity> searchAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

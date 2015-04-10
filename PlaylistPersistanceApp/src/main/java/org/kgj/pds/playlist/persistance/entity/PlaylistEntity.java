@@ -2,7 +2,7 @@ package org.kgj.pds.playlist.persistance.entity;
 
 import java.sql.Date;
 
-public class Playlist {
+public class PlaylistEntity {
 	private int id;
 	private String title;
 	private String creator;

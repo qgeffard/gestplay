@@ -1,6 +1,6 @@
 package org.kgj.pds.playlist.persistance.entity;
 
-public class Track {
+public class TrackEntity {
 	private int id;
 	private String location;
 	private String identifier;
