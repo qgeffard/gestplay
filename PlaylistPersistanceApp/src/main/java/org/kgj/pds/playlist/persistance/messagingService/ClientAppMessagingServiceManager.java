@@ -1,4 +1,4 @@
-package org.kgj.pds.playlist.metier.messagingService;
+package org.kgj.pds.playlist.persistance.messagingService;
 
 import java.io.StringReader;
 
@@ -9,7 +9,7 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import org.kgj.pds.playlist.metier.messagingProtocol.Query;
+import org.kgj.pds.playlist.persistance.messagingProtocol.Query;
 
 public class ClientAppMessagingServiceManager extends GenericMessageManager {
 

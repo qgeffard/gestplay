@@ -1,4 +1,4 @@
-package org.kgj.pds.playlist.metier.messagingService;
+package org.kgj.pds.playlist.persistance.messagingService;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

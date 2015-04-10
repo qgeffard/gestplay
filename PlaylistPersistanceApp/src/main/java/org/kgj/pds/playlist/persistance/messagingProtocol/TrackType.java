@@ -6,7 +6,7 @@
 //
 
 
-package org.kgj.pds.playlist.metier.messagingProtocol;
+package org.kgj.pds.playlist.persistance.messagingProtocol;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

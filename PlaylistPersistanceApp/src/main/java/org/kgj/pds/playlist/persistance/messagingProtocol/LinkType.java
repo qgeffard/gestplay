@@ -6,7 +6,7 @@
 //
 
 
-package org.kgj.pds.playlist.metier.messagingProtocol;
+package org.kgj.pds.playlist.persistance.messagingProtocol;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -17,14 +17,14 @@ import javax.xml.bind.annotation.XmlValue;
 
 
 /**
- * <p>Java class for MetaType complex type.
+ * <p>Java class for LinkType complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="MetaType">
+ * &lt;complexType name="LinkType">
  *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+ *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>anyURI">
  *       &lt;attribute name="rel" use="required" type="{http://www.w3.org/2001/XMLSchema}anyURI" />
  *     &lt;/extension>
  *   &lt;/simpleContent>
@@ -34,12 +34,13 @@ import javax.xml.bind.annotation.XmlValue;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MetaType", propOrder = {
+@XmlType(name = "LinkType", propOrder = {
     "value"
 })
-public class MetaType {
+public class LinkType {
 
     @XmlValue
+    @XmlSchemaType(name = "anyURI")
     protected String value;
     @XmlAttribute(name = "rel", required = true)
     @XmlSchemaType(name = "anyURI")
