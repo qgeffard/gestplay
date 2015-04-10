@@ -11,16 +11,16 @@ import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 
-public class ClientHttpMessagingServiceManager extends GenericMessageManager {
+public class ClientAppMessagingServiceManager extends GenericMessageManager {
 
-	private static ClientHttpMessagingServiceManager instance = new ClientHttpMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
+	private static ClientAppMessagingServiceManager instance = new ClientAppMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
 	
-	private ClientHttpMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
+	private ClientAppMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
 
 	}
 
-	public static ClientHttpMessagingServiceManager getInstance() {
+	public static ClientAppMessagingServiceManager getInstance() {
 		return instance;
 	}
 
