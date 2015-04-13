@@ -1,4 +1,4 @@
-# gestplay
+# Gestplay
 
 Ce projet réalisé pour le Projet de Synthese de l'année de Master 1 Miage est un projet d'école permattant de gerer des playlists d'utilisateurs. 
 
