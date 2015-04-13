@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xspf:query xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xspf="http://xspf.org/ns/0/" xsi:schemaLocation="http://xspf.org/ns/0/ messageViewController.xsd ">
+  <queryId>token</queryId>
+  <responseId>token</responseId>
+  <userManager>
+    <connectedToken>token</connectedToken>
+  </userManager>
+  <status>
+    <succed>succed</succed>
+  </status>
+  <action>
+    <idAction>token</idAction>
+    <nameAction>undo</nameAction>
+  </action>
+</xspf:query>
