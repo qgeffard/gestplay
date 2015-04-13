@@ -6,17 +6,17 @@
 	<display-name>Archetype Created Web Application</display-name>
 	<listener>
 		<listener-class>
-			org.kgj.pds.playlist.metier.serveurHttp.ServeurHttpBoot
+			org.kgj.pds.playlist.metier.serveurHttp.ServeurHttpPersistenceSideBoot
 		</listener-class>
 	</listener>
 	<servlet>
-		<servlet-name>ServeurHttp</servlet-name>
-		<display-name>ServeurHttp</display-name>
+		<servlet-name>ServeurHttpPersistenceSide</servlet-name>
+		<display-name>ServeurHttpPersistenceSide</display-name>
 		<description></description>
-		<servlet-class>org.kgj.pds.playlist.metier.serveurHttp.ServeurHttp</servlet-class>
+		<servlet-class>org.kgj.pds.playlist.metier.serveurHttp.ServeurHttpPersistenceSide</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>ServeurHttp</servlet-name>
-		<url-pattern>/serveurHttpPersistenceSide</url-pattern>
+		<servlet-name>ServeurHttpPersistenceSide</servlet-name>
+		<url-pattern>/setMessage</url-pattern>
 	</servlet-mapping>
 </web-app>

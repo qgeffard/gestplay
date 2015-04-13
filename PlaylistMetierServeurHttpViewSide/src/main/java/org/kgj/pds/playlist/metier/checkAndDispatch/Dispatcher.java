@@ -17,7 +17,7 @@ public class Dispatcher {
 	public void sendToWS(Query query) {
 		// TODO Auto-generated method stub
 		try {
-			URLConnection connection = new URL("http://localhost:8080/PlaylistMetierServeurHttp/serveurHttp?action="+query.getAction().getNameAction()).openConnection();
+			URLConnection connection = new URL("http://localhost:8080/PlaylistMetierServeurHttpPersistenceSide/setMessage?action="+query.getAction().getNameAction()).openConnection();
 			connection.setRequestProperty("Accept-Charset", "utf-8");
 			connection.setDoOutput(true);
 			

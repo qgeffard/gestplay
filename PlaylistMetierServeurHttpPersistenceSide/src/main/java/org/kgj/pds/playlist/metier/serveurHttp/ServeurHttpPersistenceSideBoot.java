@@ -7,9 +7,9 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.metier.messagingService.ServeurHttpMessagingServiceManager;
 
-public class ServeurHttpBoot implements ServletContextListener {
+public class ServeurHttpPersistenceSideBoot implements ServletContextListener {
 	ServletContext context;
-	private static final Logger logger = Logger.getLogger(ServeurHttpBoot.class);
+	private static final Logger logger = Logger.getLogger(ServeurHttpPersistenceSideBoot.class);
 
 	public void contextInitialized(ServletContextEvent contextEvent) {
 		// ... some init work

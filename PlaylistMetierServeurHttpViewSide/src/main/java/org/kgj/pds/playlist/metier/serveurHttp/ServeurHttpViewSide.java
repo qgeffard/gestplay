@@ -13,14 +13,14 @@ import org.apache.log4j.Logger;
 /**
  * Servlet implementation class ServeurHttp
  */
-public class ServeurHttp extends HttpServlet {
+public class ServeurHttpViewSide extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = Logger.getLogger(ServeurHttp.class);
+	private static final Logger logger = Logger.getLogger(ServeurHttpViewSide.class);
 	
     /**
      * Default constructor. 
      */
-    public ServeurHttp() {
+    public ServeurHttpViewSide() {
         // TODO Auto-generated constructor stub
     }
 
