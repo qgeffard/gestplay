@@ -1,7 +1,0 @@
-<root>
-  <facet id="jpt.jaxb">
-    <node name="classgen">
-      <attribute name="package" value="org.kgj.pds.playlist.metier.generated"/>
-    </node>
-  </facet>
-</root>

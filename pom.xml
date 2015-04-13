@@ -15,13 +15,13 @@
 	</properties>
 
 	<dependencies>
-		<dependency>
-			<groupId>org.kgj.pds.playlist.metier.messagingService</groupId>
+		<!-- <dependency>
+			<groupId>org.kgj.pds.playlist.metier.messagingService.GenericMessageManager</groupId>
 			<artifactId>message_manager</artifactId>
 			<version>1.0</version>
 			<scope>system</scope>
-			<systemPath>${basedir}/local-maven-repo/message_manager.jar</systemPath>
-		</dependency>
+			<systemPath>${project.basedir}/local-maven-repo/message_manager.jar</systemPath>
+		</dependency> -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
