@@ -11,14 +11,12 @@ import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 
-@SuppressWarnings("restriction")
 public class WebAppMessagingServiceManager extends GenericMessageManager {
 
-	private static WebAppMessagingServiceManager instance = new WebAppMessagingServiceManager("tcp://localhost:61616", "consumerFromView", "producerToView");
+	private static WebAppMessagingServiceManager instance = new WebAppMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
 	
-	private WebAppMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
+	public WebAppMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
-
 	}
 
 	public static WebAppMessagingServiceManager getInstance() {
@@ -29,14 +27,13 @@ public class WebAppMessagingServiceManager extends GenericMessageManager {
 	public void messageReceived(Message message) {
 		logger.debug("Message inc "+ message.toString());
 		
-		
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.presentation.messagingProtocol");
+			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 			String messageContent = ((TextMessage) message).getText();
 			Query query = (Query) unmarshaller.unmarshal(new StringReader(messageContent)); 
-			
+
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

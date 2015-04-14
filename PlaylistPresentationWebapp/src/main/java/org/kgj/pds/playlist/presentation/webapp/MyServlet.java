@@ -2,25 +2,22 @@ package org.kgj.pds.playlist.presentation.webapp;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.SecureRandom;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import java.security.SecureRandom;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.transform.Result;
 
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
+import org.kgj.pds.playlist.presentation.messagingProtocol.Query.Action;
+import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager.User;
-import org.kgj.pds.playlist.presentation.messagingProtocol.Query.*;
 import org.kgj.pds.playlist.presentation.messagingService.WebAppMessagingServiceManager;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.math.BigDecimal;
-
-import javax.xml.bind.*;
-import javax.xml.transform.Result;
 
 /**
  * Servlet implementation class myServlet
@@ -58,11 +55,10 @@ public class MyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("lol");
 		String login = request.getParameter("inputLogin");
 		String password = request.getParameter("inputPassword");
 
-		/* On créer la Query correspondant à la demande d'authentification */
+
 		Query q = new Query();
 		Action a = new Action();
 		a.setNameAction("login");
@@ -77,8 +73,9 @@ public class MyServlet extends HttpServlet {
 		q.setAction(a);
 		q.setUserManager(uM);
 		q.setQueryId(nextSessionId());
-
-		WebAppMessagingServiceManager.getInstance().send("");
+		
+		WebAppMessagingServiceManager.getInstance();
+		
 		JAXBContext jaxbContext;
 		Result str = null;
 		try {
@@ -90,8 +87,12 @@ public class MyServlet extends HttpServlet {
 		}
 		
 		System.out.println(str.toString());
+//		
+//
+		
+//		WebAppMessagingServiceManager.getInstance().send("");
 		// If the user authanticate
-		// request.getSession().setAttribute("user", user); où user = un
+		// request.getSession().setAttribute("user", user); user = un
 		// "tableau"
 
 	}

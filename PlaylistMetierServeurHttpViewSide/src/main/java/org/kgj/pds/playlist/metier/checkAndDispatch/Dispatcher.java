@@ -19,16 +19,15 @@ public class Dispatcher {
 	public final String WEBAPP_PROTOCOL = "http://";
 	public final String WEBAPP_PS_HOSTNAME = "localhost";
 	public final String WEBAPP_PS_PORT = "8080";
-	public final String WEBAPP_PS_SERVLETNAME = "PlaylistMetierServeurHttpPersistenceSide/setmessage";
+	public final String WEBAPP_PS_SERVLETNAME = "PlaylistMetierServeurHttpPersistenceSide/setMessage";
 	
 
 	public void sendToWS(Query query, Message message) throws JMSException {
-		// TODO Auto-generated method stub
 		try {
 			StringBuilder url = new StringBuilder();
 			url.append(WEBAPP_PROTOCOL);
-			url.append(WEBAPP_PS_HOSTNAME);
-			url.append(WEBAPP_PS_PORT);
+			url.append(WEBAPP_PS_HOSTNAME).append(":");
+			url.append(WEBAPP_PS_PORT).append("/");
 			url.append(WEBAPP_PS_SERVLETNAME);
 			
 			String actionParam = "action="+query.getAction().getNameAction();
