@@ -2,7 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="lib" path="/home/doot/Documents/SERVEURS/TOMCAT7/lib/servlet-api.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
@@ -11,5 +10,6 @@
 	<classpathentry kind="lib" path="src/main/resources/activemq-all-5.11.0.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/log4j-api-2.2.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/log4j-core-2.2.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/servlet-api.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
