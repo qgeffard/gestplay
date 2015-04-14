@@ -2,7 +2,7 @@ package org.kgj.pds.playlist.presentation.webapp;
 
 import javax.servlet.ServletContextEvent;
 
-import org.kgj.pds.playlist.presentation.messagingService.WebAppMessagingServiceManager;
+import org.kgj.pds.playlist.presentation.messagingService.WebappMessagingServiceManager;
 
 
 public class MyServletBoot implements javax.servlet.ServletContextListener {
@@ -19,7 +19,7 @@ public class MyServletBoot implements javax.servlet.ServletContextListener {
 		System.out.println("Starting...");
 //		new WebAppMessagingServiceManager("tcp://localhost:61616", "consumerFromView", "producerToView");
 //		new WebAppMessagingServiceManager("tcp://localhost:61616", "consumerFromView", "producerToView");
-	//	WebAppMessagingServiceManager.getInstance();
+		WebappMessagingServiceManager.getInstance();
 
 	}
 }

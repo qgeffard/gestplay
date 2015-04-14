@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,12 +18,12 @@ import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.Action;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager.User;
-import org.kgj.pds.playlist.presentation.messagingService.WebAppMessagingServiceManager;
+import org.kgj.pds.playlist.presentation.messagingService.WebappMessagingServiceManager;
 
 /**
  * Servlet implementation class myServlet
  */
-@SuppressWarnings("restriction")
+@WebServlet(loadOnStartup = 1, urlPatterns={"/myServlet"})
 public class MyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +38,11 @@ public class MyServlet extends HttpServlet {
 	 */
 	public MyServlet() {
 		// TODO Auto-generated constructor stub
+		WebappMessagingServiceManager.getInstance();
+		
 	}
+	
+	
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -74,7 +79,7 @@ public class MyServlet extends HttpServlet {
 		q.setUserManager(uM);
 		q.setQueryId(nextSessionId());
 		
-		WebAppMessagingServiceManager.getInstance();
+		WebappMessagingServiceManager.getInstance();
 		
 		JAXBContext jaxbContext;
 		Result str = null;

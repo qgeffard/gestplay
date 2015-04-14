@@ -11,15 +11,15 @@ import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 
-public class WebAppMessagingServiceManager extends GenericMessageManager {
+public class WebappMessagingServiceManager extends GenericMessageManager {
 
-	private static WebAppMessagingServiceManager instance = new WebAppMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
+	private static WebappMessagingServiceManager instance = new WebappMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
 	
-	public WebAppMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
+	public WebappMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
 	}
 
-	public static WebAppMessagingServiceManager getInstance() {
+	public static WebappMessagingServiceManager getInstance() {
 		return instance;
 	}
 
