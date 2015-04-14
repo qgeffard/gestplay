@@ -16,7 +16,7 @@ public class MyServletBoot implements javax.servlet.ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent arg0) {
 		System.out.println("Starting...");
-		WebAppMessagingServiceManager.getInstance();
+	//	WebAppMessagingServiceManager.getInstance();
 
 	}
 }

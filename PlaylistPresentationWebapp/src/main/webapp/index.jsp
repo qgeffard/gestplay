@@ -11,7 +11,13 @@
 	<!-- Bootstrap -->
 	
 	<link href="bootstrap.min.css" rel="stylesheet">
-
+	<link href="style.css" rel="stylesheet">
+	<link href="font-awesome.min.css" rel="stylesheet">
+	<link href="style-metro" rel="stylesheet">
+	<link href="myCSS.css" rel="stylesheet">
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -20,20 +26,45 @@
     <![endif]-->
   </head>
     
-<body class="loading">
-  <div class="container">
+<body class="login">
+<div class="logo"></div>
 
-      <form class="form-signin" action="myServlet" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Login</label>
-        <input type="text" id="inputLogin" class="form-control" placeholder="Login" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-      
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-      </form>
+<div class="heading-1"><p>Votre musique en illimité..</p></div>
+<div class="heading-2"><p>Créer et modifier vos playlist à l'infini.<br>Connectez-vous dès maintenant pour en profiter.</p></div>
+<br><br>
+<div class="content">
+
+      <form class="form-vertical login-form" action="myServlet" method="post">
+        <h3 class="form-title">Login to your account</h3>
+        
+        <div class="control-group">
+				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+				<label class="control-label visible-ie8 visible-ie9">Username</label>
+				<div class="controls">
+					<div class="input-icon left">
+						<i class="icon-user"></i>
+						<input class="m-wrap placeholder-no-fix" autocomplete="off" placeholder="Username" name="login" type="text">
+					</div>
+				</div>
+			</div>
+			
+		<div class="control-group">
+				<!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+				<label class="control-label visible-ie8 visible-ie9">Password</label>
+				<div class="controls">
+					<div class="input-icon left">
+						<i class="icon-lock"></i>
+						<input class="m-wrap placeholder-no-fix" autocomplete="off" placeholder="Password" name="password" type="password">
+					</div>
+				</div>
+			</div>
+		
+		<div class="form-actions">
+				<button type="submit" class="btn blue pull-right">
+				Login <i class="m-icon-swapright m-icon-white"></i>
+				</button>            
+			</div>
+     </form>
 
     </div>
     
