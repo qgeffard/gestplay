@@ -12,16 +12,16 @@ import javax.xml.bind.Unmarshaller;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 
 @SuppressWarnings("restriction")
-public class ServeurHttpMessagingServiceManager extends GenericMessageManager {
+public class ServeurHttpPersistenceSideMessagingServiceManager extends GenericMessageManager {
 
-	private static ServeurHttpMessagingServiceManager instance = new ServeurHttpMessagingServiceManager("tcp://localhost:61616",
+	private static ServeurHttpPersistenceSideMessagingServiceManager instance = new ServeurHttpPersistenceSideMessagingServiceManager("tcp://localhost:61616",
 			"producerToPersistence", "consumerFromPersistence");
 
-	private ServeurHttpMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
+	private ServeurHttpPersistenceSideMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
 	}
 
-	public static ServeurHttpMessagingServiceManager getInstance() {
+	public static ServeurHttpPersistenceSideMessagingServiceManager getInstance() {
 		return instance;
 	}
 

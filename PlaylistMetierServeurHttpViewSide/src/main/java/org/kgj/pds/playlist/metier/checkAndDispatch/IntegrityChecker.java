@@ -1,5 +1,8 @@
 package org.kgj.pds.playlist.metier.checkAndDispatch;
 
+import javax.jms.JMSException;
+import javax.jms.Message;
+
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 
 /**
@@ -14,14 +17,14 @@ public class IntegrityChecker {
 		dispatcher = new Dispatcher();
 	}
 	
-	public void entryPointCheckIntegrity(Query query){
+	public void entryPointCheckIntegrity(Query query, Message message) throws JMSException{
 		boolean forward = true;
 		//Check some point...
 		
 		if (forward) 
-			dispatcher.sendToWS(query);
+			dispatcher.sendToWS(query, message);
 		else
-			dispatcher.sendToView(query);
+			dispatcher.sendToView(query, message);
 		
 	}
 }

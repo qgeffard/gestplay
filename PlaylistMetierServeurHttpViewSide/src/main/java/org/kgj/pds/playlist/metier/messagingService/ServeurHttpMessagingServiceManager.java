@@ -38,7 +38,7 @@ public class ServeurHttpMessagingServiceManager extends GenericMessageManager {
 			String messageContent = ((TextMessage) message).getText();
 			Query query = (Query) unmarshaller.unmarshal(new StringReader(messageContent)); 
 			
-			integrityChecker.entryPointCheckIntegrity(query);
+			integrityChecker.entryPointCheckIntegrity(query, message);
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

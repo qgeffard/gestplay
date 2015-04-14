@@ -5,7 +5,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
-import org.kgj.pds.playlist.metier.messagingService.ServeurHttpMessagingServiceManager;
+import org.kgj.pds.playlist.metier.messagingService.ServeurHttpPersistenceSideMessagingServiceManager;
 
 public class ServeurHttpPersistenceSideBoot implements ServletContextListener {
 	ServletContext context;
@@ -14,7 +14,7 @@ public class ServeurHttpPersistenceSideBoot implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent contextEvent) {
 		// ... some init work
 		logger.info("Web app is starting");
-		ServeurHttpMessagingServiceManager.getInstance();
+		ServeurHttpPersistenceSideMessagingServiceManager.getInstance();
 	}
 
 	public void contextDestroyed(ServletContextEvent contextEvent) {

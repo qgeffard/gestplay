@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 public class ServeurHttpPersistenceSide extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(ServeurHttpPersistenceSide.class);
-	
+	private LocalStorage
     /**
      * Default constructor. 
      */
@@ -38,6 +38,7 @@ public class ServeurHttpPersistenceSide extends HttpServlet {
 		// TODO Auto-generated method stub
 		logger.info("request received");
 		logger.info("Param : "+request.getParameter("action"));
+		
 		
 		logger.info(request.getInputStream());
 		
