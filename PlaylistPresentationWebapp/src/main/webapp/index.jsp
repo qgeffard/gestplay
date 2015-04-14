@@ -9,7 +9,7 @@
 	<title>Log-In</title>
 	    
 	<!-- Bootstrap -->
-	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="bootstrap.min.css" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,10 +22,10 @@
 <body>
   <div class="container">
 
-      <form class="form-signin" action="index.htm">
+      <form class="form-signin" action="/myServlet" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Login</label>
-        <input type="text" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
+        <input type="text" id="inputID" class="form-control" placeholder="Login" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox">

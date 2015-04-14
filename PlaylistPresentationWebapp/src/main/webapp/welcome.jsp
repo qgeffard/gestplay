@@ -5,9 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Welcome to our dream playlists...</title>
- <link href="css/bootstrap.min.css" rel="stylesheet">
+ <link href="bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -32,31 +34,45 @@
 <div class="container">
 <h1>Vos playlist..</h1>
 
-<table class="table-bordered active">
+
+
+<table data-toggle="table" class="table table-hover">
 	<thead>
 		<tr>
 			<td>Nom</td>
 			<td>Track</td>
+			<td></td>
+			<td></td>
 		</tr>
 	</thead><tbody>
-		<tr>
+		<tr data-toggle="collapse" data-target="#playlist1" class="clickable">
 			<td>Nom Playlist 1</td>
 			<td>45</td>
-		</tr><tr>
+			<td><a href="#display">M</a></td>
+			<td><a href="#delete">S</a></td>
+		</tr>
+		<tr id="playlist1" class="collapse">
+        	<td colspan="3">- NomTrack</td>
+        	<td colspan="3">DureeTrack</td>
+        	<td colspan="3"><a href="#delete">S</a></td>
+   		</tr>
+		<tr>
 			<td>Nom Playlist 2</td>
 			<td>45</td>
+			<td><a href="#display">M</a></td>
+			<td><a href="#delete">S</a></td>
 		</tr><tr>
 			<td>Nom Playlist 3</td>
 			<td>45</td>
+			<td><a href="#display">M</a></td>
+			<td><a href="#delete">S</a></td>
 		</tr>
 	</tbody>
 </table>
 
-
-<a href="#">Créer une playlist</a><br>
-<a href="#">Afficher une playlist</a><br>
-<a href="#">Modifier une playlist</a><br>
-<a href="#">Supprimer une playlist</a><br>
+<br><br><br><p align="right">
+Afficher, Créer, Modifier, Supprimer.
+</p>
 </div>
 
 
