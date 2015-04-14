@@ -13,7 +13,7 @@
 		<servlet-name>myServlet</servlet-name>
 		<display-name>myServlet</display-name>
 		<description></description>
-		<servlet-class>org.kgj.pds.playlist.presentation.webapp.myServlet</servlet-class>
+		<servlet-class>org.kgj.pds.playlist.presentation.webapp.MyServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>myServlet</servlet-name>

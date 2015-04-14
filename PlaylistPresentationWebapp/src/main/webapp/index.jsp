@@ -9,6 +9,7 @@
 	<title>Log-In</title>
 	    
 	<!-- Bootstrap -->
+	
 	<link href="bootstrap.min.css" rel="stylesheet">
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -19,13 +20,13 @@
     <![endif]-->
   </head>
     
-<body>
+<body class="loading">
   <div class="container">
 
-      <form class="form-signin" action="/myServlet" method="post">
+      <form class="form-signin" action="myServlet" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputEmail" class="sr-only">Login</label>
-        <input type="text" id="inputID" class="form-control" placeholder="Login" required autofocus>
+        <input type="text" id="inputLogin" class="form-control" placeholder="Login" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox">

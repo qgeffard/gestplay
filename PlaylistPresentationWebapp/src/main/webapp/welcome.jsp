@@ -43,6 +43,7 @@
 			<td>Track</td>
 			<td></td>
 			<td></td>
+			<td></td>
 		</tr>
 	</thead><tbody>
 		<tr data-toggle="collapse" data-target="#playlist1" class="clickable">
