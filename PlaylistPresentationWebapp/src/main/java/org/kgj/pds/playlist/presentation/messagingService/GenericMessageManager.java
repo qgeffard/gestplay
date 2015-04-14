@@ -1,8 +1,5 @@
 package org.kgj.pds.playlist.presentation.messagingService;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
@@ -23,8 +20,6 @@ abstract class GenericMessageManager {
 	protected MessageConsumer consumer;
 	protected Session session;
 	protected static final Logger logger = Logger.getLogger(WebAppMessagingServiceManager.class);
-	private int nbProc = Runtime.getRuntime().availableProcessors();
-	ExecutorService execute = Executors.newFixedThreadPool(nbProc);
 
 	public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
 		logger.info("------- ACTIVEMQ -------");
@@ -41,13 +36,13 @@ abstract class GenericMessageManager {
 
 			connection.start();
 			logger.info("Connection to broker started");
-			
+
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
-		
-		logger.info("Producer queue = "+producerQueue);
-		logger.info("Consumer queue = "+consumerQueue);
+
+		logger.info("Producer queue = " + producerQueue);
+		logger.info("Consumer queue = " + consumerQueue);
 		logger.info("------------------------");
 	}
 
@@ -59,12 +54,7 @@ abstract class GenericMessageManager {
 			consumer.setMessageListener(new MessageListener() {
 				public void onMessage(final Message message) {
 					logger.info("message triggered - thread start");
-					execute.execute(new Runnable() {
-
-						public void run() {
-							GenericMessageManager.this.messageReceived(message);
-						}
-					});
+					GenericMessageManager.this.messageReceived(message);
 				}
 			});
 

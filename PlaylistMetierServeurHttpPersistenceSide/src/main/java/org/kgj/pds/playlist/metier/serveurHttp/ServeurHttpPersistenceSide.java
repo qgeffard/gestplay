@@ -16,19 +16,14 @@ import org.apache.log4j.Logger;
 public class ServeurHttpPersistenceSide extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(ServeurHttpPersistenceSide.class);
-	private LocalStorage
-    /**
-     * Default constructor. 
-     */
-    public ServeurHttpPersistenceSide() {
-        // TODO Auto-generated constructor stub
-    }
+	private LocalStorage localstorage;
 
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
+		localstorage = new LocalStorage();
 	}
 
 	/**
