@@ -18,10 +18,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Créer</a>
-      <a class="navbar-brand" href="#">Afficher</a>
-      <a class="navbar-brand" href="#">Modifier</a>
-      <a class="navbar-brand" href="#">Supprimer</a>
+      <a class="navbar-brand" href="#">#</a>
     </div>
 
    
@@ -33,7 +30,28 @@
 
 
 <div class="container">
-<h1>Veuillez faire un choix</h1>
+<h1>Vos playlist..</h1>
+<table class="table-bordered active">
+	<thead>
+		<tr>
+			<td>Nom</td>
+			<td>Track</td>
+		</tr>
+	</thead><tbody>
+		<tr>
+			<td>Nom Playlist 1</td>
+			<td>45</td>
+		</tr><tr>
+			<td>Nom Playlist 2</td>
+			<td>45</td>
+		</tr><tr>
+			<td>Nom Playlist 3</td>
+			<td>45</td>
+		</tr>
+	</tbody>
+</table>
+
+
 <a href="#">Créer une playlist</a><br>
 <a href="#">Afficher une playlist</a><br>
 <a href="#">Modifier une playlist</a><br>

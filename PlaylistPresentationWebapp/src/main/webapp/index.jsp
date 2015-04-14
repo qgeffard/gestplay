@@ -12,8 +12,8 @@
 
       <form class="form-signin" action="index.htm">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">Sanofi Login</label>
-        <input type="text" id="inputEmail" class="form-control" placeholder="Sanofi Login" required autofocus>
+        <label for="inputEmail" class="sr-only">Login</label>
+        <input type="text" id="inputEmail" class="form-control" placeholder="Login" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox">
