@@ -9,6 +9,7 @@
 
 	<name>PlaylistManager</name>
 	<url>http://maven.apache.org</url>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -20,10 +21,16 @@
 				</configuration>
 			</plugin>
 		</plugins>
-	</build>	
+	</build>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<log4j.version>2.2</log4j.version>
+		<junit.version>3.8.1</junit.version>
+		<activemq.version>5.11.1</activemq.version>
+		<servlet.version>2.5</servlet.version>
 	</properties>
+
 
 	<dependencies>
 		<!-- <dependency>
@@ -36,26 +43,34 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
-			<version>2.2</version>
+			<version>${log4j.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.2</version>
+			<version>${log4j.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
-			<version>5.11.1</version>
+			<version>${activemq.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
+			<version>${junnit.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+	     	<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
+
 </project>
 
