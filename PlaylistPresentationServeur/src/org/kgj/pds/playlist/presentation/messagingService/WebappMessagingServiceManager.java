@@ -13,7 +13,7 @@ import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 
 public class WebappMessagingServiceManager extends GenericMessageManager {
 
-	private static WebappMessagingServiceManager instance = new WebappMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
+	private static WebappMessagingServiceManager instance = new WebappMessagingServiceManager("tcp://localhost:61616", "consumerFromView", "producerToView");
 	
 	public WebappMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
