@@ -22,24 +22,24 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<log4j.version>2.2</log4j.version>
 		<junit.version>3.8.1</junit.version>
 		<activemq.version>5.11.1</activemq.version>
 		<servlet.version>2.5</servlet.version>
+		<httpclient.version>3.1</httpclient.version>
 	</properties>
 
 
 	<dependencies>
-		<!-- <dependency>
-			<groupId>org.kgj.pds.playlist.metier.messagingService.GenericMessageManager</groupId>
-			<artifactId>message_manager</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/local-maven-repo/message_manager.jar</systemPath>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.kgj.pds.playlist.metier.messagingService.GenericMessageManager</groupId> 
+			<artifactId>message_manager</artifactId> <version>1.0</version> <scope>system</scope> 
+			<systemPath>${project.basedir}/local-maven-repo/message_manager.jar</systemPath> 
+			</dependency> -->
+			
+		<!-- LOGGER -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-api</artifactId>
@@ -51,25 +51,36 @@
 			<version>${log4j.version}</version>
 		</dependency>
 
+		<!-- MOM broker use to dispose a broker to JMS -->
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
 			<artifactId>activemq-all</artifactId>
 			<version>${activemq.version}</version>
 		</dependency>
 
+		<!-- Test PLug-in -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-
-	     	<dependency>
+	
+		<!-- WEB APP lib -->
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>${servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>
+	
+		<!-- Httpclient used to simplify http request between webapp -->
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>${httpclient.version}</version>
+		</dependency>
+
 	</dependencies>
 
 </project>

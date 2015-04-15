@@ -57,8 +57,8 @@ public class MyServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		String login = request.getParameter("inputLogin");
-		String password = request.getParameter("inputPassword");
+		String login = request.getParameter("login");
+		String password = request.getParameter("password");
 
 
 		Query q = new Query();
