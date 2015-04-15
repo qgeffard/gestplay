@@ -28,21 +28,31 @@ public class ServeurHttpPersistenceSideMessagingServiceManager extends GenericMe
 	@Override
 	public void messageReceived(Message message) {
 		logger.debug("Message inc " + message.toString());
+			
 
+			String messageContent;
+			try {
+				messageContent = ((TextMessage) message).getText();
+				Query query = decryptQuery(messageContent);
+				
+			} catch (JMSException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
+	public Query decryptQuery(String queryString) {
+		// TODO Auto-generated method stub
+		JAXBContext jaxbContext;
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
+			jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-
-			String messageContent = ((TextMessage) message).getText();
-			Query query = (Query) unmarshaller.unmarshal(new StringReader(messageContent));
-
+			return (Query) unmarshaller.unmarshal(new StringReader(queryString));
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (JMSException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		return null;
 	}
 
 }
