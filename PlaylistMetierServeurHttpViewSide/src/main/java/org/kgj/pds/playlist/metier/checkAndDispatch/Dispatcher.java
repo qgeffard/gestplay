@@ -18,6 +18,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
+import org.kgj.pds.playlist.metier.messagingService.ServeurHttpMessagingServiceManager;
 
 public class Dispatcher {
 	
@@ -30,14 +31,13 @@ public class Dispatcher {
 	public final String WEBAPP_PS_SERVLETNAME = "PlaylistMetierServeurHttpPersistenceSide/setMessage";
 	
 
-	public void sendToWS(Query query, Message message) throws JMSException {
+	public void sendToPS(Query query, Message message) throws JMSException {
 		HttpClient client = new HttpClient();
 		PostMethod post = new PostMethod(getUrlPersistenceSide(query,message));			
 		
-		post.addParameter("query", convertQueryToText(query));
+		post.addParameter("query", ServeurHttpMessagingServiceManager.getInstance().queryToString(query));
 		
 		try {
-			
 			int statusRequest = client.executeMethod(post);
 			
 			if (statusRequest != -1) {
@@ -48,22 +48,6 @@ public class Dispatcher {
 			e.printStackTrace();
 		}
 		
-	}
-
-	private String convertQueryToText(Query query) {
-		JAXBContext jaxbContext;
-		
-		StringWriter wrt = new StringWriter();
-		try {
-			jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
-			Marshaller mar = jaxbContext.createMarshaller();
-			mar.marshal(query, wrt);
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return wrt.toString();
 	}
 
 	private String getUrlPersistenceSide(Query query, Message message) throws JMSException {
@@ -85,8 +69,15 @@ public class Dispatcher {
 	}
 
 	public void sendToView(Query query, Message message) {
-		// TODO Auto-generated method stub
-		
+		ServeurHttpMessagingServiceManager messagingService = ServeurHttpMessagingServiceManager.getInstance();
+		String queryString = messagingService.queryToString(query);
+		messagingService.send(queryString);	
+	}
+	
+	public void sendToView(Query query) {
+		ServeurHttpMessagingServiceManager messagingService = ServeurHttpMessagingServiceManager.getInstance();
+		String queryString = messagingService.queryToString(query);
+		messagingService.send(queryString);	
 	}
 
 }

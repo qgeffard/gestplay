@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.kgj.pds.playlist.metier.checkAndDispatch.Dispatcher;
+import org.kgj.pds.playlist.metier.messagingService.ServeurHttpMessagingServiceManager;
 
 /**
  * Servlet implementation class ServeurHttp
@@ -16,6 +18,7 @@ import org.apache.log4j.Logger;
 public class ServeurHttpViewSide extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(ServeurHttpViewSide.class);
+	private Dispatcher dispatcher;
 	
     /**
      * Default constructor. 
@@ -28,7 +31,7 @@ public class ServeurHttpViewSide extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		// TODO Auto-generated method stub
+		dispatcher = new Dispatcher();
 	}
 
 	/**
@@ -36,11 +39,10 @@ public class ServeurHttpViewSide extends HttpServlet {
 	 */
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		logger.info("request received");
-		logger.info("Param : "+request.getParameter("action"));
+		logger.info("request received from PS");
 		
-		logger.info(request.getInputStream());
-		
+		ServeurHttpMessagingServiceManager.getInstance().send(request.getParameter("query"));
+		logger.info(request.getParameter("query"));
 	}
 
 	/**

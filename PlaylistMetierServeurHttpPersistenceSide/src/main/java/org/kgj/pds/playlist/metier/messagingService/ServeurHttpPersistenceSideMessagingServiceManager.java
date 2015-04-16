@@ -1,23 +1,29 @@
 package org.kgj.pds.playlist.metier.messagingService;
 
 import java.io.StringReader;
+import java.io.StringWriter;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
+import org.kgj.pds.playlist.metier.serveurHttp.Router;
 
 @SuppressWarnings("restriction")
-public class ServeurHttpPersistenceSideMessagingServiceManager extends GenericMessageManager {
+public class ServeurHttpPersistenceSideMessagingServiceManager extends
+		GenericMessageManager {
 
-	private static ServeurHttpPersistenceSideMessagingServiceManager instance = new ServeurHttpPersistenceSideMessagingServiceManager("tcp://localhost:61616",
-			"producerToPersistence", "consumerFromPersistence");
+	private static ServeurHttpPersistenceSideMessagingServiceManager instance = new ServeurHttpPersistenceSideMessagingServiceManager(
+			"tcp://localhost:61616", "producerToPersistence",
+			"consumerFromPersistence");
 
-	private ServeurHttpPersistenceSideMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
+	private ServeurHttpPersistenceSideMessagingServiceManager(String url,
+			String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
 	}
 
@@ -28,31 +34,48 @@ public class ServeurHttpPersistenceSideMessagingServiceManager extends GenericMe
 	@Override
 	public void messageReceived(Message message) {
 		logger.debug("Message inc " + message.toString());
+		Router router = new Router();
+		String messageContent;
+		try {
+			messageContent = ((TextMessage) message).getText();
+			Query query = stringToQuery(messageContent);
 			
-
-			String messageContent;
-			try {
-				messageContent = ((TextMessage) message).getText();
-				Query query = decryptQuery(messageContent);
-				
-			} catch (JMSException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			router.sendToVS(query);
+			
+		} catch (JMSException e) {
+			e.printStackTrace();
+		}
 	}
-	
-	public Query decryptQuery(String queryString) {
-		// TODO Auto-generated method stub
+
+	public Query stringToQuery(String queryString) {
 		JAXBContext jaxbContext;
 		try {
-			jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
+			jaxbContext = JAXBContext
+					.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			return (Query) unmarshaller.unmarshal(new StringReader(queryString));
+			return (Query) unmarshaller
+					.unmarshal(new StringReader(queryString));
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public String queryToString(Query query) {
+		JAXBContext jaxbContext;
+
+		StringWriter wrt = new StringWriter();
+		try {
+			jaxbContext = JAXBContext
+					.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
+			Marshaller mar = jaxbContext.createMarshaller();
+			mar.marshal(query, wrt);
 		} catch (JAXBException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+
+		return wrt.toString();
 	}
 
 }

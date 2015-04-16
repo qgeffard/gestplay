@@ -22,7 +22,7 @@ public class IntegrityChecker {
 		//Check some point...
 		
 		if (forward) 
-			dispatcher.sendToWS(query, message);
+			dispatcher.sendToPS(query, message);
 		else
 			dispatcher.sendToView(query, message);
 		

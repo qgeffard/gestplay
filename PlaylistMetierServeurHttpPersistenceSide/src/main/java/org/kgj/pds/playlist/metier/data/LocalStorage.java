@@ -1,4 +1,4 @@
-package org.kgj.pds.playlist.metier.serveurHttp;
+package org.kgj.pds.playlist.metier.data;
 
 import java.io.InputStream;
 import java.util.Collections;

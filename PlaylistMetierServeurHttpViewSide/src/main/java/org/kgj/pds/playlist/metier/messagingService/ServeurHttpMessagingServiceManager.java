@@ -1,12 +1,14 @@
 package org.kgj.pds.playlist.metier.messagingService;
 
 import java.io.StringReader;
+import java.io.StringWriter;
 
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.TextMessage;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.metier.checkAndDispatch.IntegrityChecker;
@@ -36,7 +38,7 @@ public class ServeurHttpMessagingServiceManager extends GenericMessageManager {
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 			String messageContent = ((TextMessage) message).getText();
-			Query query = (Query) unmarshaller.unmarshal(new StringReader(messageContent)); 
+			Query query = stringToQuery(messageContent); 
 			
 			integrityChecker.entryPointCheckIntegrity(query, message);
 		} catch (JAXBException e) {
@@ -46,6 +48,37 @@ public class ServeurHttpMessagingServiceManager extends GenericMessageManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public Query stringToQuery(String queryString) {
+		JAXBContext jaxbContext;
+		try {
+			jaxbContext = JAXBContext
+					.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
+			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+			return (Query) unmarshaller
+					.unmarshal(new StringReader(queryString));
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public String queryToString(Query query) {
+		JAXBContext jaxbContext;
+
+		StringWriter wrt = new StringWriter();
+		try {
+			jaxbContext = JAXBContext
+					.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
+			Marshaller mar = jaxbContext.createMarshaller();
+			mar.marshal(query, wrt);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return wrt.toString();
 	}
 
 }
