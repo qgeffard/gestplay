@@ -1,13 +1,14 @@
 package org.kgj.playlist.presentation.processingService;
 
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
+import org.kgj.pds.playlist.presentation.webapp.MyServlet;
 
-@SuppressWarnings("unused")
 public class Process {
 	Query query;
 
-	Process(Query q) {
-		this.query = q;		
+	public Process(Query q) {
+		this.query = q;	
+		start();
 	}
 	
 	
@@ -40,12 +41,15 @@ public class Process {
 	 */
 	private void login() {
 		
-		
 		if (this.query.getStatus().getSucced() != null) {
 			System.out.println("Succes");
 		} else {
 			System.out.println(this.query.getStatus().getError().getMessage());
 		}
+		// Ici j'ai oublié de notify le thread
+		// Je suis donc un gros con
+		
+		MyServlet.getResponseManager().get(query.getQueryId()).notify();
 	}
 	
 	/* Process the create case

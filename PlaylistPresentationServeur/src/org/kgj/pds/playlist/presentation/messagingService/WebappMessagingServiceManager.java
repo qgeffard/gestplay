@@ -10,6 +10,8 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
+import org.kgj.playlist.presentation.processingService.*;
+import org.kgj.playlist.presentation.processingService.Process;
 
 @SuppressWarnings("unused")
 public class WebappMessagingServiceManager extends GenericMessageManager {
@@ -34,14 +36,15 @@ public class WebappMessagingServiceManager extends GenericMessageManager {
 
 			String messageContent = ((TextMessage) message).getText();
 			Query query = (Query) unmarshaller.unmarshal(new StringReader(messageContent)); 
-			
-			
+			logger.info("\n Request "+messageContent);
+			Process process = new Process(query);
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 }

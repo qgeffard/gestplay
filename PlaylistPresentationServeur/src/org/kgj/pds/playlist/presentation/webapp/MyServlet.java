@@ -34,7 +34,7 @@ public class MyServlet extends HttpServlet {
 	private static final long serialVersionUID = -871399416795687851L;
 	private static final Logger logger = Logger.getLogger(MyServlet.class);
 	private SecureRandom random = new SecureRandom();
-	private Map<String, Thread> responseManager;
+	private static Map<String, Thread> responseManager;
 	
 	public void init(ServletConfig config) throws ServletException {
 		responseManager = new ConcurrentHashMap<String, Thread>();
@@ -51,12 +51,12 @@ public class MyServlet extends HttpServlet {
 		
 	}
 
-	public Map<String, Thread> getResponseChief() {
+	public static Map<String, Thread> getResponseManager() {
 		return responseManager;
 	}
 
-	public void setResponseChief(Map<String, Thread> responseChief) {
-		this.responseManager = responseChief;
+	public void setResponseManager(Map<String, Thread> responseManager) {
+		MyServlet.responseManager = responseManager;
 	}
 
 	/**
@@ -122,12 +122,13 @@ public class MyServlet extends HttpServlet {
 		WebappMessagingServiceManager.getInstance().send(str.toString());;
 		
 	
-		try {
-			thread.wait();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-;		
+		synchronized (thread) {
+	        try {
+	            thread.wait(4000);
+	        } catch (Throwable e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 	
 
