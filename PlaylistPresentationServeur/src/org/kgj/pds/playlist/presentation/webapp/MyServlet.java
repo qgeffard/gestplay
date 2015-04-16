@@ -75,8 +75,8 @@ public class MyServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 			
-		String login = request.getParameter("inputLogin");
-		String password = request.getParameter("inputPassword");
+		String login = request.getParameter("login");
+		String password = request.getParameter("password");
 		String userAgent = request.getHeader("User-Agent");
 		
 		String id = nextSessionId();
