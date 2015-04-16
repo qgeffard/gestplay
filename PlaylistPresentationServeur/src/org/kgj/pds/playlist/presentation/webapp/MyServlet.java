@@ -80,9 +80,9 @@ public class MyServlet extends HttpServlet {
 		String userAgent = request.getHeader("User-Agent");
 		
 		String id = nextSessionId();
-		Thread thread = Thread.currentThread();
+		System.out.println(Thread.currentThread().getId());
 		
-		responseManager.put(id, thread);
+		responseManager.put(id, Thread.currentThread());
 
 		Query query = new Query();
 		Action action = new Action();
@@ -122,9 +122,9 @@ public class MyServlet extends HttpServlet {
 		WebappMessagingServiceManager.getInstance().send(str.toString());;
 		
 	
-		synchronized (thread) {
+		synchronized (Thread.currentThread()) {
 	        try {
-	            thread.wait(4000);
+	        	Thread.currentThread().wait(4000);
 	        } catch (Throwable e) {
 	            e.printStackTrace();
 	        }

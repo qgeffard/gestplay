@@ -48,8 +48,9 @@ public class Process {
 		}
 		// Ici j'ai oublié de notify le thread
 		// Je suis donc un gros con
-		
-		MyServlet.getResponseManager().get(query.getQueryId()).notify();
+		System.out.println(query.getQueryId());
+		System.out.println(MyServlet.getResponseManager().get(query.getQueryId()));
+		// MyServlet.getResponseManager().get(query.getQueryId()).notify();
 	}
 	
 	/* Process the create case
