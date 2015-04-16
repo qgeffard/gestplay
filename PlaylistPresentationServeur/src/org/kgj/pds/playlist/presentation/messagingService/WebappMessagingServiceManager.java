@@ -29,7 +29,7 @@ public class WebappMessagingServiceManager extends GenericMessageManager {
 		logger.debug("Message inc "+ message.toString());
 		
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
+			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.presentation.messagingProtocol");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 			String messageContent = ((TextMessage) message).getText();
