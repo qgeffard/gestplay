@@ -34,10 +34,10 @@ public class MyServlet extends HttpServlet {
 	private static final long serialVersionUID = -871399416795687851L;
 	private static final Logger logger = Logger.getLogger(MyServlet.class);
 	private SecureRandom random = new SecureRandom();
-	private static Map<String, Thread> responseManager;
+	private static Map<String, String> responseManager;
 	
 	public void init(ServletConfig config) throws ServletException {
-		responseManager = new ConcurrentHashMap<String, Thread>();
+		responseManager = new ConcurrentHashMap<String, String>();
 	}
 
 	public String nextSessionId() {
@@ -51,11 +51,11 @@ public class MyServlet extends HttpServlet {
 		
 	}
 
-	public static Map<String, Thread> getResponseManager() {
+	public static Map<String, String> getResponseManager() {
 		return responseManager;
 	}
 
-	public void setResponseManager(Map<String, Thread> responseManager) {
+	public void setResponseManager(Map<String, String> responseManager) {
 		MyServlet.responseManager = responseManager;
 	}
 
@@ -81,8 +81,9 @@ public class MyServlet extends HttpServlet {
 		
 		String id = nextSessionId();
 		System.out.println(Thread.currentThread().getId());
-		
-		responseManager.put(id, Thread.currentThread());
+		Thread.currentThread().setName("PresentationServlet");
+		String name = Thread.currentThread().getName();
+		responseManager.put(id, name);
 
 		Query query = new Query();
 		Action action = new Action();
@@ -105,7 +106,7 @@ public class MyServlet extends HttpServlet {
 		
 		query.setAction(action);
 		query.setUserManager(userManager);
-		query.setQueryId(nextSessionId());
+		query.setQueryId(id);
 		query.setStatus(status);
 		
 		JAXBContext jaxbContext;
@@ -121,10 +122,11 @@ public class MyServlet extends HttpServlet {
 		System.out.println(str.toString());
 		WebappMessagingServiceManager.getInstance().send(str.toString());;
 		
-	
+			
 		synchronized (Thread.currentThread()) {
 	        try {
-	        	Thread.currentThread().wait(4000);
+	        	Thread.currentThread().wait();
+	        	System.out.println("Synchro : "+Thread.currentThread().getId()+" : "+Thread.currentThread().getName());
 	        } catch (Throwable e) {
 	            e.printStackTrace();
 	        }
