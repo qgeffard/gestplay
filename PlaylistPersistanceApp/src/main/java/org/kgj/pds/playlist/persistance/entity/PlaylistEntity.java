@@ -1,25 +1,27 @@
 package org.kgj.pds.playlist.persistance.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
+
+import com.sun.org.apache.xerces.internal.util.URI;
 
 public class PlaylistEntity {
 	private int id;
 	private String title;
 	private String creator;
 	private String annotation;
-	private String info; //AnyURI
-	private String location; //AnyURI
-	private String identifier; //AnyURI
-	private String image; //AnyURI
+	private URI info; //AnyURI
+	private URI location; //AnyURI
+	private URI identifier; //AnyURI
+	private URI image; //AnyURI
 	private Date date; //Datetime
-	private String licence; //AnyURI
+	private URI licence; //AnyURI
 	private String attribution; //AttributionType
 	private String link; //linktype
 	private String meta; //metatype
 	private String extension; //ExtensionType
-	private String tracklist; //TrackListType
+	private ArrayList<TrackEntity> tracklist; //TrackListType
 	private String version; //versiontype
-	
 	public int getId() {
 		return id;
 	}
@@ -44,28 +46,28 @@ public class PlaylistEntity {
 	public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
-	public String getInfo() {
+	public URI getInfo() {
 		return info;
 	}
-	public void setInfo(String info) {
+	public void setInfo(URI info) {
 		this.info = info;
 	}
-	public String getLocation() {
+	public URI getLocation() {
 		return location;
 	}
-	public void setLocation(String location) {
+	public void setLocation(URI location) {
 		this.location = location;
 	}
-	public String getIdentifier() {
+	public URI getIdentifier() {
 		return identifier;
 	}
-	public void setIdentifier(String identifier) {
+	public void setIdentifier(URI identifier) {
 		this.identifier = identifier;
 	}
-	public String getImage() {
+	public URI getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(URI image) {
 		this.image = image;
 	}
 	public Date getDate() {
@@ -74,10 +76,10 @@ public class PlaylistEntity {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public String getLicence() {
+	public URI getLicence() {
 		return licence;
 	}
-	public void setLicence(String licence) {
+	public void setLicence(URI licence) {
 		this.licence = licence;
 	}
 	public String getAttribution() {
@@ -104,10 +106,10 @@ public class PlaylistEntity {
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}
-	public String getTracklist() {
+	public ArrayList<TrackEntity> getTracklist() {
 		return tracklist;
 	}
-	public void setTracklist(String tracklist) {
+	public void setTracklist(ArrayList<TrackEntity> tracklist) {
 		this.tracklist = tracklist;
 	}
 	public String getVersion() {

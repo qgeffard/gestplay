@@ -1,4 +1,3 @@
-CREATE DATABASE "Playlist"
 CREATE TABLE track (
 	id INT PRIMARY KEY,
 	location VARCHAR(64),

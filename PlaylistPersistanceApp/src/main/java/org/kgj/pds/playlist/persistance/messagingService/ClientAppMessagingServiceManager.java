@@ -12,11 +12,10 @@ import javax.xml.bind.Unmarshaller;
 import org.kgj.pds.playlist.persistance.messagingProtocol.Query;
 
 public class ClientAppMessagingServiceManager extends GenericMessageManager {
-	private static ClientAppMessagingServiceManager instance = new ClientAppMessagingServiceManager("tcp://localhost:61616", "consumerFromPersistence", "producerToPersistence");
+	private static ClientAppMessagingServiceManager instance = new ClientAppMessagingServiceManager("tcp://192.168.65.33:61616", "consumerFromPersistence", "producerToPersistence");
 	
 	private ClientAppMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
-
 	}
 
 	public static ClientAppMessagingServiceManager getInstance() {
@@ -29,7 +28,7 @@ public class ClientAppMessagingServiceManager extends GenericMessageManager {
 		
 		
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
+			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.persistance.messagingProtocol");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 			String messageContent = ((TextMessage) message).getText();

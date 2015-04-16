@@ -59,12 +59,7 @@ abstract class GenericMessageManager {
 			consumer.setMessageListener(new MessageListener() {
 				public void onMessage(final Message message) {
 					logger.info("message triggered - thread start");
-					execute.execute(new Runnable() {
-
-						public void run() {
-							GenericMessageManager.this.messageReceived(message);
-						}
-					});
+					GenericMessageManager.this.messageReceived(message);
 				}
 			});
 

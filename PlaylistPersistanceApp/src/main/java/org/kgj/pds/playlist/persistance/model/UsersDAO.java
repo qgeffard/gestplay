@@ -5,9 +5,9 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Properties;
 
-import org.kgj.pds.playlist.persistance.entity.PlaylistEntity;
+import org.kgj.pds.playlist.persistance.entity.UsersEntity;
 
-public class PlaylistDAO implements IDAOService<PlaylistEntity> {
+public class UsersDAO implements IDAOService<UsersEntity> {
 	/**
 	 * 
 	 */
@@ -16,7 +16,7 @@ public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 	private static Properties props;
 	static {
 		props = new Properties();
-		InputStream inStream = org.kgj.pds.playlist.persistance.model.PlaylistDAO.class.getResourceAsStream("db.properties");
+		InputStream inStream = org.kgj.pds.playlist.persistance.model.UsersDAO.class.getResourceAsStream("db.properties");
 		try {
 			props.load(inStream);
 			String driverName = props.getProperty("driverName");
@@ -25,35 +25,35 @@ public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 			System.err.println("Fichier introuvable");
 		} catch (ClassNotFoundException e) {
 			System.err.println("Mauvais nom de driver");
-		}
+		}	
 	}
 	
 	@Override
-	public boolean create(PlaylistEntity e) {
+	public boolean create(UsersEntity e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public PlaylistEntity read(int id) {
+	public UsersEntity read(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public boolean update(PlaylistEntity e) {
+	public boolean update(UsersEntity e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean delete(PlaylistEntity e) {
+	public boolean delete(UsersEntity e) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public List<PlaylistEntity> searchAll() {
+	public List<UsersEntity> searchAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
