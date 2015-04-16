@@ -1,13 +1,21 @@
 package org.kgj.playlist.presentation.processingService;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 import org.kgj.pds.playlist.presentation.webapp.MyServlet;
 
 public class Process {
 	Query query;
+	private static Map<String, String> responseManager;
 
 	public Process(Query q) {
 		this.query = q;	
+		responseManager = new ConcurrentHashMap<String, String>();
+		responseManager = MyServlet.getResponseManager();
 		start();
 	}
 	
@@ -46,11 +54,54 @@ public class Process {
 		} else {
 			System.out.println(this.query.getStatus().getError().getMessage());
 		}
-		// Ici j'ai oublié de notify le thread
-		// Je suis donc un gros con
-		System.out.println(query.getQueryId());
-		System.out.println(MyServlet.getResponseManager().get(query.getQueryId()));
-		// MyServlet.getResponseManager().get(query.getQueryId()).notify();
+		
+		String queryId = query.getQueryId();
+		String rmKey = "";
+		
+		Set cles = responseManager.keySet();
+		Iterator it = cles.iterator();
+		while (it.hasNext()){
+		   Object cle = it.next();
+		   Object valeur = responseManager.get(cle); 
+		   rmKey = cle.toString();
+		   System.out.println("Clé Query :"+queryId);
+		   System.out.println("Clé CoMap :"+rmKey);
+		   
+		   if(rmKey.equals(queryId)) {
+		   System.out.println(cle.toString()+":"+valeur.toString());
+		   
+		   } else {
+			   System.out.println("Ca passe pas dans le if");
+		   }
+		}
+		String name = MyServlet.getResponseManager().get(query.getQueryId());
+		System.out.println(name);
+		
+		int count = Thread.activeCount();
+	     System.out.println("currently active threads = " + count);
+	    
+	     Thread th[] = new Thread[count];
+	     // returns the number of threads put into the array 
+	     Thread.enumerate(th);
+	    
+	     // prints active threads
+	     for (int i = 0; i < count; i++) {
+	        System.out.println(i + ": " + th[i].getName());
+	        if(name.equals(th[i].getName())) {
+	        	System.out.println("CA PASSE DANS LE IF FDP");
+	        	synchronized (th[i]) {
+	    	        try {
+	    	        	System.out.println("Ca try");
+	    	        	th[i].notify();
+	    	        	} catch (Throwable e) {
+	    	            e.printStackTrace();
+	    	        }
+	    	    }
+	        	return;	        	
+	        	}
+	        
+	     }
+		
 	}
 	
 	/* Process the create case
