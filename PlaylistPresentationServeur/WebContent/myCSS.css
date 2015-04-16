@@ -3,6 +3,14 @@ Login page
 ***/
 
 /* logo page */
+.badlogin {
+	margin-bottom: 15px;
+	text-align: right;
+	font-weight: 600;
+	margin-right: 15px;
+	color: #FF0000;
+}
+
 .heading-1 {
 	font-size: 44px;
 	color: #FFF;
@@ -23,8 +31,6 @@ Login page
   color: white;
   text-shadow: none;
   background-color: #4d90fe;
-
-  
 }
 
 .blue:hover {

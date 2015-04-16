@@ -56,7 +56,15 @@
 					</div>
 				</div>
 			</div>
-		
+			<% if(null != session.getAttribute("erreur")) { %>
+			<%!	void output(JspWriter stream, String out) {
+					try { stream.println(out); }  catch(Exception eek) { }
+				}
+			%><%
+				if(request.getSession().getAttribute("connected").equals("-1")) { %>
+		<diV class="badlogin"><% output(out, request.getSession().getAttribute("erreur").toString()); %></diV>
+		<% }
+			} %>
 		<div class="form-actions">
 				<button type="submit" class="myBtn blue btn pull-right">
 				Login  <i class="fa fa-sign-in"></i>
