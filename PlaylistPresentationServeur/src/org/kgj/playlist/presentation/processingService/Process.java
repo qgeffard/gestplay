@@ -44,7 +44,7 @@ public class Process {
 		if (this.query.getStatus().getSucced() != null) {
 			System.out.println("Succes");
 		} else {
-			System.out.println("Echec de ta mère");
+			System.out.println(this.query.getStatus().getError().getMessage());
 		}
 	}
 	
