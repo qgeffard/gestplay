@@ -1,20 +1,18 @@
 package org.kgj.playlist.presentation.processingService;
 
+import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
+
 @SuppressWarnings("unused")
 public class Process {
-	String idQuery;
-	String action;
+	Query query;
 
-	Process(String id, String act) {
-		this.idQuery = id;
-		this.action = act;
-		
-		
+	Process(Query q) {
+		this.query = q;		
 	}
 	
 	
 	private void start() {
-		switch (this.action) {
+		switch (this.query.getAction().getNameAction()) {
 		
 		case "login":
 			login();
@@ -42,6 +40,12 @@ public class Process {
 	 */
 	private void login() {
 		
+		
+		if (this.query.getStatus().getSucced() != null) {
+			System.out.println("Succes");
+		} else {
+			System.out.println("Echec de ta mère");
+		}
 	}
 	
 	/* Process the create case
