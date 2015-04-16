@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +21,7 @@ import javax.xml.transform.Result;
 import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.Action;
+import org.kgj.pds.playlist.presentation.messagingProtocol.Query.Status;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager.User;
 import org.kgj.pds.playlist.presentation.messagingService.WebappMessagingServiceManager;
@@ -25,10 +29,16 @@ import org.kgj.pds.playlist.presentation.messagingService.WebappMessagingService
 /**
  * Servlet implementation class myServlet
  */
+@SuppressWarnings("unused")
 public class MyServlet extends HttpServlet {
+	private static final long serialVersionUID = -871399416795687851L;
 	private static final Logger logger = Logger.getLogger(MyServlet.class);
-
 	private SecureRandom random = new SecureRandom();
+	private Map<String, Thread> responseManager;
+	
+	public void init(ServletConfig config) throws ServletException {
+		responseManager = new ConcurrentHashMap<String, Thread>();
+	}
 
 	public String nextSessionId() {
 		return new BigInteger(130, random).toString(32);
@@ -41,13 +51,20 @@ public class MyServlet extends HttpServlet {
 		
 	}
 
+	public Map<String, Thread> getResponseChief() {
+		return responseManager;
+	}
+
+	public void setResponseChief(Map<String, Thread> responseChief) {
+		this.responseManager = responseChief;
+	}
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -56,45 +73,62 @@ public class MyServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
+			
+		String login = request.getParameter("inputLogin");
+		String password = request.getParameter("inputPassword");
+		String userAgent = request.getHeader("User-Agent");
+		
+		String id = nextSessionId();
+		Thread thread = Thread.currentThread();
+		
+		responseManager.put(id, thread);
 
-		String login = request.getParameter("login");
-		String password = request.getParameter("password");
+		Query query = new Query();
+		Action action = new Action();
+		action.setNameAction("login");
 
+		User user = new User();
+		user.setLogin(login);
+		user.setPassword(password);
 
-		Query q = new Query();
-		Action a = new Action();
-		a.setNameAction("login");
+		UserManager userManager = new UserManager();
+		userManager.setUser(user);
 
-		User u = new User();
-		u.setLogin(login);
-		u.setPassword(password);
-
-		UserManager uM = new UserManager();
-		uM.setUser(u);
-
-		q.setAction(a);
-		q.setUserManager(uM);
-		q.setQueryId(nextSessionId());
+		
+		// Add le status de la query
+		// Si erreur, message et source (d'où ça bug, on s'en fou)
+		// 
+		
+		Status status = new Status();
+		status.setProgress("progress");
+		
+		query.setAction(action);
+		query.setUserManager(userManager);
+		query.setQueryId(nextSessionId());
+		query.setStatus(status);
 		
 		JAXBContext jaxbContext;
 		StringWriter str = new StringWriter() ;
 		try {
 			jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.presentation.messagingProtocol");
 			Marshaller mar = jaxbContext.createMarshaller();
-			mar.marshal(q, str);
+			mar.marshal(query, str);
 		} catch ( JAXBException e) {
 			e.printStackTrace();
 		}
 		
 		System.out.println(str.toString());
-		
 		WebappMessagingServiceManager.getInstance().send(str.toString());;
-
-//		WebAppMessagingServiceManager.getInstance().send("");
-		// If the user authanticate
-		// request.getSession().setAttribute("user", user); user = un
-		// "tableau"
-
+		
+	
+		try {
+			thread.wait();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+;		
 	}
+	
 
 }

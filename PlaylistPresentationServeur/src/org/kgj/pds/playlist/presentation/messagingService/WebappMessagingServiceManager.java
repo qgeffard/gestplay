@@ -11,6 +11,7 @@ import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 
+@SuppressWarnings("unused")
 public class WebappMessagingServiceManager extends GenericMessageManager {
 
 	private static WebappMessagingServiceManager instance = new WebappMessagingServiceManager("tcp://localhost:61616", "consumerFromView", "producerToView");
@@ -28,17 +29,17 @@ public class WebappMessagingServiceManager extends GenericMessageManager {
 		logger.debug("Message inc "+ message.toString());
 		
 		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.presentation.messagingProtocol");
+			JAXBContext jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 			String messageContent = ((TextMessage) message).getText();
 			Query query = (Query) unmarshaller.unmarshal(new StringReader(messageContent)); 
+			
+			
 
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (JMSException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
