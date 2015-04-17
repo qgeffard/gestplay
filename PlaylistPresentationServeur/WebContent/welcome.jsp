@@ -59,8 +59,6 @@
 		
    		<% 	
    			List<PlaylistType> pT;
-    		pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
-    		out.println(pT.get(0));
     		if(null != request.getSession().getAttribute("playlist")) {
     		pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
     		List<TrackListType> tL; 
