@@ -114,7 +114,7 @@ public class MyServlet extends HttpServlet {
 		Query query = new Query();
 		Action action = new Action();
 		System.out.println(test);
-		if(test != null) {
+		if(test == null) {
 		action.setNameAction("test");
 		} else {
 		action.setNameAction("login");
