@@ -58,16 +58,15 @@
 		</tr>
 		
    		<% 	
-   			List<PlaylistType> pT;
+   			PlaylistType pT;
     		if(null != request.getSession().getAttribute("playlist")) {
-    		pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
+    		pT = (PlaylistType) request.getSession().getAttribute("playlist");
     		List<TrackListType> tL; 
-   			int size = pT.size(); 
-   			for(int i = 0; i < size ; i++) { 
-   			tL = (List<TrackListType>) pT.get(i).getTrackList();
+   			   			for(int i = 0; i < 1 ; i++) { 
+   			tL = (List<TrackListType>) pT.getTrackList();
    			%>
 		<tr>
-			<td><% out.println(pT.get(i).getTitle()); %></td>
+			<td><% out.println(pT.getTitle()); %></td>
 			<td><% out.println(tL.size()); %></td>
 			<td><a href="#display">M</a></td>
 			<td><a href="#delete">S</a></td>

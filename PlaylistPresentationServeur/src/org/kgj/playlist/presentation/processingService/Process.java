@@ -17,7 +17,6 @@ public class Process {
 	public Process(Query q) {
 		this.query = q;	
 		System.out.println(q.getPlaylist().size());
-		responseManager = new ConcurrentHashMap<String, String>();
 		responseManager = MyServlet.getResponseManager();
 		start();
 	}
@@ -66,6 +65,8 @@ public class Process {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
 		}
+		
+		System.out.println(this.query.getPlaylist().size());
 
 		
 		String queryId = query.getQueryId();
