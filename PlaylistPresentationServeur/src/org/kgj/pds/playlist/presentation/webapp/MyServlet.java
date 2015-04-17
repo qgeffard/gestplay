@@ -169,6 +169,7 @@ public class MyServlet extends HttpServlet {
 	        	session.setAttribute("playlist", ses[3]);
 	        	session.setAttribute("user", ses[4]);
 	        	System.out.println(session.getAttribute("playlist"));
+	        	
 	        	response.sendRedirect("welcome.jsp");
 	        	}
 	        } catch (Throwable e) {
