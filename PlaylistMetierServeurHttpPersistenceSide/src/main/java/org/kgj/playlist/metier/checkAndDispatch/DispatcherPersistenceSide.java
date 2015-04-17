@@ -16,6 +16,13 @@ public class DispatcherPersistenceSide {
 	public final String WEBAPP_VS_PORT = "8080";
 	public final String WEBAPP_VS_SERVLETNAME = "PlaylistMetierServeurHttpViewSide/setMessage";
 	
+	
+	public void dispatch(Query query) {
+		sendToPersistence(query);
+		
+	}
+	
+	
 	private String getUrlViewSide(){
 		logger.debug("Construct url of Persistence side webapp");
 		
@@ -73,4 +80,6 @@ public class DispatcherPersistenceSide {
 		}
 		
 	}
+	
+	
 }

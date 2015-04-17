@@ -12,6 +12,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
+import org.kgj.playlist.metier.checkAndDispatch.CheckerPersistenceSide;
 import org.kgj.playlist.metier.checkAndDispatch.DispatcherPersistenceSide;
 
 @SuppressWarnings("restriction")
@@ -34,13 +35,14 @@ public class ServeurHttpPersistenceSideMessagingServiceManager extends
 	@Override
 	public void messageReceived(Message message) {
 		logger.debug("Message inc " + message.toString());
-		DispatcherPersistenceSide router = new DispatcherPersistenceSide();
+		DispatcherPersistenceSide dispatcher = new DispatcherPersistenceSide();
+		CheckerPersistenceSide checker = new CheckerPersistenceSide();
 		String messageContent;
 		try {
 			messageContent = ((TextMessage) message).getText();
 			Query query = stringToQuery(messageContent);
 			
-			router.sendToVS(query);
+			dispatcher.sendToVS(query);
 			
 		} catch (JMSException e) {
 			e.printStackTrace();

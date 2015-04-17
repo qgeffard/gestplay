@@ -47,10 +47,13 @@ public class Process {
 	 * Then, notify the thread to log the user
 	 * If the login fail,  switch back the user to the login page
 	 */
+	@SuppressWarnings("unused")
 	private void login() {
-		
+		System.out.println("login");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
+			MyServlet.setSes(3,this.query.getPlaylist());
+			MyServlet.sesSes(4,this.query.getUserManager());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
@@ -92,6 +95,8 @@ public class Process {
 	        	}
 	        
 	     }
+	     
+	     // Query => Usermanagement
 		
 	}
 	
