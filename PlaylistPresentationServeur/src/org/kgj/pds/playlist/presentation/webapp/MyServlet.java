@@ -112,7 +112,7 @@ public class MyServlet extends HttpServlet {
 
 		Query query = new Query();
 		Action action = new Action();
-		action.setNameAction("login");
+		action.setNameAction("test");
 
 		User user = new User();
 		user.setLogin(login);
