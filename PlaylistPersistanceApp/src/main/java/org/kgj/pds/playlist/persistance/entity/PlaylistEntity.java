@@ -1,9 +1,8 @@
 package org.kgj.pds.playlist.persistance.entity;
 
-import java.sql.Date;
-import java.util.ArrayList;
-
-import com.sun.org.apache.xerces.internal.util.URI;
+import java.net.URI;
+import java.util.Date;
+import java.util.List;
 
 public class PlaylistEntity {
 	private int id;
@@ -20,7 +19,7 @@ public class PlaylistEntity {
 	private String link; //linktype
 	private String meta; //metatype
 	private String extension; //ExtensionType
-	private ArrayList<TrackEntity> tracklist; //TrackListType
+	private List<TrackEntity> tracklist; //TrackListType
 	private String version; //versiontype
 	public int getId() {
 		return id;
@@ -106,10 +105,10 @@ public class PlaylistEntity {
 	public void setExtension(String extension) {
 		this.extension = extension;
 	}
-	public ArrayList<TrackEntity> getTracklist() {
+	public List<TrackEntity> getTracklist() {
 		return tracklist;
 	}
-	public void setTracklist(ArrayList<TrackEntity> tracklist) {
+	public void setTracklist(List<TrackEntity> tracklist) {
 		this.tracklist = tracklist;
 	}
 	public String getVersion() {

@@ -1,6 +1,8 @@
 package org.kgj.pds.playlist.persistance.entity;
 
-import com.sun.org.apache.xerces.internal.util.URI;
+import java.math.BigInteger;
+import java.net.URI;
+
 
 public class TrackEntity {
 	private int id;
@@ -12,8 +14,8 @@ public class TrackEntity {
 	private URI info;
 	private URI image;
 	private String album; 
-	private int trackNum; // > 0
-	private int duration; // > 0
+	private BigInteger trackNum; // > 0
+	private BigInteger duration; // > 0
 	private String link; //linktype
 	private String meta; //metatype
 	private String extension; //ExtensionType
@@ -72,16 +74,17 @@ public class TrackEntity {
 	public void setAlbum(String album) {
 		this.album = album;
 	}
-	public int getTrackNum() {
+
+	public BigInteger getTrackNum() {
 		return trackNum;
 	}
-	public void setTrackNum(int trackNum) {
+	public void setTrackNum(BigInteger trackNum) {
 		this.trackNum = trackNum;
 	}
-	public int getDuration() {
+	public BigInteger getDuration() {
 		return duration;
 	}
-	public void setDuration(int duration) {
+	public void setDuration(BigInteger duration) {
 		this.duration = duration;
 	}
 	public String getLink() {
