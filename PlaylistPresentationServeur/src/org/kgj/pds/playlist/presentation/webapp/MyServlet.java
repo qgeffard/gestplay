@@ -114,7 +114,7 @@ public class MyServlet extends HttpServlet {
 		Query query = new Query();
 		Action action = new Action();
 		System.out.println(test);
-		if(test == null) {
+		if(test != null) {
 		action.setNameAction("test");
 		} else {
 		action.setNameAction("login");
@@ -165,7 +165,7 @@ public class MyServlet extends HttpServlet {
 	        	session.setAttribute("connected", ses[1].toString());
 	        	session.setAttribute("playlist", ses[3]);
 	        	session.setAttribute("user", ses[4]);
-	        	response.sendRedirect("welcome.jsp");
+	        	response.sendRedirect("appli/welcome.jsp");
 	        	}
 	        } catch (Throwable e) {
 	            e.printStackTrace();

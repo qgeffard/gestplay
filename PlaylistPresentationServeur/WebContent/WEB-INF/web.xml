@@ -9,7 +9,6 @@
 			org.kgj.pds.playlist.presentation.webapp.MyServletBoot
 		</listener-class>
 	</listener>
-		
 	<servlet>
 		<servlet-name>MyServlet</servlet-name>
 		<servlet-class>org.kgj.pds.playlist.presentation.webapp.MyServlet</servlet-class>

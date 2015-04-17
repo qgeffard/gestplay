@@ -34,11 +34,21 @@ public class MyFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
 
         HttpSession session = request.getSession(false);
+        String url = request.getRequestURL().toString();
+        System.out.println(url);
+    	if (url.equals("http://localhost:8080/PlaylistPresentationServeur/login.jsp")) {
+    		System.out.println("lol");
+    	    chain.doFilter(request, response);
+    	    return;
+    	} else {
         if (session == null || session.getAttribute("connected") == null || session.getAttribute("connected") != "0") {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
-        } else {
+            System.out.println("lolnop");
+            } else {
             chain.doFilter(request, response);
         }
+        
+    	}
     }
 
 
