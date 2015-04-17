@@ -13,14 +13,17 @@ public class Process {
 	private static Map<String, String> responseManager;
 
 	public Process(Query q) {
+		System.out.println("Je suis dans le constructeur");
 		this.query = q;	
 		responseManager = new ConcurrentHashMap<String, String>();
 		responseManager = MyServlet.getResponseManager();
+		System.out.println("Je vais lancer le start");
 		start();
 	}
 	
 	
 	private void start() {
+		System.out.println("Je rentre dans le start");
 		switch (this.query.getAction().getNameAction()) {
 		
 		case "login":
