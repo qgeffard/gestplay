@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,6 +21,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.transform.Result;
 
 import org.apache.log4j.Logger;
+import org.kgj.pds.playlist.presentation.messagingProtocol.PlaylistType;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.Action;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.Status;
@@ -157,6 +159,7 @@ public class MyServlet extends HttpServlet {
 		synchronized (Thread.currentThread()) {
 	        try {
 	        	Thread.currentThread().wait();
+	        	System.out.println("J'ai été notify");
 	        	if(ses[1].equals("-1")) {
 	        		session.setAttribute("connected", ses[1].toString());
 	        		session.setAttribute("erreur", ses[2].toString());
@@ -165,7 +168,8 @@ public class MyServlet extends HttpServlet {
 	        	session.setAttribute("connected", ses[1].toString());
 	        	session.setAttribute("playlist", ses[3]);
 	        	session.setAttribute("user", ses[4]);
-	        	response.sendRedirect("appli/welcome.jsp");
+	        	System.out.println(session.getAttribute("playlist"));
+	        	response.sendRedirect("welcome.jsp");
 	        	}
 	        } catch (Throwable e) {
 	            e.printStackTrace();
@@ -175,6 +179,10 @@ public class MyServlet extends HttpServlet {
 
 	public static void sesSes(int i, UserManager userManager) {
 		MyServlet.ses[i] = userManager.getUser().getLogin();
+	}
+	
+	public static void sesSes(int i, List<PlaylistType> list) {
+		MyServlet.ses[i] = list;
 	}
 	
 

@@ -56,7 +56,7 @@
 					</div>
 				</div>
 			</div>
-			<div><input type="checkbox" name="test" value="test"></div>
+			<div>Test <input type="checkbox" name="test" value="test"></div>
 			<% if(null != session.getAttribute("erreur")) { %>
 			<%
 				if(request.getSession().getAttribute("connected").equals("-1")) { %>

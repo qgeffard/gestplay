@@ -1,10 +1,12 @@
 package org.kgj.playlist.presentation.processingService;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.kgj.pds.playlist.presentation.messagingProtocol.PlaylistType;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 import org.kgj.pds.playlist.presentation.webapp.MyServlet;
 
@@ -13,20 +15,21 @@ public class Process {
 	private static Map<String, String> responseManager;
 
 	public Process(Query q) {
-		System.out.println("Je suis dans le constructeur");
 		this.query = q;	
 		responseManager = new ConcurrentHashMap<String, String>();
 		responseManager = MyServlet.getResponseManager();
-		System.out.println("Je vais lancer le start");
 		start();
 	}
 	
 	
 	private void start() {
-		System.out.println("Je rentre dans le start");
 		switch (this.query.getAction().getNameAction()) {
 		
 		case "login":
+			login();
+			break;
+			
+		case "test":
 			login();
 			break;
 		
@@ -55,7 +58,7 @@ public class Process {
 		System.out.println("login");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
-			MyServlet.setSes(3,this.query.getPlaylist());
+			MyServlet.setSes(3,(List<PlaylistType>) this.query.getPlaylist());
 			MyServlet.sesSes(4,this.query.getUserManager());
 		} else {
 			MyServlet.setSes(1,"-1");
@@ -75,7 +78,7 @@ public class Process {
 		   
 		}
 		String name = MyServlet.getResponseManager().get(query.getQueryId());
-		
+		System.out.println(name);
 		
 		int count = Thread.activeCount();
 	     
@@ -86,12 +89,11 @@ public class Process {
 	    
 	     // prints active threads
 	     for (int i = 0; i < count; i++) {
-	        
-	        if(name.equals(th[i].getName())) {
-	        	synchronized (th[i]) {
-	    	        try {
-	    	        	th[i].notify();
-	    	        	} catch (Throwable e) {
+	    	  if(name.equals(th[i].getName())) {
+	    		  synchronized (th[i]) {
+	    	      try {
+	    	    	  th[i].notify();
+	    	      	  } catch (Throwable e) {
 	    	            e.printStackTrace();
 	    	        }
 	    	    }
