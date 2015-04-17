@@ -12,7 +12,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
-import org.kgj.pds.playlist.metier.serveurHttp.DispatcherPersistenceSide;
+import org.kgj.playlist.metier.checkAndDispatch.DispatcherPersistenceSide;
 
 @SuppressWarnings("restriction")
 public class ServeurHttpPersistenceSideMessagingServiceManager extends

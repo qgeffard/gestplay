@@ -1,4 +1,4 @@
-package org.kgj.playlist.metier.checker;
+package org.kgj.playlist.metier.checkAndDispatch;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
