@@ -65,19 +65,13 @@ public class Process {
 		   Object cle = it.next();
 		   Object valeur = responseManager.get(cle); 
 		   rmKey = cle.toString();
-		   System.out.println("Clé Query :"+queryId);
-		   System.out.println("Clé CoMap :"+rmKey);
 		   
-		   if(rmKey.equals(queryId)) {
-		   System.out.println(cle.toString()+":"+valeur.toString());
-		   
-		   } 
 		}
 		String name = MyServlet.getResponseManager().get(query.getQueryId());
-		System.out.println(name);
+		
 		
 		int count = Thread.activeCount();
-	     System.out.println("currently active threads = " + count);
+	     
 	    
 	     Thread th[] = new Thread[count];
 	     // returns the number of threads put into the array 
@@ -85,7 +79,7 @@ public class Process {
 	    
 	     // prints active threads
 	     for (int i = 0; i < count; i++) {
-	        System.out.println(i + ": " + th[i].getName());
+	        
 	        if(name.equals(th[i].getName())) {
 	        	synchronized (th[i]) {
 	    	        try {

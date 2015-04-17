@@ -123,7 +123,7 @@ public class MyServlet extends HttpServlet {
 
 		
 		// Add le status de la query
-		// Si erreur, message et source (d'où ça bug, on s'en fou)
+		// Si erreur, message et source (d'oï¿½ ï¿½a bug, on s'en fou)
 		// 
 		
 		Status status = new Status();
@@ -144,7 +144,7 @@ public class MyServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		System.out.println(str.toString());
+		
 		WebappMessagingServiceManager.getInstance().send(str.toString());;
 		
 			
