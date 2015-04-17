@@ -9,16 +9,16 @@ public class PlaylistEntity {
 	private String title;
 	private String creator;
 	private String annotation;
-	private URI info; //AnyURI
-	private URI location; //AnyURI
-	private URI identifier; //AnyURI
-	private URI image; //AnyURI
+	private String info; //AnyURI
+	private String location; //AnyURI
+	private String identifier; //AnyURI
+	private String image; //AnyURI
 	private Date date; //Datetime
-	private URI licence; //AnyURI
-	private String attribution; //AttributionType
-	private String link; //linktype
-	private String meta; //metatype
-	private String extension; //ExtensionType
+	private String licence; //AnyURI
+	private String attribution; //ListAttributionType
+	private String link; //list linktype
+	private String meta; //list metatype
+	private String extension; //list ExtensionType
 	private List<TrackEntity> tracklist; //TrackListType
 	private String version; //versiontype
 	public int getId() {
@@ -45,28 +45,28 @@ public class PlaylistEntity {
 	public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
-	public URI getInfo() {
+	public String getInfo() {
 		return info;
 	}
-	public void setInfo(URI info) {
+	public void setInfo(String info) {
 		this.info = info;
 	}
-	public URI getLocation() {
+	public String getLocation() {
 		return location;
 	}
-	public void setLocation(URI location) {
+	public void setLocation(String location) {
 		this.location = location;
 	}
-	public URI getIdentifier() {
+	public String getIdentifier() {
 		return identifier;
 	}
-	public void setIdentifier(URI identifier) {
+	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}
-	public URI getImage() {
+	public String getImage() {
 		return image;
 	}
-	public void setImage(URI image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
 	public Date getDate() {
@@ -75,10 +75,10 @@ public class PlaylistEntity {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	public URI getLicence() {
+	public String getLicence() {
 		return licence;
 	}
-	public void setLicence(URI licence) {
+	public void setLicence(String licence) {
 		this.licence = licence;
 	}
 	public String getAttribution() {

@@ -1,5 +1,8 @@
 package org.kgj.pds.playlist.persistance;
 
+import java.util.List;
+
+import org.kgj.pds.playlist.persistance.entity.PlaylistEntity;
 import org.kgj.pds.playlist.persistance.entity.TrackEntity;
 import org.kgj.pds.playlist.persistance.messagingProtocol.PlaylistType;
 import org.kgj.pds.playlist.persistance.messagingProtocol.Query;
@@ -39,19 +42,29 @@ public class Task {
 		}
 	}
 
-	private void sendTrackById(int id) {//INUTILLOL
+	private void sendTrackById(int id) {
 		TrackEntity userTrack = trackDao.read(id);
-		PlaylistType playlist = new PlaylistType();
+		PlaylistType playlistType = new PlaylistType();
 		TrackListType trackListType = new TrackListType();
 		TrackType trac = new TrackType();
 		trac = trackDao.convertToTrackType(userTrack);
 		trackListType.getTrack().add(trackDao.convertToTrackType(userTrack));
-		playlist.setTrackList(trackListType);
-		query.getPlaylist().add(playlist);
+		playlistType.setTrackList(trackListType);
+		query.getPlaylist().add(playlistType);
 		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
 		clAppMessServ.send(clAppMessServ.queryToString(query));	
 	}
 
 	private void sendGlobalPlaylistAndUser(String login){
+		List<PlaylistEntity> userPlaylist = playlistDao.getPlaylistByUser(login);
+		PlaylistType playlistType = new PlaylistType();
+		TrackListType trackListType = new TrackListType();
+		TrackType trackType = new TrackType();
+		for (PlaylistEntity temp:userPlaylist){
+			playlistType = playlistDao.convertToListPlaylistType(temp);
+			query.getPlaylist().add(playlistType);
+		}
+		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
+		clAppMessServ.send(clAppMessServ.queryToString(query));	
 	}
 }

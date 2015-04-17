@@ -17,6 +17,8 @@ import java.util.Properties;
 
 import org.kgj.pds.playlist.persistance.entity.PlaylistEntity;
 import org.kgj.pds.playlist.persistance.entity.TrackEntity;
+import org.kgj.pds.playlist.persistance.messagingProtocol.PlaylistType;
+import org.kgj.pds.playlist.persistance.messagingProtocol.TrackType;
 
 public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 	/**
@@ -73,12 +75,12 @@ public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 				playlist.setTitle((rs.getString("title")));
 				playlist.setCreator((rs.getString("creator")));
 				playlist.setAnnotation((rs.getString("annotation")));
-				playlist.setInfo(new URI(rs.getString("info")));
-				playlist.setLocation(new URI(rs.getString("location")));
-				playlist.setIdentifier(new URI(rs.getString("identifier")));
-				playlist.setImage(new URI(rs.getString("image")));
+				playlist.setInfo(rs.getString("info"));
+				playlist.setLocation(rs.getString("location"));
+				playlist.setIdentifier(rs.getString("identifier"));
+				playlist.setImage(rs.getString("image"));
 				playlist.setDate(new Date(rs.getString("date")));
-				playlist.setLicence(new URI(rs.getString("licence")));
+				playlist.setLicence(rs.getString("licence"));
 				playlist.setAttribution(rs.getString("attribution"));
 				playlist.setLink(rs.getString("link"));
 				playlist.setMeta(rs.getString("meta"));;
@@ -128,6 +130,23 @@ public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 		}
 		// return false;
 		return null;
+	}
+	
+	public PlaylistType convertToListPlaylistType(PlaylistEntity userPlaylist) {
+		PlaylistType playlist = new PlaylistType();
+		playlist.setTitle(userPlaylist.getTitle());
+		playlist.setCreator(userPlaylist.getCreator());
+		playlist.setAnnotation(userPlaylist.getAnnotation());
+		playlist.setInfo(userPlaylist.getInfo());
+		playlist.setLocation(userPlaylist.getLocation());
+		playlist.setIdentifier(userPlaylist.getIdentifier());
+		playlist.setImage(userPlaylist.getImage());
+		//playlist.setDate(new XMLguserPlaylist.getDate());
+		playlist.setLicense(userPlaylist.getLicence());
+		//playlist.setAttribution(userPlaylist.getAttribution());
+		//playlist.setTrackList(userPlaylist.getTracklist());
+		
+		return playlist;
 	}
 
 	@Override

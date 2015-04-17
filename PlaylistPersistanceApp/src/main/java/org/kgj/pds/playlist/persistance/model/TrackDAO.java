@@ -153,26 +153,15 @@ public class TrackDAO implements IDAOService<TrackEntity> {
 	}
 
 	public TrackType convertToTrackType(TrackEntity userTrack) {
-		System.out.println("convertToTrackType entry");
 		TrackType track = new TrackType();
-		int i = 0;
-		System.out.println("convertToTrackType" + i++);
 		track.setAlbum(userTrack.getAlbum());
-		System.out.println("convertToTrackType" + i++);
 		track.setAnnotation(userTrack.getAnnotation());
-		System.out.println("convertToTrackType" + i++);
 		track.setCreator(userTrack.getCreator());
-		System.out.println("convertToTrackType" + i++);
 		track.setDuration(userTrack.getDuration());
-		System.out.println("convertToTrackType" + i++);
 		track.setImage(userTrack.getImage().toString());
-		System.out.println("convertToTrackType" + i++);
 		track.setInfo(userTrack.getInfo().toString());
-		System.out.println("convertToTrackType" + i++);
 		track.setTitle(userTrack.getTitle());
-		System.out.println("convertToTrackType" + i++);
 		track.setTrackNum(userTrack.getTrackNum());
-		System.out.println("convertToTrackType" + i++);
 		return track;
 	}
 
