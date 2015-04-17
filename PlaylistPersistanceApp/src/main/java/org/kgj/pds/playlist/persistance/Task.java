@@ -58,10 +58,16 @@ public class Task {
 	private void sendGlobalPlaylistAndUser(String login){
 		List<PlaylistEntity> userPlaylist = playlistDao.getPlaylistByUser(login);
 		PlaylistType playlistType = new PlaylistType();
-		TrackListType trackListType = new TrackListType();
-		TrackType trackType = new TrackType();
 		for (PlaylistEntity temp:userPlaylist){
 			playlistType = playlistDao.convertToListPlaylistType(temp);
+			TrackListType trackListType = new TrackListType();
+			for (int i=0; i<temp.getTracklist().size();i++){
+				TrackType trackType = new TrackType();
+				TrackEntity track = temp.getTracklist().get(i);
+				trackType = trackDao.convertToTrackType(track);
+				trackListType.getTrack().add(trackType);
+			}
+			playlistType.setTrackList(trackListType);
 			query.getPlaylist().add(playlistType);
 		}
 		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();

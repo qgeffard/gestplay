@@ -39,7 +39,7 @@ public class ClientAppMessagingServiceManager extends GenericMessageManager {
 			messageContent = ((TextMessage) message).getText();
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace();	
 		}
 		Query query = stringToQuery(messageContent);
 		System.out.println("login :"

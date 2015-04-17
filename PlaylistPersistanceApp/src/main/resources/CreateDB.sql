@@ -38,8 +38,8 @@ CREATE TABLE playlist (
 CREATE TABLE playlist_track_bridge (
 	track_id INT,
 	playlist_id INT,
-	FOREIGN KEY(track_id) REFERENCES track(id),
-	FOREIGN KEY(playlist_id) REFERENCES playlist(id)
+	FOREIGN KEY(track_id) REFERENCES track(id) ON DELETE CASCADE,
+	FOREIGN KEY(playlist_id) REFERENCES playlist(id) ON DELETE CASCADE
 );
 
 CREATE TABLE command (
@@ -47,9 +47,9 @@ CREATE TABLE command (
 	username VARCHAR(64),
 	description VARCHAR(64)
 );
-/*CREATE TABLE users (
+CREATE TABLE users (
 	id INT PRIMARY KEY,
 	username VARCHAR(64),
 	password VARCHAR(64),
 	image VARCHAR(64),
-);*/
+);
