@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xspf="http://xspf.org/ns/0/" 
+	targetNamespace="http://xspf.org/ns/0/">
+	
+	<xsd:include schemaLocation="http://xspf.org/validation/xspf-1_0.2.xsd"/>
+	
+	<!-- GLOBAL TYPE -->  <!-- xsd:token — Whitespace-replaced and collapsed strings -->
+	<xsd:simpleType name="tokenType">
+		<xsd:restriction base="xsd:token">
+			<xsd:minLength value="25" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:element name="query">
+		<xsd:complexType>
+			<xsd:sequence>
+				<!-- Query / Answer MANAGEMENT -->
+				<xsd:element name="queryId" type="xspf:tokenType" />
+				<xsd:element name="responseId" type="xspf:tokenType" />
+
+				<!-- LOGIN MANAGEMENT -->
+				<xsd:element name="userManager">
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element name="connectedToken" type="xspf:tokenType" />
+							<xsd:element name="user">
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="login">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:Name">
+													<xsd:minLength value="3" />
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+										<xsd:element name="password">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:minLength value="8" />
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+
+				<!-- ERROR MANAGEMENT -->
+				<xsd:element name="status">
+					<xsd:complexType>
+						<xsd:choice>
+							<xsd:element name="succed" type="xsd:string" />   <!--  Retour -->
+							<xsd:element name="progress" type="xsd:string" /> <!--  Aller  -->
+							<xsd:element name="error"> 
+								<xsd:complexType>
+									<xsd:sequence>
+										<xsd:element name="message" type="xsd:string" />
+										<xsd:element name="source">
+											<xsd:simpleType>
+												<xsd:restriction base="xsd:string">
+													<xsd:enumeration value="model" />
+													<xsd:enumeration value="controller" />
+												</xsd:restriction>
+											</xsd:simpleType>
+										</xsd:element>
+									</xsd:sequence>
+								</xsd:complexType>
+							</xsd:element>
+						</xsd:choice>
+					</xsd:complexType>
+				</xsd:element>
+
+				<!-- CURRENT OPERATION -->
+				<xsd:element name="action">
+					<xsd:complexType>
+						<xsd:sequence>
+							<xsd:element name="idAction" type="xspf:tokenType" />
+							<xsd:element name="nameAction">
+								<xsd:simpleType>
+									<xsd:restriction base="xsd:string">
+										<xsd:enumeration value="undo" />
+										<xsd:enumeration value="redo" />
+										<xsd:enumeration value="create" />
+										<xsd:enumeration value="delete" />
+										<xsd:enumeration value="update" />
+										<xsd:enumeration value="read" />
+										<xsd:enumeration value="login" />
+									</xsd:restriction>
+								</xsd:simpleType>
+							</xsd:element>
+						</xsd:sequence>
+					</xsd:complexType>
+				</xsd:element>
+				
+				<xsd:element ref="xspf:playlist" minOccurs="0" maxOccurs="unbounded" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+</xsd:schema>
