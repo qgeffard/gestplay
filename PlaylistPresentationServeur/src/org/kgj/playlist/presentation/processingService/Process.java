@@ -58,6 +58,7 @@ public class Process {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
 		}
+
 		
 		String queryId = query.getQueryId();
 		String rmKey = "";

@@ -101,7 +101,8 @@ public class MyServlet extends HttpServlet {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		String userAgent = request.getHeader("User-Agent");
-	
+		String test = request.getParameter("test");
+		
 		HttpSession session = request.getSession();
 		session.setAttribute("id", login);
 		
@@ -112,7 +113,11 @@ public class MyServlet extends HttpServlet {
 
 		Query query = new Query();
 		Action action = new Action();
+		if(test == "test") {
 		action.setNameAction("test");
+		} else {
+		action.setNameAction("login");
+		}
 
 		User user = new User();
 		user.setLogin(login);
