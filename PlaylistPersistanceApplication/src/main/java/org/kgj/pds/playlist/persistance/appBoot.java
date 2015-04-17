@@ -1,13 +1,5 @@
 package org.kgj.pds.playlist.persistance;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.persistance.messagingService.ClientAppMessagingServiceManager;
 
