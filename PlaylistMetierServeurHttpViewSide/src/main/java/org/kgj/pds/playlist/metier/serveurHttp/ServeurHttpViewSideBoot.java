@@ -5,7 +5,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
-import org.kgj.pds.playlist.metier.messagingService.ServeurHttpMessagingServiceManager;
+import org.kgj.pds.playlist.metier.messagingService.ServeurHttpViewSideMessagingServiceManager;
 
 
 public class ServeurHttpViewSideBoot implements ServletContextListener {
@@ -23,7 +23,7 @@ public class ServeurHttpViewSideBoot implements ServletContextListener {
 	 * creer le singleton
 	 */
 	private static void startMessagingService() {
-		ServeurHttpMessagingServiceManager.getInstance();
+		ServeurHttpViewSideMessagingServiceManager.getInstance();
 	}
 
 	public void contextDestroyed(ServletContextEvent contextEvent) {

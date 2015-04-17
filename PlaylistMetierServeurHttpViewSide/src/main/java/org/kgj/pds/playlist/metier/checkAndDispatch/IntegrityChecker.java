@@ -11,10 +11,10 @@ import org.kgj.pds.playlist.metier.messagingProtocol.Query;
  *
  */
 public class IntegrityChecker {
-	private Dispatcher dispatcher;
+	private DispatcherViewSide dispatcher;
 	
 	public IntegrityChecker(){
-		dispatcher = new Dispatcher();
+		dispatcher = new DispatcherViewSide();
 	}
 	
 	public void entryPointCheckIntegrity(Query query, Message message) throws JMSException{

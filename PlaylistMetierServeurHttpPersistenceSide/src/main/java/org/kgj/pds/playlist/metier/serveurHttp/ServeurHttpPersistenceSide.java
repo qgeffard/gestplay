@@ -13,7 +13,8 @@ import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.metier.data.LocalStorage;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 import org.kgj.pds.playlist.metier.messagingService.ServeurHttpPersistenceSideMessagingServiceManager;
-import org.kgj.playlist.metier.checker.LoginChecker;
+import org.kgj.playlist.metier.checkAndDispatch.DispatcherPersistenceSide;
+import org.kgj.playlist.metier.checkAndDispatch.LoginChecker;
 
 /**
  * Servlet implementation class ServeurHttp
@@ -23,14 +24,14 @@ public class ServeurHttpPersistenceSide extends HttpServlet {
 	private static final Logger logger = Logger
 			.getLogger(ServeurHttpPersistenceSide.class);
 	private LocalStorage localstorage;
-	private Router router;
+	private DispatcherPersistenceSide router;
 
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		localstorage = new LocalStorage();
-		router = new Router();
+		router = new DispatcherPersistenceSide();
 	}
 
 	/**

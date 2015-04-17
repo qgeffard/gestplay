@@ -12,7 +12,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
-import org.kgj.pds.playlist.metier.serveurHttp.Router;
+import org.kgj.playlist.metier.checkAndDispatch.DispatcherPersistenceSide;
 
 @SuppressWarnings("restriction")
 public class ServeurHttpPersistenceSideMessagingServiceManager extends
@@ -34,7 +34,7 @@ public class ServeurHttpPersistenceSideMessagingServiceManager extends
 	@Override
 	public void messageReceived(Message message) {
 		logger.debug("Message inc " + message.toString());
-		Router router = new Router();
+		DispatcherPersistenceSide router = new DispatcherPersistenceSide();
 		String messageContent;
 		try {
 			messageContent = ((TextMessage) message).getText();

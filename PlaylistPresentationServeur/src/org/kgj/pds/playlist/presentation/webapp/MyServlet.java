@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -34,8 +35,14 @@ public class MyServlet extends HttpServlet {
 	private static final long serialVersionUID = -871399416795687851L;
 	private static final Logger logger = Logger.getLogger(MyServlet.class);
 	private SecureRandom random = new SecureRandom();
-	private static Map<String, String> responseManager;
 	
+	/* 1 = connected
+	 * 2 = error message
+	 * 3 = list of playlist
+ */	
+	private static String ses[] = new String[10];
+	private static Map<String, String> responseManager;
+
 	public void init(ServletConfig config) throws ServletException {
 		responseManager = new ConcurrentHashMap<String, String>();
 	}
@@ -49,6 +56,22 @@ public class MyServlet extends HttpServlet {
 	 */
 	public MyServlet() {
 		
+	}
+	
+	public static String[] getSes() {
+		return ses;
+	}
+	
+	public static String getSes(int i) {
+		return ses[i];
+	}
+	
+	public static void setSes(String[] ses) {
+		MyServlet.ses = ses;
+	}
+	
+	public static void setSes(int i, String s) {
+		MyServlet.ses[i] = s;
 	}
 
 	public static Map<String, String> getResponseManager() {
@@ -78,10 +101,12 @@ public class MyServlet extends HttpServlet {
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		String userAgent = request.getHeader("User-Agent");
+	
+		HttpSession session = request.getSession();
+		session.setAttribute("id", login);
 		
 		String id = nextSessionId();
-		System.out.println(Thread.currentThread().getId());
-		Thread.currentThread().setName("PresentationServlet");
+		Thread.currentThread().setName(id);
 		String name = Thread.currentThread().getName();
 		responseManager.put(id, name);
 
@@ -98,7 +123,7 @@ public class MyServlet extends HttpServlet {
 
 		
 		// Add le status de la query
-		// Si erreur, message et source (d'où ça bug, on s'en fou)
+		// Si erreur, message et source (d'oï¿½ ï¿½a bug, on s'en fou)
 		// 
 		
 		Status status = new Status();
@@ -119,14 +144,21 @@ public class MyServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		System.out.println(str.toString());
+		
 		WebappMessagingServiceManager.getInstance().send(str.toString());;
 		
 			
 		synchronized (Thread.currentThread()) {
 	        try {
 	        	Thread.currentThread().wait();
-	        	System.out.println("Synchro : "+Thread.currentThread().getId()+" : "+Thread.currentThread().getName());
+	        	if(ses[1].equals("-1")) {
+	        		session.setAttribute("connected", ses[1]);
+	        		session.setAttribute("erreur", ses[2]);
+	        		response.sendRedirect("index.jsp");
+	        	} else {
+	        	session.setAttribute("connected", ses[1]);
+	        	response.sendRedirect("welcome.jsp");
+	        	}
 	        } catch (Throwable e) {
 	            e.printStackTrace();
 	        }

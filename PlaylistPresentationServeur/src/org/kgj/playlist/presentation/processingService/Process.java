@@ -50,9 +50,10 @@ public class Process {
 	private void login() {
 		
 		if (this.query.getStatus().getSucced() != null) {
-			System.out.println("Succes");
+			MyServlet.setSes(1,"0");
 		} else {
-			System.out.println(this.query.getStatus().getError().getMessage());
+			MyServlet.setSes(1,"-1");
+			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
 		}
 		
 		String queryId = query.getQueryId();
@@ -64,21 +65,13 @@ public class Process {
 		   Object cle = it.next();
 		   Object valeur = responseManager.get(cle); 
 		   rmKey = cle.toString();
-		   System.out.println("Clé Query :"+queryId);
-		   System.out.println("Clé CoMap :"+rmKey);
 		   
-		   if(rmKey.equals(queryId)) {
-		   System.out.println(cle.toString()+":"+valeur.toString());
-		   
-		   } else {
-			   System.out.println("Ca passe pas dans le if");
-		   }
 		}
 		String name = MyServlet.getResponseManager().get(query.getQueryId());
-		System.out.println(name);
+		
 		
 		int count = Thread.activeCount();
-	     System.out.println("currently active threads = " + count);
+	     
 	    
 	     Thread th[] = new Thread[count];
 	     // returns the number of threads put into the array 
@@ -86,12 +79,10 @@ public class Process {
 	    
 	     // prints active threads
 	     for (int i = 0; i < count; i++) {
-	        System.out.println(i + ": " + th[i].getName());
+	        
 	        if(name.equals(th[i].getName())) {
-	        	System.out.println("CA PASSE DANS LE IF FDP");
 	        	synchronized (th[i]) {
 	    	        try {
-	    	        	System.out.println("Ca try");
 	    	        	th[i].notify();
 	    	        	} catch (Throwable e) {
 	    	            e.printStackTrace();
