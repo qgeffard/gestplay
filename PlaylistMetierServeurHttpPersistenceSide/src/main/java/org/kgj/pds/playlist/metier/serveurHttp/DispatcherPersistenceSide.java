@@ -8,8 +8,8 @@ import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 import org.kgj.pds.playlist.metier.messagingService.ServeurHttpPersistenceSideMessagingServiceManager;
 
-public class Router {
-	private static final Logger logger = Logger.getLogger(Router.class);
+public class DispatcherPersistenceSide {
+	private static final Logger logger = Logger.getLogger(DispatcherPersistenceSide.class);
 	
 	public final String WEBAPP_PROTOCOL = "http://";
 	public final String WEBAPP_VS_HOSTNAME = "localhost";

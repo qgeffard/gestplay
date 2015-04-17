@@ -18,11 +18,11 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
-import org.kgj.pds.playlist.metier.messagingService.ServeurHttpMessagingServiceManager;
+import org.kgj.pds.playlist.metier.messagingService.ServeurHttpViewSideMessagingServiceManager;
 
-public class Dispatcher {
+public class DispatcherViewSide {
 	
-	private static final Logger logger = Logger.getLogger(Dispatcher.class);
+	private static final Logger logger = Logger.getLogger(DispatcherViewSide.class);
 	
 	
 	public final String WEBAPP_PROTOCOL = "http://";
@@ -35,7 +35,7 @@ public class Dispatcher {
 		HttpClient client = new HttpClient();
 		PostMethod post = new PostMethod(getUrlPersistenceSide(query,message));			
 		
-		post.addParameter("query", ServeurHttpMessagingServiceManager.getInstance().queryToString(query));
+		post.addParameter("query", ServeurHttpViewSideMessagingServiceManager.getInstance().queryToString(query));
 		
 		try {
 			int statusRequest = client.executeMethod(post);
@@ -69,13 +69,13 @@ public class Dispatcher {
 	}
 
 	public void sendToView(Query query, Message message) {
-		ServeurHttpMessagingServiceManager messagingService = ServeurHttpMessagingServiceManager.getInstance();
+		ServeurHttpViewSideMessagingServiceManager messagingService = ServeurHttpViewSideMessagingServiceManager.getInstance();
 		String queryString = messagingService.queryToString(query);
 		messagingService.send(queryString);	
 	}
 	
 	public void sendToView(Query query) {
-		ServeurHttpMessagingServiceManager messagingService = ServeurHttpMessagingServiceManager.getInstance();
+		ServeurHttpViewSideMessagingServiceManager messagingService = ServeurHttpViewSideMessagingServiceManager.getInstance();
 		String queryString = messagingService.queryToString(query);
 		messagingService.send(queryString);	
 	}

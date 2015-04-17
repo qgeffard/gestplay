@@ -19,7 +19,7 @@ abstract class GenericMessageManager {
 	protected MessageProducer producer;
 	protected MessageConsumer consumer;
 	protected Session session;
-	protected static final Logger logger = Logger.getLogger(ServeurHttpMessagingServiceManager.class);
+	protected static final Logger logger = Logger.getLogger(ServeurHttpViewSideMessagingServiceManager.class);
 
 	public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
 		logger.info("------- ACTIVEMQ -------");

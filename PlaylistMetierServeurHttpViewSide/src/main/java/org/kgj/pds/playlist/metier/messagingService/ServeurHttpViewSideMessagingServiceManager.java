@@ -15,16 +15,16 @@ import org.kgj.pds.playlist.metier.checkAndDispatch.IntegrityChecker;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 
 
-public class ServeurHttpMessagingServiceManager extends GenericMessageManager {
+public class ServeurHttpViewSideMessagingServiceManager extends GenericMessageManager {
 
-	private static ServeurHttpMessagingServiceManager instance = new ServeurHttpMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
+	private static ServeurHttpViewSideMessagingServiceManager instance = new ServeurHttpViewSideMessagingServiceManager("tcp://localhost:61616", "producerToView", "consumerFromView");
 	
-	private ServeurHttpMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
+	private ServeurHttpViewSideMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);
 
 	}
 
-	public static ServeurHttpMessagingServiceManager getInstance() {
+	public static ServeurHttpViewSideMessagingServiceManager getInstance() {
 		return instance;
 	}
 

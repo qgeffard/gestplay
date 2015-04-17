@@ -23,14 +23,14 @@ public class ServeurHttpPersistenceSide extends HttpServlet {
 	private static final Logger logger = Logger
 			.getLogger(ServeurHttpPersistenceSide.class);
 	private LocalStorage localstorage;
-	private Router router;
+	private DispatcherPersistenceSide router;
 
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
 		localstorage = new LocalStorage();
-		router = new Router();
+		router = new DispatcherPersistenceSide();
 	}
 
 	/**
