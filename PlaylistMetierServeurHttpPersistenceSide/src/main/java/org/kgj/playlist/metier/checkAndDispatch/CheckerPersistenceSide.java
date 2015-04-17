@@ -17,6 +17,9 @@ public class CheckerPersistenceSide {
 		case "login":
 			checkLogin(query);
 			break;
+		case "test":
+			checkLogin(query);
+			break;
 		default:
 			break;
 		}

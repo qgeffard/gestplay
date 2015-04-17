@@ -56,13 +56,11 @@
 					</div>
 				</div>
 			</div>
+			<div><input type="checkbox" name="test" value="test"></div>
 			<% if(null != session.getAttribute("erreur")) { %>
-			<%!	void output(JspWriter stream, String out) {
-					try { stream.println(out); }  catch(Exception eek) { }
-				}
-			%><%
+			<%
 				if(request.getSession().getAttribute("connected").equals("-1")) { %>
-		<diV class="badlogin"><% output(out, request.getSession().getAttribute("erreur").toString()); %></diV>
+		<diV class="badlogin"><% out.println(request.getSession().getAttribute("erreur").toString()); %></diV>
 		<% }
 			} %>
 		<div class="form-actions">
