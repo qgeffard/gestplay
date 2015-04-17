@@ -1,21 +1,43 @@
 package org.kgj.playlist.metier.checkAndDispatch;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import org.apache.log4j.Logger;
-
 import org.kgj.pds.playlist.metier.data.LocalStorage;
+import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query.UserManager.User;
+import org.kgj.pds.playlist.metier.serveurHttp.ServeurHttpPersistenceSide;
 
-public class LoginChecker {
-	private static final Logger logger = Logger.getLogger(LoginChecker.class);
-
-	LocalStorage localStorage;
-
-	public LoginChecker(LocalStorage localstorage) {
-		localStorage = localstorage;
+public class CheckerPersistenceSide {
+	private static LocalStorage localStorage = ServeurHttpPersistenceSide.localStorage;
+	private static final Logger logger = Logger.getLogger(CheckerPersistenceSide.class);
+	public CheckerPersistenceSide(){
+		
 	}
-
+	public void check(Query query) {
+		switch (query.getAction().getNameAction()) {
+		case "login":
+			checkLogin(query);
+			break;
+		default:
+			break;
+		}
+		
+	}
+	
+	public void checkLogin(Query query) {
+		boolean allowed = validLogin(query.getUserManager().getUser());
+		if (allowed) {
+			query.getStatus().setSucced("succed");
+		} else {
+			Query.Status status = new Query.Status();
+			Query.Status.Error error = new Query.Status.Error();
+			error.setSource("Metier");
+			error.setMessage("Invalid login or password");
+			status.setError(error);
+			query.setStatus(status);
+		}
+		
+	}
+	
 	public boolean validLogin(User user) {
 		boolean valid = false;
 
@@ -31,7 +53,7 @@ public class LoginChecker {
 
 		return valid;
 	}
-
+	
 	public String mdpHashInMD5(String md5) {
 		try {
 			java.security.MessageDigest md = java.security.MessageDigest

@@ -13,25 +13,23 @@ import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.metier.data.LocalStorage;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 import org.kgj.pds.playlist.metier.messagingService.ServeurHttpPersistenceSideMessagingServiceManager;
+import org.kgj.playlist.metier.checkAndDispatch.CheckerPersistenceSide;
 import org.kgj.playlist.metier.checkAndDispatch.DispatcherPersistenceSide;
-import org.kgj.playlist.metier.checkAndDispatch.LoginChecker;
 
 /**
  * Servlet implementation class ServeurHttp
  */
 public class ServeurHttpPersistenceSide extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger logger = Logger
-			.getLogger(ServeurHttpPersistenceSide.class);
-	private LocalStorage localstorage;
-	private DispatcherPersistenceSide router;
+	private static final Logger logger = Logger.getLogger(ServeurHttpPersistenceSide.class);
+	public static LocalStorage localStorage = new LocalStorage();
+	private DispatcherPersistenceSide dispatcher;
 
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {
-		localstorage = new LocalStorage();
-		router = new DispatcherPersistenceSide();
+		dispatcher = new DispatcherPersistenceSide();
 	}
 
 	/**
@@ -46,31 +44,11 @@ public class ServeurHttpPersistenceSide extends HttpServlet {
 		logger.info("Param : " + request.getParameter("query"));
 		Query query = ServeurHttpPersistenceSideMessagingServiceManager
 				.getInstance().stringToQuery(request.getParameter("query"));
-
-		switch (request.getParameter("action")) {
-		case "login":
-			LoginChecker loginChecker = new LoginChecker(localstorage);
-			boolean allowed = loginChecker.validLogin(query.getUserManager().getUser());
-			//todo send to persist or return to view depend on 
-			
-			if (allowed) {
-				query.getStatus().setSucced("succed");
-				router.sendToPersistence(query);
-			} else {
-				Query.Status status = new Query.Status();
-				Query.Status.Error error = new Query.Status.Error();
-				error.setSource("Metier");
-				error.setMessage("Invalid login or password");
-				status.setError(error);
-				query.setStatus(status);
-				
-				router.sendToVS(query);
-			}
-			break;
-		default:
-			break;
-		}
-
+		
+		CheckerPersistenceSide checker = new CheckerPersistenceSide();
+		checker.check(query);
+		dispatcher.dispatch(query);
+		
 	}
 
 	/**
