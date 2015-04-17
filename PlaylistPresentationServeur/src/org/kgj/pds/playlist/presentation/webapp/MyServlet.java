@@ -40,7 +40,7 @@ public class MyServlet extends HttpServlet {
 	 * 2 = error message
 	 * 3 = list of playlist
  */	
-	private static String ses[] = new String[10];
+	private static Object ses[] = new Object[10];
 	private static Map<String, String> responseManager;
 
 	public void init(ServletConfig config) throws ServletException {
@@ -58,19 +58,19 @@ public class MyServlet extends HttpServlet {
 		
 	}
 	
-	public static String[] getSes() {
+	public static Object[] getSes() {
 		return ses;
 	}
 	
 	public static String getSes(int i) {
-		return ses[i];
+		return ses[i].toString();
 	}
 	
-	public static void setSes(String[] ses) {
+	public static void setSes(Object[] ses) {
 		MyServlet.ses = ses;
 	}
 	
-	public static void setSes(int i, String s) {
+	public static void setSes(int i, Object s) {
 		MyServlet.ses[i] = s;
 	}
 
@@ -152,17 +152,23 @@ public class MyServlet extends HttpServlet {
 	        try {
 	        	Thread.currentThread().wait();
 	        	if(ses[1].equals("-1")) {
-	        		session.setAttribute("connected", ses[1]);
-	        		session.setAttribute("erreur", ses[2]);
+	        		session.setAttribute("connected", ses[1].toString());
+	        		session.setAttribute("erreur", ses[2].toString());
 	        		response.sendRedirect("index.jsp");
 	        	} else {
-	        	session.setAttribute("connected", ses[1]);
+	        	session.setAttribute("connected", ses[1].toString());
+	        	session.setAttribute("playlist", ses[3]);
+	        	session.setAttribute("user", ses[4]);
 	        	response.sendRedirect("welcome.jsp");
 	        	}
 	        } catch (Throwable e) {
 	            e.printStackTrace();
 	        }
 	    }
+	}
+
+	public static void sesSes(int i, UserManager userManager) {
+		MyServlet.ses[i] = userManager.getUser().getLogin();
 	}
 	
 

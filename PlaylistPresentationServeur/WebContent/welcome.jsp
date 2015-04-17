@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Welcome to our dream playlists...</title>
  <link href="bootstrap.min.css" rel="stylesheet">
+
 </head>
 <body>
 
@@ -25,7 +26,7 @@
 
    
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">N. Juillien</a></li>
+        <li><a href="#"><% out.println(request.getSession().getAttribute("user"));  %></a></li>
       </ul>
   </div><!-- /.container-fluid -->
 </nav>

@@ -51,6 +51,8 @@ public class Process {
 		
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
+			MyServlet.setSes(3,this.query.getPlaylist());
+			MyServlet.sesSes(4,this.query.getUserManager());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
@@ -92,6 +94,8 @@ public class Process {
 	        	}
 	        
 	     }
+	     
+	     // Query => Usermanagement
 		
 	}
 	
