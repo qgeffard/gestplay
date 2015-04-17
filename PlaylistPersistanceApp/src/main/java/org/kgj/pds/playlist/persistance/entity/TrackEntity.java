@@ -1,33 +1,41 @@
 package org.kgj.pds.playlist.persistance.entity;
 
+import java.math.BigInteger;
+import java.net.URI;
+
+
 public class TrackEntity {
 	private int id;
-	private String location;
-	private String identifier;
+	private URI location;
+	private URI identifier;
 	private String title;
 	private String creator;
 	private String annotation;
-	private String info;
-	private String album;
-	private int trackNum;
-	private int duration;
-	private String tracktypecol;
+	private URI info;
+	private URI image;
+	private String album; 
+	private BigInteger trackNum; // > 0
+	private BigInteger duration; // > 0
+	private String link; //linktype
+	private String meta; //metatype
+	private String extension; //ExtensionType
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getLocation() {
+	public URI getLocation() {
 		return location;
 	}
-	public void setLocation(String location) {
+	public void setLocation(URI location) {
 		this.location = location;
 	}
-	public String getIdentifier() {
+	public URI getIdentifier() {
 		return identifier;
 	}
-	public void setIdentifier(String identifier) {
+	public void setIdentifier(URI identifier) {
 		this.identifier = identifier;
 	}
 	public String getTitle() {
@@ -48,11 +56,17 @@ public class TrackEntity {
 	public void setAnnotation(String annotation) {
 		this.annotation = annotation;
 	}
-	public String getInfo() {
+	public URI getInfo() {
 		return info;
 	}
-	public void setInfo(String info) {
+	public void setInfo(URI info) {
 		this.info = info;
+	}
+	public URI getImage() {
+		return image;
+	}
+	public void setImage(URI image) {
+		this.image = image;
 	}
 	public String getAlbum() {
 		return album;
@@ -60,23 +74,35 @@ public class TrackEntity {
 	public void setAlbum(String album) {
 		this.album = album;
 	}
-	public int getTrackNum() {
+
+	public BigInteger getTrackNum() {
 		return trackNum;
 	}
-	public void setTrackNum(int trackNum) {
+	public void setTrackNum(BigInteger trackNum) {
 		this.trackNum = trackNum;
 	}
-	public int getDuration() {
+	public BigInteger getDuration() {
 		return duration;
 	}
-	public void setDuration(int duration) {
+	public void setDuration(BigInteger duration) {
 		this.duration = duration;
 	}
-	public String getTracktypecol() {
-		return tracktypecol;
+	public String getLink() {
+		return link;
 	}
-	public void setTracktypecol(String tracktypecol) {
-		this.tracktypecol = tracktypecol;
+	public void setLink(String link) {
+		this.link = link;
 	}
-
+	public String getMeta() {
+		return meta;
+	}
+	public void setMeta(String meta) {
+		this.meta = meta;
+	}
+	public String getExtension() {
+		return extension;
+	}
+	public void setExtension(String extension) {
+		this.extension = extension;
+	}
 }

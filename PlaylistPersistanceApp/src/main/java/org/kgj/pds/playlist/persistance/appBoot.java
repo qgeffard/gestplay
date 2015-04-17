@@ -27,22 +27,6 @@ public class appBoot {
 		// ...
 //		tryWSquery();
 	}
-
-	private static void tryWSquery() {
-		// TODO Auto-generated method stub
-		try {
-			URLConnection connection = new URL("http://localhost:8080/PlaylistMetierServeurHttp/serveurHttp").openConnection();
-			connection.setRequestProperty("Accept-Charset", "utf-8");
-			InputStream response = connection.getInputStream();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
 	
 	/**
 	 * Demarre le service de messagerie grace a la methode getInstance pour
