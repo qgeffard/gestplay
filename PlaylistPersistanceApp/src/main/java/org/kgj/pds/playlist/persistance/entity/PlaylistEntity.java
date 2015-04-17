@@ -13,7 +13,7 @@ public class PlaylistEntity {
 	private String location; //AnyURI
 	private String identifier; //AnyURI
 	private String image; //AnyURI
-	private Date date; //Datetime
+	private Date date_creation; //Datetime
 	private String licence; //AnyURI
 	private String attribution; //ListAttributionType
 	private String link; //list linktype
@@ -70,10 +70,10 @@ public class PlaylistEntity {
 		this.image = image;
 	}
 	public Date getDate() {
-		return date;
+		return date_creation;
 	}
 	public void setDate(Date date) {
-		this.date = date;
+		this.date_creation = date;
 	}
 	public String getLicence() {
 		return licence;

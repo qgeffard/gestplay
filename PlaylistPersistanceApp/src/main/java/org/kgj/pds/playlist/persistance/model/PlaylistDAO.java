@@ -66,7 +66,6 @@ public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 			String sqlOrder = props.getProperty("playlistByUser");
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
 			pStmt.setString(1, username);
-			System.out.println(pStmt.toString());
 			ResultSet rs = pStmt.executeQuery();
 			List<PlaylistEntity> listPlaylist = new ArrayList<PlaylistEntity>();
 			while(rs.next()) {
@@ -79,7 +78,7 @@ public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 				playlist.setLocation(rs.getString("location"));
 				playlist.setIdentifier(rs.getString("identifier"));
 				playlist.setImage(rs.getString("image"));
-				playlist.setDate(new Date(rs.getString("date")));
+				//playlist.setDate(new Date(rs.getString("date_creation")));
 				playlist.setLicence(rs.getString("licence"));
 				playlist.setAttribution(rs.getString("attribution"));
 				playlist.setLink(rs.getString("link"));
@@ -93,28 +92,32 @@ public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 				ResultSet rs2 = pStmt2.executeQuery();
 				List<Integer> trackIdPerPlaylist = new ArrayList<Integer>();
 				List<TrackEntity> trackList = new ArrayList<TrackEntity>();
+				while(rs2.next()){
+					trackIdPerPlaylist.add(new Integer(rs2.getString("track_id")));
+				}
 				for (int i = 0; i<trackIdPerPlaylist.size();i++){
 					String sqlOrder3 = props.getProperty("trackRead");
 					PreparedStatement pStmt3 = connection.prepareStatement(sqlOrder3);
 					pStmt3.setString(1, String.valueOf(trackIdPerPlaylist.get(i)));
-					trackIdPerPlaylist.get(i);
+					System.out.println(trackIdPerPlaylist.get(i));
+					
 					ResultSet rs3 = pStmt3.executeQuery();
 					while(rs3.next()){
 						TrackEntity track = new TrackEntity();
-						track.setId(new Integer(rs.getString("id")));
-						track.setLocation(new URI(rs.getString("location")));
-						track.setIdentifier(new URI(rs.getString("identifier")));
-						track.setTitle((rs.getString("title")));
-						track.setCreator((rs.getString("creator")));
-						track.setAnnotation((rs.getString("annotation")));
-						track.setInfo(new URI(rs.getString("info")));
-						track.setImage(new URI(rs.getString("image")));
-						track.setAlbum((rs.getString("album")));
-						track.setTrackNum(new BigInteger(rs.getString("tracknum")));
-						track.setDuration(new BigInteger(rs.getString("duration")));
-						track.setLink((rs.getString("link")));
-						track.setMeta((rs.getString("meta")));
-						track.setExtension((rs.getString("extension")));
+						track.setId(new Integer(rs3.getString("id")));
+						track.setLocation(new URI(rs3.getString("location")));
+						track.setIdentifier(new URI(rs3.getString("identifier")));
+						track.setTitle((rs3.getString("title")));
+						track.setCreator((rs3.getString("creator")));
+						track.setAnnotation((rs3.getString("annotation")));
+						track.setInfo(new URI(rs3.getString("info")));
+						track.setImage(new URI(rs3.getString("image")));
+						track.setAlbum((rs3.getString("album")));
+						track.setTrackNum(new BigInteger(rs3.getString("tracknum")));
+						track.setDuration(new BigInteger(rs3.getString("duration")));
+						track.setLink((rs3.getString("link")));
+						track.setMeta((rs3.getString("meta")));
+						track.setExtension((rs3.getString("extension")));
 						trackList.add(track);
 					}
 				}
