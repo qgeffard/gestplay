@@ -14,5 +14,10 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="resources/activemq-all-5.11.0.jar"/>
+	<classpathentry kind="lib" path="resources/log4j-api-2.2.jar"/>
+	<classpathentry kind="lib" path="resources/log4j-core-2.2.jar"/>
+	<classpathentry kind="lib" path="resources/log4j.properties"/>
+	<classpathentry kind="lib" path="resources/servlet-api.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

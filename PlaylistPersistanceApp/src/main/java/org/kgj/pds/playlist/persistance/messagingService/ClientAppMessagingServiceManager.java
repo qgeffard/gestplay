@@ -16,7 +16,7 @@ import org.kgj.pds.playlist.persistance.messagingProtocol.Query;
 
 public class ClientAppMessagingServiceManager extends GenericMessageManager {
 	private static ClientAppMessagingServiceManager instance = new ClientAppMessagingServiceManager(
-			"tcp://localhost:61616", "consumerFromPersistence",
+			"tcp://25.82.33.58:61616", "consumerFromPersistence",
 			"producerToPersistence");
 
 	private ClientAppMessagingServiceManager(String url, String producerQueue,
@@ -39,7 +39,7 @@ public class ClientAppMessagingServiceManager extends GenericMessageManager {
 			messageContent = ((TextMessage) message).getText();
 		} catch (JMSException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.printStackTrace();	
 		}
 		Query query = stringToQuery(messageContent);
 		System.out.println("login :"
