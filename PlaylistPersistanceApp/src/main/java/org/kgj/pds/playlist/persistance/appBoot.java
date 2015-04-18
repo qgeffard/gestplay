@@ -19,7 +19,8 @@ import org.kgj.pds.playlist.persistance.messagingService.ClientAppMessagingServi
  */
 public class appBoot {
 	
-	static Logger logger = Logger.getLogger(appBoot.class);
+	//static Logger logger = Logger.getLogger(appBoot.class);
+	protected static final Logger logger = Logger.getLogger(appBoot.class);
 
 	public static void main(String[] args) {
 		logger.info("Starting app metier");

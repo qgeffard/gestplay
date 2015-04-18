@@ -2,6 +2,7 @@ package org.kgj.pds.playlist.persistance;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.persistance.entity.PlaylistEntity;
 import org.kgj.pds.playlist.persistance.entity.TrackEntity;
 import org.kgj.pds.playlist.persistance.messagingProtocol.PlaylistType;
@@ -18,6 +19,7 @@ public class Task {
 	private PlaylistDAO playlistDao;
 	private TrackDAO trackDao;
 	private UsersDAO usersDao;
+	protected static final Logger logger = Logger.getLogger(Task.class);
 
 	public Task() {
 		playlistDao = new PlaylistDAO(); 
@@ -71,6 +73,7 @@ public class Task {
 			query.getPlaylist().add(playlistType);
 		}
 		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
+		logger.info("Message sending :" + clAppMessServ.queryToString(query));
 		clAppMessServ.send(clAppMessServ.queryToString(query));	
 	}
 }

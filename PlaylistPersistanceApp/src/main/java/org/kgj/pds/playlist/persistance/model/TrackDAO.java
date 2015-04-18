@@ -49,11 +49,9 @@ public class TrackDAO implements IDAOService<TrackEntity> {
 	@Override
 	public TrackEntity read(int id) {
 		// TODO Auto-generated method stub
-		// � remplacer par datasource dbcp
 		String urlDatabase = props.getProperty("urlDatabase");
 		String login = props.getProperty("login");
 		String password = props.getProperty("password");
-
 		try {
 			Connection connection = DriverManager.getConnection(urlDatabase,
 					login, password);

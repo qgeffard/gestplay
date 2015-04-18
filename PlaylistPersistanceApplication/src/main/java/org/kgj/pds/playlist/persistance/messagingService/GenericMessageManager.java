@@ -87,7 +87,7 @@ abstract class GenericMessageManager {
 		try {
 			textMessage = session.createTextMessage(message);
 			producer.send(textMessage);
-			logger.info("message sent");
+			logger.info("Message Send");
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}

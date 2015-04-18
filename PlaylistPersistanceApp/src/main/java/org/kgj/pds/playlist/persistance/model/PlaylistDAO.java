@@ -10,15 +10,17 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Properties;
 
 import org.kgj.pds.playlist.persistance.entity.PlaylistEntity;
 import org.kgj.pds.playlist.persistance.entity.TrackEntity;
 import org.kgj.pds.playlist.persistance.messagingProtocol.PlaylistType;
-import org.kgj.pds.playlist.persistance.messagingProtocol.TrackType;
 
 public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 	/**
@@ -78,7 +80,20 @@ public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 				playlist.setLocation(rs.getString("location"));
 				playlist.setIdentifier(rs.getString("identifier"));
 				playlist.setImage(rs.getString("image"));
-				//playlist.setDate(new Date(rs.getString("date_creation")));
+//				playlist.setDate(new XMLGre(rs.getString("date_creation")));
+//				Date dateCreation = null;
+//				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//				df.parse(rs.getString("date_creation"));
+//				GregorianCalendar xmlDateCreation = new GregorianCalendar();
+//				xmlDateCreation.setTime(dateCreation);
+//				XMLGregorianCalendar xmlDateé = 
+//						DatatypeFactory.newInstance().newXMLGregorianCalendar(cal.get(Calendar.YEAR),
+//								cal.get(Calendar.MONTH)+1, cal.get(Calendar.DAY_OF_MONTH),
+//								dob.getHours(),dob.getMinutes(),dob.getSeconds(),
+//								DatatypeConstants.FIELD_UNDEFINED,
+//								cal.getTimeZone().LONG).normalize();
+//				date_creation.setTime(rs.getString("date_creation"));
+//				playlist.setDate(rs.getString("date_creation"));
 				playlist.setLicence(rs.getString("licence"));
 				playlist.setAttribution(rs.getString("attribution"));
 				playlist.setLink(rs.getString("link"));
