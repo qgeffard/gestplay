@@ -58,20 +58,21 @@
 		</tr>
 		
    		<% 	
-   			PlaylistType pT;
+   			List<PlaylistType> pT;
     		if(null != request.getSession().getAttribute("playlist")) {
-    		pT = (PlaylistType) request.getSession().getAttribute("playlist");
+    		pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
     		List<TrackListType> tL; 
    			   			for(int i = 0; i < 1 ; i++) { 
-   			tL = (List<TrackListType>) pT.getTrackList();
+   			   				if(0 != pT.size()) {
+   			tL = (List<TrackListType>) pT.get(0).getTrackList();
    			%>
 		<tr>
-			<td><% out.println(pT.getTitle()); %></td>
+			<td><% out.println(pT.get(0).getTitle()); %></td>
 			<td><% out.println(tL.size()); %></td>
 			<td><a href="#display">M</a></td>
 			<td><a href="#delete">S</a></td>
 		</tr>
-		<% } } %>
+		<% } } } %>
 	</tbody>
 </table>
 
