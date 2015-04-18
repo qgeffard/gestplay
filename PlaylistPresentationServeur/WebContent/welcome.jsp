@@ -29,52 +29,60 @@
 
    
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><% out.println(request.getSession().getAttribute("user"));  %></a></li>
+        <li><a href="#">Welcome <% out.println(request.getSession().getAttribute("user"));  %></a></li>
       </ul>
   </div><!-- /.container-fluid -->
 </nav>
 
 
 <div class="container">
-<h1>Vos playlist..</h1>
+<h1>Your playlists !</h1>
 
 
 
-<table data-toggle="table" class="table table-hover">
-	<thead>
-		<tr>
-			<td>Nom</td>
-			<td>Track</td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>
-	</thead><tbody>
-		<tr data-toggle="collapse" data-target="#playlist1" class="clickable">
-			<td>Nom Playlist 1</td>
-			<td>45</td>
-			<td><a href="#display">M</a></td>
-			<td><a href="#delete">S</a></td>
-		</tr>
-		
+
    		<% 	
    			List<PlaylistType> pT;
     		if(null != request.getSession().getAttribute("playlist")) {
     		pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
-    		List<TrackListType> tL; 
-   			   			for(int i = 0; i < 1 ; i++) { 
+    		TrackListType tL; 
+   			   			for(int i = 0; i < pT.size() ; i++) { 
    			   				if(0 != pT.size()) {
-   			tL = (List<TrackListType>) pT.get(0).getTrackList();
+   							tL = pT.get(i).getTrackList();
    			%>
+  <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <% out.println(pT.get(i).getTitle()); %>
+        </a>
+        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+        <table data-toggle="table" class="table table-hover">
+	<thead>
 		<tr>
-			<td><% out.println(pT.get(0).getTitle()); %></td>
-			<td><% out.println(tL.size()); %></td>
+			<td>Track</td>
+			<td>Album</td>
+			<td>Durée</td>
+			<td>Créateur</td>
+			<td>Info</td>
+			<td>Annotation</td>
+			<td></td>
+			<td></td>
+		</tr>
+	</thead><tbody>
+   			<% for(int j = 0;j < tL.getTrack().size();j++) { %>
+		<tr>
+			<td><% out.println(tL.getTrack().get(j).getTitle()); %></td>
+			<td><% out.println(tL.getTrack().get(j).getAlbum()); %></td>
+			<td><% out.println(tL.getTrack().get(j).getDuration()); %></td>
+			<td><% out.println(tL.getTrack().get(j).getCreator()); %></td>
+			<td><% out.println(tL.getTrack().get(j).getInfo()); %></td>
+			<td><% out.println(tL.getTrack().get(j).getAnnotation()); %></td>
 			<td><a href="#display">M</a></td>
 			<td><a href="#delete">S</a></td>
 		</tr>
-		<% } } } %>
+		<% } } }  %>
+		</div>
 	</tbody>
 </table>
+<% } %>
 
 <br><br><br><p align="right">
 Afficher, Créer, Modifier, Supprimer.
