@@ -3,6 +3,7 @@ package org.kgj.pds.playlist.metier.data;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
@@ -22,7 +23,7 @@ public class LocalStorage {
 
 	public LocalStorage() {
 		data  = new ConcurrentHashMap<String, Map<Integer,PlaylistType>>();
-		users = new HashMap<String, String>();
+		users = new LinkedHashMap<String, String>();
 		
 		//load users
 		prop  =  new Properties();
@@ -30,9 +31,16 @@ public class LocalStorage {
 			input =  getClass().getClassLoader().getResourceAsStream("users.properties");
 			prop.load(input);
 			
-			for (int i = 0; i < prop.keySet().size(); i+=2) {
-				users.put(prop.getProperty(prop.keySet().toArray()[i].toString()), prop.getProperty(prop.keySet().toArray()[i+1].toString()));
+			String currentUserLogin = "";
+			for (String propertyName : prop.stringPropertyNames()) {
+				if(propertyName.endsWith("login")){
+					currentUserLogin = prop.getProperty(propertyName);
+				} else {
+					users.put(currentUserLogin, prop.getProperty(propertyName));
+				}
 			}
+
+			logger.info(users);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}

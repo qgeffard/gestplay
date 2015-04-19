@@ -15,8 +15,6 @@ public class CheckerPersistenceSide {
 	public void check(Query query) {
 		switch (query.getAction().getNameAction()) {
 		case "login":
-			checkLogin(query);
-			break;
 		case "test":
 			checkLogin(query);
 			break;
