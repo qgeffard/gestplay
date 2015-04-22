@@ -1,5 +1,6 @@
 package org.kgj.pds.playlist.metier.messagingService;
 
+import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -22,31 +23,50 @@ abstract class GenericMessageManager {
 	protected MessageProducer producer;
 	protected MessageConsumer consumer;
 	protected Session session;
-	protected static final Logger logger = Logger.getLogger(ServeurHttpPersistenceSideMessagingServiceManager.class);
+	protected static final Logger logger = Logger
+			.getLogger(ServeurHttpPersistenceSideMessagingServiceManager.class);
+	private int nbProc = Runtime.getRuntime().availableProcessors();
+	ExecutorService execute = Executors.newFixedThreadPool(nbProc);
 
-	public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
+	public GenericMessageManager(String url, String producerQueue,
+			String consumerQueue) {
 		logger.info("------- ACTIVEMQ -------");
 		logger.info("Connection to broker starting...");
 		// Connect to it and create producer / consumer
-		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(url);
 		Connection connection;
 		try {
-			connection = connectionFactory.createConnection();
+			connection = getConnection(url);
 			session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-
 			producer = createProducer(producerQueue);
 			consumer = createConsumer(consumerQueue);
-
 			connection.start();
 			logger.info("Connection to broker started");
-
 		} catch (JMSException e) {
-			e.printStackTrace();
-		}
 
+		}
 		logger.info("Producer queue = " + producerQueue);
 		logger.info("Consumer queue = " + consumerQueue);
 		logger.info("------------------------");
+	}
+
+	private Connection getConnection(String url) {
+		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
+				url);
+		try {
+			Connection connection = connectionFactory.createConnection();
+			return connection;
+		} catch (JMSException e) {
+			if (e.getLinkedException() instanceof SocketTimeoutException) {
+				String urlLocal = "tcp://localhost:61616";
+				if (url.equals(urlLocal)) {
+					logger.error("No activemq service up");
+				} else {
+					logger.warn(url + " not responding, try on localhost");
+					return getConnection(urlLocal);
+				}
+			}
+		}
+		return null;
 	}
 
 	private MessageConsumer createConsumer(String queue) {
@@ -85,7 +105,7 @@ abstract class GenericMessageManager {
 		try {
 			textMessage = session.createTextMessage(message);
 			producer.send(textMessage);
-			logger.info("message sent");
+			logger.info("Message Send");
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
