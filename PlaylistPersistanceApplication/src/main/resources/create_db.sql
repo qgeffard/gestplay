@@ -1,6 +1,6 @@
-CREATE SCHEMA IF NOT EXISTS GESTPLAY;
+CREATE DATABASE IF NOT EXISTS gestplay;
 
-USE GESTPLAY;
+USE gestplay;
 
 CREATE TABLE IF NOT EXISTS track (
 	id INT 			PRIMARY KEY AUTO_INCREMENT,
@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS playlist (
 CREATE TABLE IF NOT EXISTS playlist_track_bridge (
 	track_id		INT,
 	playlist_id 	INT,
+	PRIMARY KEY (track_id, playlist_id),
 	FOREIGN KEY(track_id) REFERENCES track(id) ON DELETE CASCADE,
 	FOREIGN KEY(playlist_id) REFERENCES playlist(id) ON DELETE CASCADE
 );
