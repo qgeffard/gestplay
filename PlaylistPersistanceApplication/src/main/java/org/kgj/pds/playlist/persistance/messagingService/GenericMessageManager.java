@@ -1,5 +1,6 @@
 package org.kgj.pds.playlist.persistance.messagingService;
 
+import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,6 +28,10 @@ abstract class GenericMessageManager {
 	ExecutorService execute = Executors.newFixedThreadPool(nbProc);
 
 	public GenericMessageManager(String url, String producerQueue, String consumerQueue) {
+		init(url, producerQueue, consumerQueue);
+	}
+
+	private void init(String url, String producerQueue, String consumerQueue) {
 		logger.info("------- ACTIVEMQ -------");
 		logger.info("Connection to broker starting...");
 		// Connect to it and create producer / consumer
@@ -41,9 +46,11 @@ abstract class GenericMessageManager {
 
 			connection.start();
 			logger.info("Connection to broker started");
-			
 		} catch (JMSException e) {
-			e.printStackTrace();
+			if(e.getLinkedException() instanceof SocketTimeoutException){
+				logger.warn(url+" not responding, try on localhost");
+				init("127.0.0.1",producerQueue, consumerQueue);
+			}
 		}
 		
 		logger.info("Producer queue = "+producerQueue);

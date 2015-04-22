@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS track (
 	image 			VARCHAR(64),
 	album 			VARCHAR(64),
 	tracknum 		INT,
-	duration 		DATE,
+	duration 		INT,
 	link 			VARCHAR(64),
 	meta 			VARCHAR(64),
 	extension 		VARCHAR(64)

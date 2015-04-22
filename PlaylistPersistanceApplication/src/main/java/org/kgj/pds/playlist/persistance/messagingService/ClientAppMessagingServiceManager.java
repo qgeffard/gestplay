@@ -16,7 +16,7 @@ import org.kgj.pds.playlist.persistance.messagingProtocol.Query;
 
 public class ClientAppMessagingServiceManager extends GenericMessageManager {
 	private static ClientAppMessagingServiceManager instance = new ClientAppMessagingServiceManager(
-			"tcp://192.168.43.198:61616", "consumerFromPersistence",
+			"tcp://192.168.0.2:61616", "consumerFromPersistence",
 			"producerToPersistence");
 
 	private ClientAppMessagingServiceManager(String url, String producerQueue,

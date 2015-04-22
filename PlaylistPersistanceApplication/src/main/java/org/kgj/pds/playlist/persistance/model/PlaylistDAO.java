@@ -26,7 +26,7 @@ public class PlaylistDAO implements IDAOService<PlaylistEntity> {
 	 */
 	public static final long serialVersionUID = 1L;
 	
-	private static Properties props;
+	public static Properties props;
 	static {
 		props = new Properties();
 		InputStream inStream = org.kgj.pds.playlist.persistance.model.TrackDAO.class
