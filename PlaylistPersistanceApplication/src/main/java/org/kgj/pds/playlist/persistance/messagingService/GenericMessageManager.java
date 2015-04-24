@@ -1,8 +1,6 @@
 package org.kgj.pds.playlist.persistance.messagingService;
 
 import java.net.SocketTimeoutException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
@@ -24,9 +22,7 @@ abstract class GenericMessageManager {
 	protected MessageConsumer consumer;
 	protected Session session;
 	protected static final Logger logger = Logger
-			.getLogger(ClientAppMessagingServiceManager.class);
-	private int nbProc = Runtime.getRuntime().availableProcessors();
-	ExecutorService execute = Executors.newFixedThreadPool(nbProc);
+			.getLogger(GenericMessageManager.class);
 
 	public GenericMessageManager(String url, String producerQueue,
 			String consumerQueue) {
@@ -42,18 +38,24 @@ abstract class GenericMessageManager {
 			connection.start();
 			logger.info("Connection to broker started");
 		} catch (JMSException e) {
-
+			logger.error(e.getMessage());
+		} catch (NullPointerException npe) {
+			logger.error("There is no broker running");
 		}
+
 		logger.info("Producer queue = " + producerQueue);
 		logger.info("Consumer queue = " + consumerQueue);
 		logger.info("------------------------");
 	}
 
+	@SuppressWarnings("finally")
 	private Connection getConnection(String url) {
 		ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(
 				url);
+		Connection connection = null;
+
 		try {
-			Connection connection = connectionFactory.createConnection();
+			connection = connectionFactory.createConnection();
 			return connection;
 		} catch (JMSException e) {
 			if (e.getLinkedException() instanceof SocketTimeoutException) {
@@ -65,8 +67,10 @@ abstract class GenericMessageManager {
 					return getConnection(urlLocal);
 				}
 			}
+		} finally {
+			return connection;
 		}
-		return null;
+
 	}
 
 	private MessageConsumer createConsumer(String queue) {

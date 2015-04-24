@@ -27,7 +27,9 @@ public class CheckerPersistenceSide {
 	public void checkLogin(Query query) {
 		boolean allowed = validLogin(query.getUserManager().getUser());
 		if (allowed) {
-			query.getStatus().setSucced("succed");
+			Query.Status status = new Query.Status();
+			status.setSucced("succed");
+			query.setStatus(status);
 		} else {
 			Query.Status status = new Query.Status();
 			Query.Status.Error error = new Query.Status.Error();
@@ -43,7 +45,6 @@ public class CheckerPersistenceSide {
 		boolean valid = false;
 
 		if (localStorage.getUsers().containsKey(user.getLogin())) {
-			logger.info(mdpHashInMD5(user.getPassword()));
 			if (localStorage
 					.getUsers()
 					.get(user.getLogin())
