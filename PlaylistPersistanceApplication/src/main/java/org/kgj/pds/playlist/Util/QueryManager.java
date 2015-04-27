@@ -1,6 +1,6 @@
 package org.kgj.pds.playlist.Util;
 
-import org.kgj.pds.playlist.metier.messagingProtocol.Query;
+import org.kgj.pds.playlist.persistance.messagingProtocol.Query;
 
 public class QueryManager {
 
