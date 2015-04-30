@@ -1,6 +1,8 @@
 package org.kgj.playlist.metier.checkAndDispatch;
 
 import org.apache.log4j.Logger;
+import org.kgj.pds.playlist.Utils.QueryManager;
+import org.kgj.pds.playlist.Utils.Source;
 import org.kgj.pds.playlist.metier.data.LocalStorage;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 import org.kgj.pds.playlist.metier.messagingProtocol.Query.UserManager.User;
@@ -27,18 +29,10 @@ public class CheckerPersistenceSide {
 	public void checkLogin(Query query) {
 		boolean allowed = validLogin(query.getUserManager().getUser());
 		if (allowed) {
-			Query.Status status = new Query.Status();
-			status.setSucced("succed");
-			query.setStatus(status);
+			QueryManager.setStatusSucced(query);
 		} else {
-			Query.Status status = new Query.Status();
-			Query.Status.Error error = new Query.Status.Error();
-			error.setSource("Metier");
-			error.setMessage("Invalid login or password");
-			status.setError(error);
-			query.setStatus(status);
+			QueryManager.setStatusError(query,Source.METIER.getName(), "Invalid login or password");
 		}
-		
 	}
 	
 	public boolean validLogin(User user) {

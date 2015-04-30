@@ -1,4 +1,4 @@
-package org.kgj.pds.playlist.Util;
+package org.kgj.pds.playlist.Utils;
 
 import org.kgj.pds.playlist.persistance.messagingProtocol.Query;
 
