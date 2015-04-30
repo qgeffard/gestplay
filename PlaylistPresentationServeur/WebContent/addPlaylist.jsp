@@ -73,9 +73,9 @@
 		<th>Head Office</th>
 	</tr>
 	<tr ng-repeat="track in tracklist" class="ng-scope">
-		<td>{ {track.name} }</td>
-		<td>{ {track.employees} }</td>
-		<td>{ {track.headoffice} }</td>
+		<td>{{track.name}}</td>
+		<td>{{track.employees}}</td>
+		<td>{{track.headoffice}}</td>
 	</tr>
 </table>
 </td></tr></tbody></table>
