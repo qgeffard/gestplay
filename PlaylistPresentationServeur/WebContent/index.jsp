@@ -10,9 +10,9 @@
 	    
 	<!-- Bootstrap -->
 	
-	<link href="bootstrap.min.css" rel="stylesheet">
-	<link href="style.css" rel="stylesheet">
-	<link href="myCSS.css" rel="stylesheet">
+	<link href="CSS/bootstrap.min.css" rel="stylesheet">
+	<link href="CSS/style.css" rel="stylesheet">
+	<link href="CSS/myCSS.css" rel="stylesheet">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	
