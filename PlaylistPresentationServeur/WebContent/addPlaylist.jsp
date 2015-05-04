@@ -37,7 +37,8 @@
 
 
 <table style="width:100%"><tbody><tr><td style="width:45%;padding-left:40px;vertical-align: top">
-<form class="form-horizontal" role="form" ng-submit="addRow()">
+<form id="tabPlaylist" class="form-horizontal" role="form" ng-submit="addRow()" >
+<div>Add a playlist</div><br>
 	<div class="form-group">
 		<label class="col-md-2 control-label">Name</label>
 		<div class="col-md-4">
@@ -65,17 +66,48 @@
 		</div>
 	</div>
 </form>	
+<form hidden="true" id="tabTrack" class="form-horizontal" role="form" ng-submit="addTrack()" >
+<div>Add a track</div>	<br/>
+	<div class="form-group">
+		<label class="col-md-2 control-label">Name</label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" name="Name"
+				ng-model="Name" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-2 control-label">Artist</label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" name="Artist"
+				ng-model="Artist" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-2 control-label">Album</label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" name="Album"
+				ng-model="Album" />
+		</div>
+	</div>
+	<div class="form-group">								
+		<div style="padding-left:110px">
+			<input type="submit" value="Submit" class="btn btn-primary"/>
+		</div>
+	</div>
+	</form>
 </td><td style="vertical-align: top">
-<table class="table">
+<table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>
 		<th>Employees</th>
 		<th>Head Office</th>
+		<th></th>
 	</tr>
-	<tr ng-repeat="track in tracklist" class="ng-scope">
-		<td>{{track.name}}</td>
-		<td>{{track.employees}}</td>
-		<td>{{track.headoffice}}</td>
+	<tr ng-repeat="playlist in playlists" class="ng-scope" onClick="selectPlaylist();">
+		<td>{{playlist.name}}</td>
+		<td>{{playlist.employees}}</td>
+		<td>{{playlist.headoffice}}</td>
+		<td class="ng-binding">Show tracks</td>
 	</tr>
 </table>
 </td></tr></tbody></table>
