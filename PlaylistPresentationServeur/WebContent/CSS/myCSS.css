@@ -10,6 +10,11 @@ Login page
 	color:white;
 }
 
+.alignright {
+  float: right;
+  margin-right: 35px;
+}
+
 .myNavbar>a {
 	color:white;
 }

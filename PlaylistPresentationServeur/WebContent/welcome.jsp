@@ -48,6 +48,7 @@
     		TrackListType tL; 
    			   			for(int i = 0; i < pT.size() ; i++) { 
    			   				if(0 != pT.size()) {
+   			   					out.println("<script>alert("+i+");</script>");
    							tL = pT.get(i).getTrackList();
    			%>
   <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">

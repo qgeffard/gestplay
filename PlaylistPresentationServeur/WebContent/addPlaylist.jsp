@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="org.kgj.pds.playlist.presentation.messagingProtocol.*" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="addPlaylist">
 <head>
@@ -10,10 +12,11 @@
 <script	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+<script src="js/myPrimeJS.js"></script>
 
 </head>
 <body ng-controller="ctrlPlaylist">
-
+<% int Id; %>
 
 <nav class="myNavbar navbar navbar-default">
   <div class="myNavbar container-fluid">
@@ -66,20 +69,13 @@
 		</div>
 	</div>
 </form>	
-<form hidden="true" id="tabTrack" class="form-horizontal" role="form" ng-submit="addTrack()" >
+<form hidden="true" id="tabTrack" class="form-horizontal" role="form" ng-submit="addRowtl()" >
 <div>Add a track</div>	<br/>
 	<div class="form-group">
 		<label class="col-md-2 control-label">Name</label>
 		<div class="col-md-4">
-			<input type="text" class="form-control" name="Name"
-				ng-model="Name" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-md-2 control-label">Artist</label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" name="artist"
-				ng-model="artist" />
+			<input type="text" class="form-control" name="name"
+				ng-model="name" />
 		</div>
 	</div>
 	<div class="form-group">
@@ -89,6 +85,13 @@
 				ng-model="album" />
 		</div>
 	</div>
+	<div class="form-group">
+		<label class="col-md-2 control-label">Artist</label>
+		<div class="col-md-4">
+			<input type="text" class="form-control" name="artist"
+				ng-model="artist" />
+		</div>
+	</div>
 	<div class="form-group">								
 		<div style="padding-left:110px">
 			<input type="submit" value="Submit" class="btn btn-primary"/>
@@ -96,6 +99,11 @@
 	</div>
 	</form>
 </td><td style="vertical-align: top">
+
+
+   		
+   			
+<form id="submitPlaylist" action="connectedServlet/savePlaylists" method="post">
 <table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>
@@ -110,8 +118,14 @@
 		<td class="ng-binding">Show tracks</td>
 	</tr>
 </table>
+<input type="submit" value="Save playlists" class="alignright btn btn-primary"/>
+</form>
+
 </td></tr>
+
 <tr id="tracktab" hidden="true"><td></td><td>Tracklist <br/><br/>
+
+<form id="submitTrack" action="connectedServlet/savePlaylist" method="post">
 <table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>
@@ -123,13 +137,35 @@
 		<td>{{track.name}}</td>
 		<td>{{track.album}}</td>
 		<td>{{track.artist}}</td>
-		<td class="ng-binding">Show tracks</td>
 	</tr>
 </table>
+<input type="submit" value="Save playlist" class="alignright btn btn-primary"/>
+</form>
+
 </td></tr></tbody></table>
 	
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/myJS.js"></script>
+
+   		<% 	
+   			List<PlaylistType> pT;
+    		if(null != request.getSession().getAttribute("playlist")) {
+    			pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
+    			TrackListType tL; 
+    			
+   			   	for(int i = 0; i < pT.size() ; i++) { 
+   			   		if(0 != pT.size()) {
+   						tL = pT.get(i).getTrackList();
+   						pT.get(i).getTitle();
+   						String str = "<script>window.onload = loadPlaylist("+'"';
+   						str = str + pT.get(i).getTitle().toString()+'"'+','+'"'+pT.get(i).getCreator().toString()+'"'+','+'"'+pT.get(i).getTrackList().getTrack().size();
+   						str = str + '"';
+   						str = str + ");</script>";
+   						out.println(str);
+   			   		}
+   			   	}
+    		}
+   			%>
 </body>
 </html>

@@ -1,18 +1,16 @@
 var currentApp = angular.module("addPlaylist", []);
+var playlists = [];
+var tracklist = [];
 	currentApp.controller("ctrlPlaylist", function($scope) {
-		$scope.playlists = [];
+		$scope.playlists = playlists;
+		$scope.tracklist = tracklist;
 		$scope.addRow = function(){		
 			$scope.playlists.push({ 'name':$scope.name, 'creator': $scope.creator, 'tracks':$scope.tracks });
 			$scope.name='';
 			$scope.creator='';
 			$scope.tracks='';
 		};
-		$scope.selectedPlaylist = function() {
-			console.log("selectedPlaylist");
-			$scope.selectedPlaylist = true ? false : true;
-		};
-
-		$scope.tracklist = [];
+		
 		$scope.addRowtl = function(){		
 			$scope.tracklist.push({ 'name':$scope.name, 'album': $scope.album, 'artist':$scope.artist });
 			$scope.name='';
@@ -40,3 +38,11 @@ function selectPlaylist(){
 	tracktab.hidden = false;
 	}
 }
+
+function loadPlaylist(name,creator,tracks) {
+	alert(name);	
+
+	playlists.push({ 'name':name, 'creator': creator, 'tracks':tracks });
+    
+}
+

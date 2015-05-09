@@ -1,29 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	id="WebApp_ID" version="3.0">
-	<display-name>PlaylistPresentationServeur</display-name>
-	<listener>
-		<listener-class>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>PlaylistPresentationServeur</display-name>
+  <listener>
+    <listener-class>
 			org.kgj.pds.playlist.presentation.webapp.MyServletBoot
 		</listener-class>
-	</listener>
-	<servlet>
-		<servlet-name>MyServlet</servlet-name>
-		<servlet-class>org.kgj.pds.playlist.presentation.webapp.MyServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>MyServlet</servlet-name>
-		<url-pattern>/myServlet</url-pattern>
-	</servlet-mapping>
-	<welcome-file-list>
-		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>welcome.jsp</welcome-file>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
-	</welcome-file-list>
+  </listener>
+  <servlet>
+    <servlet-name>MyServlet</servlet-name>
+    <servlet-class>org.kgj.pds.playlist.presentation.webapp.MyServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MyServlet</servlet-name>
+    <url-pattern>/myServlet</url-pattern>
+  </servlet-mapping>
+    <servlet>
+    <servlet-name>ConnectedServlet</servlet-name>
+    <servlet-class>org.kgj.pds.playlist.presentation.webapp.ConnectedServlet</servlet-class>
+  </servlet>
+    <servlet-mapping>
+    <servlet-name>ConnectedServlet</servlet-name>
+    <url-pattern>/connectedServlet</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>welcome.jsp</welcome-file>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
 </web-app>
