@@ -47,17 +47,17 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-md-2 control-label">Employees</label>
+		<label class="col-md-2 control-label">Creator</label>
 		<div class="col-md-4">
-			<input type="text" class="form-control" name="employees"
-				ng-model="employees" />
+			<input type="text" class="form-control" name="creator"
+				ng-model="creator" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-md-2 control-label">Headoffice</label>
+		<label class="col-md-2 control-label">Tracks</label>
 		<div class="col-md-4">
-			<input type="text" class="form-control" name="headoffice"
-				ng-model="headoffice" />
+			<input type="text" class="form-control" name="tracks"
+				ng-model="tracks" />
 		</div>
 	</div>
 	<div class="form-group">								
@@ -78,15 +78,15 @@
 	<div class="form-group">
 		<label class="col-md-2 control-label">Artist</label>
 		<div class="col-md-4">
-			<input type="text" class="form-control" name="Artist"
-				ng-model="Artist" />
+			<input type="text" class="form-control" name="artist"
+				ng-model="artist" />
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-md-2 control-label">Album</label>
 		<div class="col-md-4">
-			<input type="text" class="form-control" name="Album"
-				ng-model="Album" />
+			<input type="text" class="form-control" name="album"
+				ng-model="album" />
 		</div>
 	</div>
 	<div class="form-group">								
@@ -99,14 +99,30 @@
 <table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>
-		<th>Employees</th>
-		<th>Head Office</th>
+		<th>Creator</th>
+		<th>Tracks</th>
 		<th></th>
 	</tr>
 	<tr ng-repeat="playlist in playlists" class="ng-scope" onClick="selectPlaylist();">
 		<td>{{playlist.name}}</td>
-		<td>{{playlist.employees}}</td>
-		<td>{{playlist.headoffice}}</td>
+		<td>{{playlist.creator}}</td>
+		<td>{{playlist.tracks}}</td>
+		<td class="ng-binding">Show tracks</td>
+	</tr>
+</table>
+</td></tr>
+<tr id="tracktab" hidden="true"><td></td><td>Tracklist <br/><br/>
+<table class="table" ng-model="clicked">
+	<tr>
+		<th>Name</th>
+		<th>Album</th>
+		<th>Artist</th>
+		
+	</tr>
+	<tr ng-repeat="track in tracklist" class="ng-scope" onClick="selectTrack();">
+		<td>{{track.name}}</td>
+		<td>{{track.album}}</td>
+		<td>{{track.artist}}</td>
 		<td class="ng-binding">Show tracks</td>
 	</tr>
 </table>

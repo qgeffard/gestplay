@@ -2,25 +2,22 @@ var currentApp = angular.module("addPlaylist", []);
 	currentApp.controller("ctrlPlaylist", function($scope) {
 		$scope.playlists = [];
 		$scope.addRow = function(){		
-			$scope.playlists.push({ 'name':$scope.name, 'employees': $scope.employees, 'headoffice':$scope.headoffice });
+			$scope.playlists.push({ 'name':$scope.name, 'creator': $scope.creator, 'tracks':$scope.tracks });
 			$scope.name='';
-			$scope.employees='';
-			$scope.headoffice='';
+			$scope.creator='';
+			$scope.tracks='';
 		};
 		$scope.selectedPlaylist = function() {
 			console.log("selectedPlaylist");
 			$scope.selectedPlaylist = true ? false : true;
 		};
-	});
-	
-var currentApp = angular.module("addTrack", []);
-	currentApp.controller("ctrlTrack", function($scope) {
+
 		$scope.tracklist = [];
-		$scope.addRow = function(){		
-			$scope.tracklist.push({ 'name':$scope.name, 'employees': $scope.employees, 'headoffice':$scope.headoffice });
+		$scope.addRowtl = function(){		
+			$scope.tracklist.push({ 'name':$scope.name, 'album': $scope.album, 'artist':$scope.artist });
 			$scope.name='';
-			$scope.employees='';
-			$scope.headoffice='';
+			$scope.album='';
+			$scope.artist='';
 		};
 		
 	});
@@ -29,14 +26,17 @@ var currentApp = angular.module("addTrack", []);
 function selectPlaylist(){
 	var tab = document.getElementById("tabPlaylist");
 	var track = document.getElementById("tabTrack");
+	var tracktab = document.getElementById("tracktab");
 	if(tab.hidden == true) {
 	tab.hidden = false;
 	track.style.postion = "relative";
 	track.hidden = true;
+	tracktab.hidden = true;
 	}
 	else {
 	tab.style.postion = "relative";
 	tab.hidden = true;
 	track.hidden = false;
+	tracktab.hidden = false;
 	}
 }
