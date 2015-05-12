@@ -115,7 +115,7 @@
 		<td>{{playlist.name}}</td>
 		<td>{{playlist.creator}}</td>
 		<td>{{playlist.tracks}}</td>
-		<td class="showTracks ng-binding" onClick="selectPlaylist();">Show Tracks</td>
+		<td class="showTracks ng-binding" onClick="selectPlaylist()">{{playlist.count}}</td>
 	</tr>
 </table>
 <input type="submit" value="Save playlists" class="alignright btn btn-primary"/>
