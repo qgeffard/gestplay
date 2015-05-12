@@ -1,20 +1,17 @@
 var currentApp = angular.module("addPlaylist", []);
 var playlists = [];
 var tracklist = [];
-var idPlaylist = 0;
+
 
 
 	currentApp.controller("ctrlPlaylist", function($scope) {
 		$scope.playlists = playlists;
 		$scope.tracklist = tracklist;
-		$scope.count = idPlaylist;
 		$scope.addRow = function(){		
-			$scope.playlists.push({ 'name':$scope.name, 'creator': $scope.creator, 'tracks':$scope.tracks, 'count':$scope.count });
+			$scope.playlists.push({ 'name':$scope.name, 'creator': $scope.creator, 'tracks':$scope.tracks, 'trackList':[] });
 			$scope.name='';
 			$scope.creator='';
 			$scope.tracks='';
-			document.getElementById("tabPlaylist").getElementsByClassName("showTracks")[$scope.count].setAttribute("onClick","selectPlaylist("+$scope.count+");");
-			$scope.count++;
 		};
 		
 		$scope.addRowtl = function(){		
@@ -24,9 +21,42 @@ var idPlaylist = 0;
 			$scope.artist='';
 		};
 		
+		$scope.del = function ( idx ) {
+			  var trackToDelete = $scope.tracklist[idx];		
+			  $scope.tracklist.splice(idx, 1);
+			};
+			
+		$scope.delPlaylist = function ( idx ) {
+			  var trackToDelete = $scope.playlists[idx];		
+			  $scope.playlists.splice(idx, 1);
+			};
+
+		$scope.editPlaylist = function (id) {
+				var tab = document.getElementById("tabPlaylist");
+				var track = document.getElementById("tabTrack");
+				var tracktab = document.getElementById("tracktab");
+				if(tab.hidden == true) {
+				tracklist = [];
+				$scope.tracklist = []
+				tab.hidden = false;
+				track.style.postion = "relative";
+				track.hidden = true;
+				tracktab.hidden = true;
+				}
+				else {
+				tracklist = $scope.playlists[id].trackList;
+				$scope.tracklist = tracklist;
+				tab.style.postion = "relative";
+				tab.hidden = true;
+				track.hidden = false;
+				tracktab.hidden = false;
+				}
+			};
 	});
 	
 	
+	
+	/*
 function selectPlaylist(id){
 	var tab = document.getElementById("tabPlaylist");
 	var track = document.getElementById("tabTrack");
@@ -44,10 +74,14 @@ function selectPlaylist(id){
 	tracktab.hidden = false;
 	}
 }
-
+	*/
+	
 function loadPlaylist(name,creator,tracks) {
-	playlists.push({ 'name':name, 'creator': creator, 'tracks':tracks, 'count':idPlaylist });  
-	idPlaylist++;
+	playlists.push({ 'name':name, 'creator': creator, 'tracks':tracks, 'trackList':tracklist });  
+}
+
+function addTrackToPlaylist(name, album, artist) {
+	tracklist.push({ 'name':name, 'album': album, 'artist':artist });
 }
 
 

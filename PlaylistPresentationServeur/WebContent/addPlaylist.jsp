@@ -9,6 +9,7 @@
 
 <link href="CSS/bootstrap.min.css" rel="stylesheet">
 <link href="CSS/myCSS.css" rel="stylesheet">
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <script	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
@@ -115,7 +116,7 @@
 		<td>{{playlist.name}}</td>
 		<td>{{playlist.creator}}</td>
 		<td>{{playlist.tracks}}</td>
-		<td class="showTracks ng-binding" onClick="selectPlaylist()">{{playlist.count}}</td>
+		<td class="ng-binding"><a ng-click="editPlaylist($index)"><i class="icon-edit icon-2x"></i></a> <a ng-click="delPlaylist($index)"><i class="icon-remove-sign icon-2x"></i></a></td>
 	</tr>
 </table>
 <input type="submit" value="Save playlists" class="alignright btn btn-primary"/>
@@ -133,11 +134,11 @@
 		<th>Artist</th>
 		<th></th>
 	</tr>
-	<tr ng-repeat="track in tracklist" class="ng-scope" onClick="selectTrack();">
+	<tr ng-repeat="track in tracklist" class="ng-scope">
 		<td>{{track.name}}</td>
 		<td>{{track.album}}</td>
 		<td>{{track.artist}}</td>
-		<td>Delete</td>
+		<td><a ng-click="del($index)"><i class="icon-remove-sign icon-2x"></i></a></td>
 	</tr>
 </table>
 <input type="submit" value="Save playlist" class="alignright btn btn-primary"/>
@@ -148,6 +149,7 @@
 
 <script src="js/bootstrap.min.js"></script>
 <script src="js/myJS.js"></script>
+
 
    		<% 	
    			List<PlaylistType> pT;
@@ -163,10 +165,20 @@
    						str = str + pT.get(i).getTitle().toString()+'"'+','+'"'+pT.get(i).getCreator().toString()+'"'+','+'"'+pT.get(i).getTrackList().getTrack().size();
    						str = str + '"';
    						str = str + ");</script>";
-   						out.println(str);
-   			   		}
+   						 
+   					for(int j = 0; j < tL.getTrack().size(); j++) {
+   						String toTracklist = "<script>window.onload = addTrackToPlaylist("+'"';
+   						toTracklist = toTracklist + tL.getTrack().get(j).getTitle().toString()+'"'+','+'"'+tL.getTrack().get(j).getAlbum().toString()+'"'+','+'"'+pT.get(i).getTrackList().getTrack().get(j).getCreator()+ '"'+ ");</script>";
+   						out.println(toTracklist);
+   					}
+   					
+   					out.println(str); 
+   						%>
+<script>   					
+<%   			   		}
    			   	}
     		}
    			%>
+   			console.log("${test}");</script>
 </body>
 </html>
