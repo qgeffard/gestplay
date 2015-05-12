@@ -33,7 +33,13 @@ public class ConnectedServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String action = request.getParameter("action");
+		// On fait un switch sur l'action qui est défini dans le formulaire
+		
+		if(action == "savePlaylists") {
+			response.sendRedirect("welcome.jsp");
+		}
+		response.sendRedirect("index.jsp");
 	}
 	
 	void savePlaylists(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

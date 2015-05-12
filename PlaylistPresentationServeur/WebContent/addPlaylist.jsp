@@ -103,7 +103,7 @@
 
    		
    			
-<form id="submitPlaylist" action="connectedServlet/savePlaylists" method="post">
+<form id="submitPlaylist" action="connectedServlet?action=savePlaylists" method="post">
 <table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>
@@ -111,11 +111,11 @@
 		<th>Tracks</th>
 		<th></th>
 	</tr>
-	<tr ng-repeat="playlist in playlists" class="ng-scope" onClick="selectPlaylist();">
+	<tr ng-repeat="playlist in playlists" class="ng-scope">
 		<td>{{playlist.name}}</td>
 		<td>{{playlist.creator}}</td>
 		<td>{{playlist.tracks}}</td>
-		<td class="ng-binding">Show tracks</td>
+		<td class="showTracks ng-binding" onClick="selectPlaylist();">Show Tracks</td>
 	</tr>
 </table>
 <input type="submit" value="Save playlists" class="alignright btn btn-primary"/>
@@ -125,18 +125,19 @@
 
 <tr id="tracktab" hidden="true"><td></td><td>Tracklist <br/><br/>
 
-<form id="submitTrack" action="connectedServlet/savePlaylist" method="post">
+<form id="submitTrack" action="connectedServlet?action=saveTrack" method="post">
 <table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>
 		<th>Album</th>
 		<th>Artist</th>
-		
+		<th></th>
 	</tr>
 	<tr ng-repeat="track in tracklist" class="ng-scope" onClick="selectTrack();">
 		<td>{{track.name}}</td>
 		<td>{{track.album}}</td>
 		<td>{{track.artist}}</td>
+		<td>Delete</td>
 	</tr>
 </table>
 <input type="submit" value="Save playlist" class="alignright btn btn-primary"/>

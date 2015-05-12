@@ -59,15 +59,11 @@ public class Process {
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
 			MyServlet.setSes(3,(List<PlaylistType>) this.query.getPlaylist());
-			System.out.println(this.query.getPlaylist().size());
 			MyServlet.sesSes(4,this.query.getUserManager());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
 		}
-		
-		System.out.println(this.query.getPlaylist().size());
-
 		
 		String queryId = query.getQueryId();
 		String rmKey = "";
