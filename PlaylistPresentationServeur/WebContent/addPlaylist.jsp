@@ -8,10 +8,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <link href="CSS/myCSS.css" rel="stylesheet">
-<<<<<<< HEAD
 <link href="CSS/bootstrap.min.css" rel="stylesheet">
-=======
->>>>>>> origin/master
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 <script	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
