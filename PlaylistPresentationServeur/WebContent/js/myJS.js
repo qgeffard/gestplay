@@ -52,6 +52,7 @@ var tracklist = [];
 			var track = document.getElementById("tabTrack");
 			var tracktab = document.getElementById("tracktab");
 			
+<<<<<<< HEAD
 			if(tracktab.hidden == true) {  // Ici on affiche la tracklist // Ici on cache la tracklist
 				$scope.idCurrentPlaylist = id;
 				tracklist = $scope.playlists[id].trackList;
@@ -68,6 +69,24 @@ var tracklist = [];
 				track.style.postion = "relative";
 				track.hidden = true;
 				tracktab.hidden = true;
+=======
+			if(tab.hidden == true) {  // Ici on cache la tracklist
+			tracklist = [];
+			$scope.tracklist = []
+			tab.hidden = false;
+			track.style.postion = "relative";
+			track.hidden = true;
+			tracktab.hidden = true;
+			}
+			else {   // Ici on affiche la tracklist
+			$scope.idCurrentPlaylist = id;
+			tracklist = $scope.playlists[id].trackList;
+			$scope.tracklist = tracklist;
+			tab.style.postion = "relative";
+			tab.hidden = true;
+			track.hidden = false;
+			tracktab.hidden = false;
+>>>>>>> origin/master
 			}
 		};
 	});
@@ -94,8 +113,13 @@ function selectPlaylist(id){
 }
 	*/
 	
+<<<<<<< HEAD
 function loadPlaylist(ident, name,creator,tracks) {
 	playlists.push({ 'ident':ident, 'name':name, 'creator': creator, 'tracks':tracks, 'trackList':tracklist });  
+=======
+function loadPlaylist(name,creator,tracks) {
+	playlists.push({ 'name':name, 'creator': creator, 'tracks':tracks, 'trackList':tracklist });  
+>>>>>>> origin/master
 }
 
 function addTrackToPlaylist(name, album, artist) {
