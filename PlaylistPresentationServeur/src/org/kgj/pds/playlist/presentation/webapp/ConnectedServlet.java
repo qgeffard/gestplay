@@ -92,6 +92,7 @@ public class ConnectedServlet extends HttpServlet {
 		listPlaylist.add(playlist);  		// On set la playlist à la liste de playlist
 		playlist.setTrackList(trackList);  	// On set la liste de track à la playlist
 		
+		System.out.println("Requête en cours d'envoi !");
 		
 		userManager = (UserManager) session.getAttribute("user");
 		status.setProgress("In progress");
@@ -102,13 +103,15 @@ public class ConnectedServlet extends HttpServlet {
 		responseManager.put(id, name);
 
 		if(action == "savePlaylists") {  // Quand l'utilisateur sauvegarde la liste des tracks
+			System.out.println("update");
 			act.setNameAction("update");
 		} else if (action == "deletePlaylist") {  // Quand l'utilisateur supprime une playlist
+			System.out.println("delete");
 			act.setNameAction("delete");
 		} else if (action == "createPlaylist") {  // Se fait lors de l'ajout d'une playlist
+			System.out.println("create");
 			act.setNameAction("create");
 			userManager = (UserManager) session.getAttribute("user");
-			
 		}
 		
 		query.setAction(act);
