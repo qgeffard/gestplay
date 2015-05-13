@@ -113,7 +113,6 @@ public class MyServlet extends HttpServlet {
 
 		Query query = new Query();
 		Action action = new Action();
-		System.out.println(test);
 		if(test == null) {
 		action.setNameAction("login");
 		} else {
@@ -133,7 +132,7 @@ public class MyServlet extends HttpServlet {
 		// 
 		
 		Status status = new Status();
-		status.setProgress("progress");
+		status.setProgress("In progress");
 		
 		query.setAction(action);
 		query.setUserManager(userManager);
@@ -151,13 +150,12 @@ public class MyServlet extends HttpServlet {
 		}
 		
 		
-		WebappMessagingServiceManager.getInstance().send(str.toString());;
+		WebappMessagingServiceManager.getInstance().send(str.toString());
 		
 			
 		synchronized (Thread.currentThread()) {
 	        try {
 	        	Thread.currentThread().wait();
-	        	System.out.println("J'ai été notify");
 	        	if(ses[1].equals("-1")) {
 	        		session.setAttribute("connected", ses[1].toString());
 	        		session.setAttribute("erreur", ses[2].toString());
@@ -166,7 +164,7 @@ public class MyServlet extends HttpServlet {
 	        	session.setAttribute("connected", ses[1].toString());
 	        	session.setAttribute("playlist", ses[3]);
 	        	session.setAttribute("user", ses[4]);
-	        	response.sendRedirect("welcome.jsp");
+	        	response.sendRedirect("addPlaylist.jsp");
 	        	}
 	        } catch (Throwable e) {
 	            e.printStackTrace();

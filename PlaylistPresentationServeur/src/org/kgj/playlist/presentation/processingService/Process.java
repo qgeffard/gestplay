@@ -16,7 +16,6 @@ public class Process {
 
 	public Process(Query q) {
 		this.query = q;	
-		System.out.println(q.getPlaylist().size());
 		responseManager = MyServlet.getResponseManager();
 		start();
 	}
@@ -64,29 +63,48 @@ public class Process {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
 		}
-		
-		String queryId = query.getQueryId();
-		String rmKey = "";
-		
-		Set cles = responseManager.keySet();
-		Iterator it = cles.iterator();
-		while (it.hasNext()){
-		   Object cle = it.next();
-		   Object valeur = responseManager.get(cle); 
-		   rmKey = cle.toString();
-		   
-		}
-		String name = MyServlet.getResponseManager().get(query.getQueryId());
-		System.out.println(name);
-		
-		int count = Thread.activeCount();
-	     
+		notifyThread();
 	    
+	}
+	
+	/* Process the create case
+	 * When the user want to create a new playlist
+	 * if the create success, don't change the display. (Already displayed in JS)
+	 * if the create fail, alert the user and delete it in the view
+	 */
+	private void create() {
+		System.out.println("create");
+		notifyThread();
+	}
+	
+	/* Process the modify playlist case
+	 * In fact, modify is a delete for the track but not only (so do the number of track)
+	 * also the modification of the name and other basic informations
+	 * All informations about the playlist will be reloaded when we made a change
+	 */
+	private void modify() {
+		System.out.println("modify");
+		notifyThread();
+	}
+	
+	/* Process the delete playlist case
+	 * Simply delete a playlist from the user account
+	 * The playlist will be deleted with JS until the answer come back
+	 * If the answer is false, then the playlist will be displayed back and the user alerted
+	 */
+	private void delete() {
+		System.out.println("delete");
+		notifyThread();
+	}
+	
+	private void notifyThread() {
+		String name = MyServlet.getResponseManager().get(query.getQueryId());
+		int count = Thread.activeCount();
 	     Thread th[] = new Thread[count];
 	     // returns the number of threads put into the array 
 	     Thread.enumerate(th);
 	    
-	     // prints active threads
+	     // notify the thread that get answer
 	     for (int i = 0; i < count; i++) {
 	    	  if(name.equals(th[i].getName())) {
 	    		  synchronized (th[i]) {
@@ -100,36 +118,6 @@ public class Process {
 	        	}
 	        
 	     }
-	     
-	     // Query => Usermanagement
-		
-	}
-	
-	/* Process the create case
-	 * When the user want to create a new playlist
-	 * if the create success, don't change the display. (Already displayed in JS)
-	 * if the create fail, alert the user and delete it in the view
-	 */
-	private void create() {
-		
-	}
-	
-	/* Process the modify playlist case
-	 * In fact, modify is a delete for the track but not only (so do the number of track)
-	 * also the modification of the name and other basic informations
-	 * All informations about the playlist will be reloaded when we made a change
-	 */
-	private void modify() {
-		
-	}
-	
-	/* Process the delete playlist case
-	 * Simply delete a playlist from the user account
-	 * The playlist will be deleted with JS until the answer come back
-	 * If the answer is false, then the playlist will be displayed back and the user alerted
-	 */
-	private void delete() {
-		
 	}
 
 }
