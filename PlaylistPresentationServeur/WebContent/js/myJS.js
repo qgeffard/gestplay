@@ -7,6 +7,7 @@ var tracklist = [];
 	currentApp.controller("ctrlPlaylist", function($scope) {
 		$scope.playlists = playlists;
 		$scope.tracklist = tracklist;
+		$scope.idCurrentPlaylist = 0;  // Mis à jour dès qu'on affiche les tracks.
 		$scope.addRow = function(){		
 			$scope.playlists.push({ 'name':$scope.name, 'creator': $scope.creator, 'tracks':$scope.tracks, 'trackList':[] });
 			$scope.name='';
@@ -19,39 +20,56 @@ var tracklist = [];
 			$scope.name='';
 			$scope.album='';
 			$scope.artist='';
+			$scope.playlists[$scope.idCurrentPlaylist].trackList = $scope.tracklist;
 		};
 		
 		$scope.del = function ( idx ) {
 			  var trackToDelete = $scope.tracklist[idx];		
 			  $scope.tracklist.splice(idx, 1);
+			  $scope.playlists[$scope.idCurrentPlaylist].trackList = $scope.tracklist;
 			};
 			
 		$scope.delPlaylist = function ( idx ) {
 			  var trackToDelete = $scope.playlists[idx];		
 			  $scope.playlists.splice(idx, 1);
+			  
+			  var tab = document.getElementById("tabPlaylist");
+			  var track = document.getElementById("tabTrack");
+			  var tracktab = document.getElementById("tracktab");
+			  if(tab.hidden == true) {  // Ici on cache la tracklist
+					tracklist = [];
+					$scope.tracklist = []
+					tab.hidden = false;
+					track.style.postion = "relative";
+					track.hidden = true;
+					tracktab.hidden = true;
+				}
 			};
 
 		$scope.editPlaylist = function (id) {
-				var tab = document.getElementById("tabPlaylist");
-				var track = document.getElementById("tabTrack");
-				var tracktab = document.getElementById("tracktab");
-				if(tab.hidden == true) {
-				tracklist = [];
-				$scope.tracklist = []
-				tab.hidden = false;
-				track.style.postion = "relative";
-				track.hidden = true;
-				tracktab.hidden = true;
-				}
-				else {
-				tracklist = $scope.playlists[id].trackList;
-				$scope.tracklist = tracklist;
-				tab.style.postion = "relative";
-				tab.hidden = true;
-				track.hidden = false;
-				tracktab.hidden = false;
-				}
-			};
+			
+			var tab = document.getElementById("tabPlaylist");
+			var track = document.getElementById("tabTrack");
+			var tracktab = document.getElementById("tracktab");
+			
+			if(tab.hidden == true) {  // Ici on cache la tracklist
+			tracklist = [];
+			$scope.tracklist = []
+			tab.hidden = false;
+			track.style.postion = "relative";
+			track.hidden = true;
+			tracktab.hidden = true;
+			}
+			else {   // Ici on affiche la tracklist
+			$scope.idCurrentPlaylist = id;
+			tracklist = $scope.playlists[id].trackList;
+			$scope.tracklist = tracklist;
+			tab.style.postion = "relative";
+			tab.hidden = true;
+			track.hidden = false;
+			tracktab.hidden = false;
+			}
+		};
 	});
 	
 	
