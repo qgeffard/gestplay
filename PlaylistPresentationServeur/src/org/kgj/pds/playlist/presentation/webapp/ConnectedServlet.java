@@ -93,7 +93,7 @@ public class ConnectedServlet extends HttpServlet {
 		playlist.setTrackList(trackList);  	// On set la liste de track à la playlist
 		
 		
-		userManager = (UserManager) session.getAttribute("user");
+		System.out.println(session.getAttribute("user"));
 		status.setProgress("In progress");
 		
 		String id = nextSessionId();
@@ -107,7 +107,7 @@ public class ConnectedServlet extends HttpServlet {
 			act.setNameAction("delete");
 		} else if (action == "createPlaylist") {  // Se fait lors de l'ajout d'une playlist
 			act.setNameAction("create");
-			userManager = (UserManager) session.getAttribute("user");
+			// userManager = (UserManager) session.getAttribute("user");
 			
 		}
 		
@@ -115,6 +115,7 @@ public class ConnectedServlet extends HttpServlet {
 		query.setUserManager(userManager);
 		query.setQueryId(id);
 		query.setStatus(status);
+		query.getPlaylist().add(playlist);
 		
 		JAXBContext jaxbContext;
 		StringWriter str = new StringWriter() ;

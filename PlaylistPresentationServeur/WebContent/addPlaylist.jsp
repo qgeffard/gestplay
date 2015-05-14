@@ -105,7 +105,7 @@
 
    		
    			
-<form id="submitPlaylist" action="connectedServlet?action=savePlaylists" method="post">
+<form id="submitPlaylist" action="connectedServlet" method="post">
 <table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>
