@@ -1,7 +1,7 @@
 var currentApp = angular.module("addPlaylist", []);
 var playlists = [];
 var tracklist = [];
-var form = $('#tabPlaylist');
+
 
 
 
@@ -13,6 +13,7 @@ var form = $('#tabPlaylist');
 		$scope.addRow = function(){		
 				$scope.action = "create";
 				$.ajax({
+				async : false,
 				method : "POST",	
 	            url : 'connectedServlet',
 	            data : {
@@ -22,12 +23,16 @@ var form = $('#tabPlaylist');
 	                tracks : $scope.tracks,
 	                tracklist : $scope.tracklist
 	            },
-	            success : function(responseText) {
+	            success : function(ident) {
 	            	console.log("success");
-	            	$scope.playlists.push({ 'name':$scope.name, 'creator': $scope.creator, 'tracks':$scope.tracks, 'trackList':[] });		
+	            	console.log(ident);
+	            	$scope.playlists.push({ 'ident':ident, 'name':$scope.name, 'creator': $scope.creator, 'tracks':$scope.tracks, 'trackList':[] });		
 	              //  $('#ajaxGetUserServletResponse').text(responseText);
-	            }
-	        });
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                console.log(xhr.status);
+	                console.log(thrownError);
+	              }	        });
 			$scope.name='';
 			$scope.creator='';
 			$scope.tracks='';		
@@ -92,28 +97,6 @@ var form = $('#tabPlaylist');
 		};
 	});
 	
-	
-	
-	/*
-function selectPlaylist(id){
-	var tab = document.getElementById("tabPlaylist");
-	var track = document.getElementById("tabTrack");
-	var tracktab = document.getElementById("tracktab");
-	if(tab.hidden == true) {
-	tab.hidden = false;
-	track.style.postion = "relative";
-	track.hidden = true;
-	tracktab.hidden = true;
-	}
-	else {
-	tab.style.postion = "relative";
-	tab.hidden = true;
-	track.hidden = false;
-	tracktab.hidden = false;
-	}
-}
-	*/
-	
 function loadPlaylist(ident, name,creator,tracks) {
 	playlists.push({ 'ident':ident, 'name':name, 'creator': creator, 'tracks':tracks, 'trackList':tracklist });  
 }
@@ -122,20 +105,3 @@ function addTrackToPlaylist(name, album, artist) {
 	tracklist.push({ 'name':name, 'album': album, 'artist':artist });
 
 }
-
-
-/*
-var form = $('#tabPlaylist');
-$( "#submitNewPlaylist" ).click(function(){
- $.ajax({
- type: form.attr('method'),
- url: form.attr('action'),
- data: value,
- success: function (data) {
- var result=data;
- $('#result').attr("value",result);
- }
- });
- return false;
- });
-*/

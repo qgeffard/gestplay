@@ -78,10 +78,10 @@ public class ConnectedServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
 		// On fait un switch sur l'action qui est défini dans le formulaire
-		
+
 		HttpSession session = request.getSession();
 		Query query = new Query();
-		Action act = new Action();
+		Action act = new Action();	
 		UserManager userManager = new UserManager();
 		Status status = new Status();
 		List<PlaylistType> listPlaylist = new ArrayList<PlaylistType>();
@@ -98,10 +98,7 @@ public class ConnectedServlet extends HttpServlet {
 		listPlaylist.add(playlist);  		// On set la playlist à la liste de playlist
 		playlist.setTrackList(trackList);  	// On set la liste de track à la playlist
 		playlist.setTitle(request.getParameter("name"));
-		
 		System.out.println("Requête en cours d'envoi !");
-		
-		System.out.println(session.getAttribute("user"));
 		status.setProgress("In progress");
 		
 		String id = nextSessionId();
@@ -109,13 +106,13 @@ public class ConnectedServlet extends HttpServlet {
 		String name = Thread.currentThread().getName();
 		responseManager.put(id, name);
 
-		if(action == "update") {  // Quand l'utilisateur sauvegarde la liste des tracks
+		if(action.equals("update")) {  // Quand l'utilisateur sauvegarde la liste des tracks
 			System.out.println("update");
 			act.setNameAction("update");
-		} else if (action == "delete") {  // Quand l'utilisateur supprime une playlist
+		} else if (action.equals("delete")) {  // Quand l'utilisateur supprime une playlist
 			System.out.println("delete");
 			act.setNameAction("delete");
-		} else if (action == "create") {  // Se fait lors de l'ajout d'une playlist
+		} else if (action.equals("create")) {  // Se fait lors de l'ajout d'une playlist
 			System.out.println("create");
 			act.setNameAction("create");
 		}
@@ -144,13 +141,18 @@ public class ConnectedServlet extends HttpServlet {
 	        try {
 	        	Thread.currentThread().wait();
 	        	System.out.println("J'ai été notify");
+	        	response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+	            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+	            String text = "";
+	            
 	        	if(action == "update") {  // Quand l'utilisateur sauvegarde la liste des tracks
 	        		 out.println();
 	    		} else if (action == "delete") {  // Quand l'utilisateur supprime une playlist
 	    			 out.println();
 	    		} else if (action == "create") {  // Se fait lors de l'ajout d'une playlist
-	    			 out.println();
-	    		}
+	    			 text = ses[10].toString();
+	    		}	
+	        	response.getWriter().write(text);       // Write response body.
 	        } catch (Throwable e) {
 	            e.printStackTrace();
 	        }

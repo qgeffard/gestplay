@@ -42,7 +42,7 @@
 
 
 <table style="width:100%"><tbody><tr><td style="width:45%;padding-left:40px;vertical-align: top">
-<form id="tabPlaylist" action="connectedServlet" method="post" class="form-horizontal" role="form" ng-submit="addRow()" >
+<form id="tabPlaylist" class="form-horizontal" role="form" ng-submit="addRow()" >
 <div>Add a playlist</div><br>
 	<div class="form-group">
 		<label class="col-md-2 control-label">Name</label>
@@ -105,7 +105,7 @@
 
    		
    			
-<form id="submitPlaylist" action="connectedServlet" method="post">
+<form id="submitPlaylist" action="connectedServlet?action=savePlaylists" method="post">
 <table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>
@@ -113,7 +113,7 @@
 		<th>Tracks</th>
 		<th></th>
 	</tr>
-	<tr ng-repeat="playlist in playlists" class="ng-scope">
+	<tr ng-repeat="playlist in playlists" class="ng-scope" ng-click="editPlaylist($index)">
 		<td>{{playlist.name}}</td>
 		<td>{{playlist.creator}}</td>
 		<td>{{playlist.tracks}}</td>
@@ -180,6 +180,6 @@
    			   	}
     		}
    			%>
-   			console.log("${test}");</script>
+   			</script>
 </body>
 </html>
