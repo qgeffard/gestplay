@@ -7,7 +7,7 @@ var currentTracks;
 
 
 	currentApp.controller("ctrlPlaylist", function($scope) {
-		$scope user = user;
+		$scope.user = user;
 		$scope.playlists = playlists;
 		$scope.tracklist = tracklist;
 		$scope.idCurrentPlaylist = 0;  // Mis à jour dès qu'on affiche les tracks.
@@ -54,6 +54,8 @@ var currentTracks;
 		
 		$scope.del = function ( idx ) {
 			  var trackToDelete = $scope.tracklist[idx];		
+			  
+			  
 			  $scope.tracklist.splice(idx, 1);
 			  $scope.playlists[$scope.idCurrentPlaylist].trackList = $scope.tracklist;
 			};
@@ -102,8 +104,6 @@ var currentTracks;
 
 		$scope.editPlaylist = function (idx) {
 			$scope.name = $scope.playlists[idx]['name'];
-			
-			
 			$scope.action = "update";
 			$.ajax({
 			method : "POST",	
@@ -166,7 +166,7 @@ var currentTracks;
 	
 
 			
-function loadPlaylist(ident, name,creator,tracks) {
+function loadPlaylist(ident, name, creator, tracks) {
 	playlists.push({ 'ident':ident, 'name':name, 'creator': creator, 'tracks':tracks, 'trackList':tracklist });  
 }
 

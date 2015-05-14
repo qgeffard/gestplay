@@ -165,7 +165,7 @@
 <%   			   		}
    			   	}
     		}
-    		String string = "<script>window.onload = function() { user ="+request.getSession().getAttribute("id")+"; }";
+    		String string = "window.onload = function() { user = "+"'"+request.getSession().getAttribute("id")+"'"+"; }";
     		out.println(string);
    			%>
    			</script>
