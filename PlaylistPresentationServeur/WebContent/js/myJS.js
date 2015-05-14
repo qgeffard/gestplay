@@ -9,13 +9,14 @@ var form = $('#tabPlaylist');
 		$scope.playlists = playlists;
 		$scope.tracklist = tracklist;
 		$scope.idCurrentPlaylist = 0;  // Mis à jour dès qu'on affiche les tracks.
+		$scope.action;
 		$scope.addRow = function(){		
-			$scope.playlists.push({ 'name':$scope.name, 'creator': $scope.creator, 'tracks':$scope.tracks, 'trackList':[] });			
-			$.ajax({
+				$scope.action = "create";
+				$.ajax({
 				method : "POST",	
 	            url : 'connectedServlet',
 	            data : {
-	            	action : "create",
+	            	action :$scope.action,
 	                name : $scope.name,
 	                creator : $scope.creator,
 	                tracks : $scope.tracks,
@@ -23,6 +24,7 @@ var form = $('#tabPlaylist');
 	            },
 	            success : function(responseText) {
 	            	console.log("success");
+	            	$scope.playlists.push({ 'name':$scope.name, 'creator': $scope.creator, 'tracks':$scope.tracks, 'trackList':[] });		
 	              //  $('#ajaxGetUserServletResponse').text(responseText);
 	            }
 	        });
@@ -30,16 +32,6 @@ var form = $('#tabPlaylist');
 			$scope.creator='';
 			$scope.tracks='';		
 	
-			$.ajax({
-				 type: form.attr('method'),
-				 url: form.attr('action'),
-				 data: form.serialize(),
-				 success: function (data) {
-				 var result=data;
-				 $('#result').attr("value",result);
-				 }
-				 });
-
 		};
 		
 		$scope.addRowtl = function(){		
@@ -128,7 +120,7 @@ function loadPlaylist(ident, name,creator,tracks) {
 
 function addTrackToPlaylist(name, album, artist) {
 	tracklist.push({ 'name':name, 'album': album, 'artist':artist });
-<<<<<<< HEAD
+
 }
 
 
@@ -147,6 +139,3 @@ $( "#submitNewPlaylist" ).click(function(){
  return false;
  });
 */
-=======
-}
->>>>>>> origin/master

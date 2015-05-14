@@ -88,9 +88,16 @@ public class ConnectedServlet extends HttpServlet {
 		List<TrackType> track = new ArrayList<TrackType>();
 		TrackListType trackList = new TrackListType();
 		PlaylistType playlist = new PlaylistType();
+		
+		User user = new User();
+		user.setLogin(session.getAttribute("user").toString());
+		user.setPassword(session.getAttribute("pass").toString());
+		
+		userManager.setUser(user);
 
 		listPlaylist.add(playlist);  		// On set la playlist à la liste de playlist
 		playlist.setTrackList(trackList);  	// On set la liste de track à la playlist
+		playlist.setTitle(request.getParameter("name"));
 		
 		System.out.println("Requête en cours d'envoi !");
 		
@@ -102,19 +109,15 @@ public class ConnectedServlet extends HttpServlet {
 		String name = Thread.currentThread().getName();
 		responseManager.put(id, name);
 
-		if(action == "savePlaylists") {  // Quand l'utilisateur sauvegarde la liste des tracks
+		if(action == "update") {  // Quand l'utilisateur sauvegarde la liste des tracks
 			System.out.println("update");
 			act.setNameAction("update");
-		} else if (action == "deletePlaylist") {  // Quand l'utilisateur supprime une playlist
+		} else if (action == "delete") {  // Quand l'utilisateur supprime une playlist
 			System.out.println("delete");
 			act.setNameAction("delete");
-		} else if (action == "createPlaylist") {  // Se fait lors de l'ajout d'une playlist
+		} else if (action == "create") {  // Se fait lors de l'ajout d'une playlist
 			System.out.println("create");
 			act.setNameAction("create");
-
-			// userManager = (UserManager) session.getAttribute("user");
-	
-
 		}
 		
 		query.setAction(act);
@@ -141,11 +144,11 @@ public class ConnectedServlet extends HttpServlet {
 	        try {
 	        	Thread.currentThread().wait();
 	        	System.out.println("J'ai été notify");
-	        	if(action == "savePlaylists") {  // Quand l'utilisateur sauvegarde la liste des tracks
+	        	if(action == "update") {  // Quand l'utilisateur sauvegarde la liste des tracks
 	        		 out.println();
-	    		} else if (action == "deletePlaylist") {  // Quand l'utilisateur supprime une playlist
+	    		} else if (action == "delete") {  // Quand l'utilisateur supprime une playlist
 	    			 out.println();
-	    		} else if (action == "createPlaylist") {  // Se fait lors de l'ajout d'une playlist
+	    		} else if (action == "create") {  // Se fait lors de l'ajout d'une playlist
 	    			 out.println();
 	    		}
 	        } catch (Throwable e) {
