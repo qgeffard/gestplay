@@ -51,20 +51,7 @@
 				ng-model="name" />
 		</div>
 	</div>
-	<div class="form-group">
-		<label class="col-md-2 control-label">Creator</label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" name="creator"
-				ng-model="creator" />
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-md-2 control-label">Tracks</label>
-		<div class="col-md-4">
-			<input type="text" class="form-control" name="tracks"
-				ng-model="tracks" />
-		</div>
-	</div>
+	
 	<div class="form-group">								
 		<div style="padding-left:110px">
 			<input id="submitNewPlaylist" type="submit" value="Submit" class="btn btn-primary"/>
@@ -105,7 +92,7 @@
 
    		
    			
-<form id="submitPlaylist" action="connectedServlet?action=savePlaylists" method="post">
+
 <table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>
@@ -117,11 +104,10 @@
 		<td>{{playlist.name}}</td>
 		<td>{{playlist.creator}}</td>
 		<td>{{playlist.tracks}}</td>
-		<td class="ng-binding"><a ng-click="editPlaylist($index)"><i class="icon-edit icon-2x"></i></a> <a ng-click="delPlaylist($index)"><i class="icon-remove-sign icon-2x"></i></a></td>
+		<td class="ng-binding"><a ng-click="editPlaylistInfos($index)"><i class="icon-edit icon-2x"></i></a> <a ng-click="delPlaylist($index)"><i class="icon-remove-sign icon-2x"></i></a></td>
 	</tr>
 </table>
-<input type="submit" value="Save playlists" class="alignright btn btn-primary"/>
-</form>
+
 
 </td></tr>
 
@@ -179,6 +165,8 @@
 <%   			   		}
    			   	}
     		}
+    		String string = "<script>window.onload = function() { user ="+request.getSession().getAttribute("id")+"; }";
+    		out.println(string);
    			%>
    			</script>
 </body>

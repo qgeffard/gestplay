@@ -105,17 +105,21 @@ public class ConnectedServlet extends HttpServlet {
 		Thread.currentThread().setName(id);
 		String name = Thread.currentThread().getName();
 		responseManager.put(id, name);
-
+		
+		
 		if(action.equals("update")) {  // Quand l'utilisateur sauvegarde la liste des tracks
 			System.out.println("update");
 			act.setNameAction("update");
+			playlist.setIdentifier(request.getParameter("identifier").toString());
 		} else if (action.equals("delete")) {  // Quand l'utilisateur supprime une playlist
 			System.out.println("delete");
 			act.setNameAction("delete");
+			playlist.setIdentifier(request.getParameter("identifier").toString());
 		} else if (action.equals("create")) {  // Se fait lors de l'ajout d'une playlist
 			System.out.println("create");
 			act.setNameAction("create");
 		}
+
 		
 		query.setAction(act);
 		query.setUserManager(userManager);
@@ -145,15 +149,23 @@ public class ConnectedServlet extends HttpServlet {
 	            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
 	            String text = "";
 	            
+	            if(ses[1].equals("0")) {
+	        		
+	            
 	        	if(action == "update") {  // Quand l'utilisateur sauvegarde la liste des tracks
-	        		 out.println();
+	        		text = ses[10].toString();
 	    		} else if (action == "delete") {  // Quand l'utilisateur supprime une playlist
-	    			 out.println();
+	    			text = ses[10].toString();
 	    		} else if (action == "create") {  // Se fait lors de l'ajout d'une playlist
 	    			 text = ses[10].toString();
 	    		}	
 	        	response.getWriter().write(text);       // Write response body.
-	        } catch (Throwable e) {
+	            } else {
+	            	session.setAttribute("erreur", ses[2].toString());
+	            	response.getWriter().write("Error"); 
+	            }
+	        }
+			catch (Throwable e) {
 	            e.printStackTrace();
 	        }
 	    }

@@ -74,9 +74,13 @@ public class Process {
 	 */
 	private void create() {
 		System.out.println("Requête reçu : Create.");
-		
-		MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier());
-		
+		if (this.query.getStatus().getSucced() != null) {
+			MyServlet.setSes(1,"0");
+			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier());
+		} else {
+			MyServlet.setSes(1,"-1");
+			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
+		}
 		notifyThread();
 	}
 	
@@ -97,6 +101,13 @@ public class Process {
 	 */
 	private void delete() {
 		System.out.println("Requête reçu : Delete");
+		if (this.query.getStatus().getSucced() != null) {
+			MyServlet.setSes(1,"0");
+			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier());
+		} else {
+			MyServlet.setSes(1,"-1");
+			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
+		}
 		notifyThread();
 	}
 	
