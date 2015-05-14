@@ -42,7 +42,7 @@
 
 
 <table style="width:100%"><tbody><tr><td style="width:45%;padding-left:40px;vertical-align: top">
-<form id="tabPlaylist" class="form-horizontal" role="form" ng-submit="addRow()" >
+<form id="tabPlaylist" action="connectedServlet" method="post" class="form-horizontal" role="form" ng-submit="addRow()" >
 <div>Add a playlist</div><br>
 	<div class="form-group">
 		<label class="col-md-2 control-label">Name</label>

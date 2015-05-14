@@ -1,6 +1,7 @@
 var currentApp = angular.module("addPlaylist", []);
 var playlists = [];
 var tracklist = [];
+var form = $('#tabPlaylist');
 
 
 
@@ -28,6 +29,17 @@ var tracklist = [];
 			$scope.name='';
 			$scope.creator='';
 			$scope.tracks='';		
+	
+			$.ajax({
+				 type: form.attr('method'),
+				 url: form.attr('action'),
+				 data: form.serialize(),
+				 success: function (data) {
+				 var result=data;
+				 $('#result').attr("value",result);
+				 }
+				 });
+
 		};
 		
 		$scope.addRowtl = function(){		
@@ -116,6 +128,7 @@ function loadPlaylist(ident, name,creator,tracks) {
 
 function addTrackToPlaylist(name, album, artist) {
 	tracklist.push({ 'name':name, 'album': album, 'artist':artist });
+<<<<<<< HEAD
 }
 
 
@@ -134,3 +147,6 @@ $( "#submitNewPlaylist" ).click(function(){
  return false;
  });
 */
+=======
+}
+>>>>>>> origin/master
