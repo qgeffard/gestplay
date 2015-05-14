@@ -15,9 +15,9 @@ import org.kgj.pds.playlist.persistance.model.PlaylistDAO;
  * @author Doox
  *
  */
-public class appBoot {
+public class AppBoot {
 
-	static Logger logger = Logger.getLogger(appBoot.class);
+	static Logger logger = Logger.getLogger(AppBoot.class);
 
 	public static void main(String[] args) {
 		logger.info("Starting app metier");
