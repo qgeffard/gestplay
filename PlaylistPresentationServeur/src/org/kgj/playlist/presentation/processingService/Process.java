@@ -73,7 +73,10 @@ public class Process {
 	 * if the create fail, alert the user and delete it in the view
 	 */
 	private void create() {
-		System.out.println("create");
+		System.out.println("Requête reçu : Create.");
+		
+		MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier());
+		
 		notifyThread();
 	}
 	
@@ -83,7 +86,7 @@ public class Process {
 	 * All informations about the playlist will be reloaded when we made a change
 	 */
 	private void modify() {
-		System.out.println("modify");
+		System.out.println("Requête reçu : Modify");
 		notifyThread();
 	}
 	
@@ -93,7 +96,7 @@ public class Process {
 	 * If the answer is false, then the playlist will be displayed back and the user alerted
 	 */
 	private void delete() {
-		System.out.println("delete");
+		System.out.println("Requête reçu : Delete");
 		notifyThread();
 	}
 	

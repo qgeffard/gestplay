@@ -180,6 +180,10 @@ public class MyServlet extends HttpServlet {
 	public static void sesSes(int i, List<PlaylistType> list) {
 		MyServlet.ses[i] = list;
 	}
+
+	public static void sesSes(int i, String identifier) {
+		MyServlet.ses[i] = identifier;
+	}
 	
 
 }
