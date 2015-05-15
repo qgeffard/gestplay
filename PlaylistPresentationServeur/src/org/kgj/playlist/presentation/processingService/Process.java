@@ -77,7 +77,7 @@ public class Process {
 		System.out.println("Requête reçu : Create.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
-			MyServlet.sesSes(10,this.query.getPlaylist().getIdentifier());
+			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
@@ -104,7 +104,7 @@ public class Process {
 		System.out.println("Requête reçu : Delete");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
-			MyServlet.sesSes(10,this.query.getPlaylist().getIdentifier());
+			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());

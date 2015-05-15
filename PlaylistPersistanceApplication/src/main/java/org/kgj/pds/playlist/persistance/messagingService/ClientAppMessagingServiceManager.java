@@ -41,8 +41,12 @@ public class ClientAppMessagingServiceManager extends GenericMessageManager {
 			e.printStackTrace();	
 		}
 		Query query = stringToQuery(messageContent);
-		System.out.println(queryToString(query));
-		Task task = new Task(query, messageContent);
+		System.out.println("login :"
+				+ query.getUserManager().getUser().getLogin());
+		System.out.println("password :"
+				+ query.getUserManager().getUser().getPassword());
+
+		Task task = new Task(query);
 		task.start();
 
 	}

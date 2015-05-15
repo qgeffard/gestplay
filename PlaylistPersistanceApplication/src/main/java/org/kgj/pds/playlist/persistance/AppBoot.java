@@ -3,10 +3,11 @@ package org.kgj.pds.playlist.persistance;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
 import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.persistance.entity.PlaylistEntity;
 import org.kgj.pds.playlist.persistance.messagingService.ClientAppMessagingServiceManager;
-import org.kgj.pds.playlist.persistance.model.QueryDAO;
+import org.kgj.pds.playlist.persistance.model.PlaylistDAO;
 
 /**
  * Class used to init all ClientHttp side
@@ -29,9 +30,9 @@ public class AppBoot {
 	}
 
 	private static void tryDbConnection() {
-		String urlDatabase = QueryDAO.props.getProperty("urlDatabase");
-		String login = QueryDAO.props.getProperty("login");
-		String password = QueryDAO.props.getProperty("password");
+		String urlDatabase = PlaylistDAO.props.getProperty("urlDatabase");
+		String login = PlaylistDAO.props.getProperty("login");
+		String password = PlaylistDAO.props.getProperty("password");
 
 		try {
 			Connection connection = DriverManager.getConnection(urlDatabase,
