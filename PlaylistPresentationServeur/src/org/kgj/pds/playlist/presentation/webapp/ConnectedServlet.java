@@ -129,7 +129,7 @@ public class ConnectedServlet extends HttpServlet {
 		//   query.setUserManager(userManager);
 		query.setQueryId(id);
 		query.setStatus(status);
-		query.getPlaylist().add(playlist);
+		query.setPlaylist(playlist);
 		
 		JAXBContext jaxbContext;
 		StringWriter str = new StringWriter() ;

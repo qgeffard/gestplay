@@ -32,54 +32,17 @@ public class Task {
 			sendGlobalPlaylistAndUser(query.getUserManager().getUser().getLogin());
 			break;
 		case "create" :
-			createPlaylist(query.getPlaylist().get(0));
+			createPlaylist(query.getPlaylist());
 		break;
 			
 		default:
 			break;
 		}
 	}
-
-	private void sendTrackById(int id) {
-		TrackEntity userTrack = trackDao.read(id);
-		PlaylistType playlistType = new PlaylistType();
-		TrackListType trackListType = new TrackListType();
-		TrackType trac = new TrackType();
-		trac = trackDao.convertToTrackType(userTrack);
-		trackListType.getTrack().add(trackDao.convertToTrackType(userTrack));
-		playlistType.setTrackList(trackListType);
-		query.getPlaylist().add(playlistType);
-		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
-		clAppMessServ.send(clAppMessServ.queryToString(query));	
-	}
-
-//	private void sendGlobalPlaylistAndUser(String login){
-//		
-//		List<PlaylistEntity> userPlaylist = playlistDao.getPlaylistByUser(login);
-//		PlaylistType playlistType = new PlaylistType();
-//		
-//		for (PlaylistEntity temp : userPlaylist){
-//			playlistType = playlistDao.convertToListPlaylistType(temp);
-//			TrackListType trackListType = new TrackListType();
-//			
-//			for (int i=0; i<temp.getTracklist().size();i++){
-//				TrackType trackType = new TrackType();
-//				TrackEntity track = temp.getTracklist().get(i);
-//				trackType = trackDao.convertToTrackType(track);
-//				trackListType.getTrack().add(trackType);
-//			}
-//			playlistType.setTrackList(trackListType);
-//			query.getPlaylist().add(playlistType);
-//		}
-//		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
-//		logger.info("Message sending :" + clAppMessServ.queryToString(query));
-//		clAppMessServ.send(clAppMessServ.queryToString(query));	
-//	}
 	
 	private void sendGlobalPlaylistAndUser(String login){
 		Query queryDb = queryDAO.readByUser(login);
 		query.getPlaylist();
-		List<PlaylistTy
 		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
 //		logger.info("Message sending :" + clAppMessServ.queryToString(query));
 //		clAppMessServ.send(clAppMessServ.queryToString(query));
@@ -89,10 +52,10 @@ public class Task {
 		PlaylistEntity playlistEntity = new PlaylistEntity();
 		playlistEntity.setCreator(playlistType.getCreator());
 		playlistEntity.setTitle(playlistType.getTitle());
-		if (playlistDao.create(playlistEntity)){
-			ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
-			logger.info("Message sending :" + clAppMessServ.queryToString(query));
-			clAppMessServ.send(clAppMessServ.queryToString(query));	
-		}
+//		if (playlistDao.create(playlistEntity)){
+//			ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
+//			logger.info("Message sending :" + clAppMessServ.queryToString(query));
+//			clAppMessServ.send(clAppMessServ.queryToString(query));	
+//		}
 	}
 }

@@ -46,7 +46,7 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 			maxId++;
 
 			pStmt.setString(1,
-					maxId + "," + 1 + "," + true + "," + query.getPlaylist().get(0).getCreator() + "," + ClientAppMessagingServiceManager.getInstance().queryToString(query));
+					maxId + "," + 1 + "," + true + "," + query.getPlaylist().getCreator() + "," + ClientAppMessagingServiceManager.getInstance().queryToString(query));
 
 			return maxId;
 
