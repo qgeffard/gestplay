@@ -3,9 +3,8 @@ CREATE DATABASE IF NOT EXISTS gestplay;
 USE gestplay;
 
 CREATE TABLE IF NOT EXISTS track (
-	id INT 			PRIMARY KEY AUTO_INCREMENT,
+	identifier INT  PRIMARY KEY AUTO_INCREMENT,
 	location 		VARCHAR(64),
-	identifier 		VARCHAR(64),
 	title 			VARCHAR(64),
 	creator 		VARCHAR(64),
 	annotation 		VARCHAR(64),
@@ -20,14 +19,13 @@ CREATE TABLE IF NOT EXISTS track (
 );
 
 CREATE TABLE IF NOT EXISTS playlist (
-	id 				INT PRIMARY KEY AUTO_INCREMENT,
+	identifier 	INT PRIMARY KEY AUTO_INCREMENT,
 	title			VARCHAR(64),
 	creator			VARCHAR(64),
 	/* FOREIGN KEY Pour le user*/
 	annotation		VARCHAR(64),
 	info			VARCHAR(64),
 	location		VARCHAR(64),
-	identifier		VARCHAR(64),
 	image			VARCHAR(64),
 	date_creation	DATE,
 	licence 		VARCHAR(64),
@@ -57,4 +55,18 @@ CREATE TABLE IF NOT EXISTS users (
 	username 		VARCHAR(64),
 	password 		VARCHAR(64),
 	image 			VARCHAR(64)
+);
+CREATE TABLE IF NOT EXISTS playlistxml (
+	id INT  PRIMARY KEY AUTO_INCREMENT,
+    version 		VARCHAR(64),
+    statut 			BOOLEAN,
+	playlist 		LONGTEXT,
+    creator			VARCHAR(64)
+);
+CREATE TABLE IF NOT EXISTS query (
+	id INT  		PRIMARY KEY ,
+    version 		PRIMARY KEY VARCHAR(64),
+    statut 			BOOLEAN,
+	query 			LONGTEXT,
+    creator			VARCHAR(64)
 );
