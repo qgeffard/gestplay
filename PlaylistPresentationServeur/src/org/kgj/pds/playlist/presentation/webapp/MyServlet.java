@@ -163,6 +163,7 @@ public class MyServlet extends HttpServlet {
 	        	} else {
 	        	session.setAttribute("connected", ses[1].toString());
 	        	session.setAttribute("playlist", ses[3]);
+	        	session.setAttribute("token", ses[5]);
 	        	session.setAttribute("user", user.getLogin().toString());
 	        	session.setAttribute("pass", user.getPassword().toString());
 	        	response.sendRedirect("addPlaylist.jsp");

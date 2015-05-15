@@ -59,6 +59,7 @@ public class Process {
 			MyServlet.setSes(1,"0");
 			MyServlet.setSes(3,(List<PlaylistType>) this.query.getPlaylist());
 			MyServlet.sesSes(4,this.query.getUserManager());
+			MyServlet.setSes(5,this.query.getUserManager().getConnectedToken().toString());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());

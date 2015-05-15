@@ -92,7 +92,7 @@ public class ConnectedServlet extends HttpServlet {
 		User user = new User();
 		user.setLogin(session.getAttribute("user").toString());
 		user.setPassword(session.getAttribute("pass").toString());
-		
+		userManager.setConnectedToken(session.getAttribute("token").toString());
 		userManager.setUser(user);
 
 		listPlaylist.add(playlist);  		// On set la playlist à la liste de playlist
