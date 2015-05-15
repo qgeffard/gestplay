@@ -107,11 +107,13 @@ public class ConnectedServlet extends HttpServlet {
 		String name = Thread.currentThread().getName();
 		responseManager.put(id, name);
 		
+		System.out.println(request.getParameter("tracklist"));
 		
 		if(action.equals("update")) {  // Quand l'utilisateur sauvegarde la liste des tracks
 			System.out.println("update");
 			act.setNameAction("update");
 			playlist.setIdentifier(request.getParameter("identifier").toString());
+		// 	tracklist = request.getParameter("tracklist");
 		} else if (action.equals("delete")) {  // Quand l'utilisateur supprime une playlist
 			System.out.println("delete");
 			act.setNameAction("delete");
@@ -123,7 +125,8 @@ public class ConnectedServlet extends HttpServlet {
 
 		
 		query.setAction(act);
-		query.setUserManager(userManager);
+		// On se sert désormais du connected token, et non plus du userManager
+		//   query.setUserManager(userManager);
 		query.setQueryId(id);
 		query.setStatus(status);
 		query.getPlaylist().add(playlist);
@@ -147,7 +150,7 @@ public class ConnectedServlet extends HttpServlet {
 	        	Thread.currentThread().wait();
 	        	System.out.println("J'ai été notify");
 	        	response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-	            response.setCharacterEncoding("UTF-8"); // You want world domination, huh?
+	            response.setCharacterEncoding("UTF-8"); // For world domination.
 	            String text = "";
 	            
 	            if(ses[1].equals("0")) {

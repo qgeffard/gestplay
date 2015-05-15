@@ -11,13 +11,15 @@ var currentTracks;
 		$scope.playlists = playlists;
 		$scope.tracklist = tracklist;
 		$scope.idCurrentPlaylist = 0;  // Mis à jour dès qu'on affiche les tracks.
-		$scope.action;
+		$scope.action = "";
 		$scope.addRow = function(){		
 			
 			if($scope.action.equals("update")) {
 				// Ici on modifie
+				$scope.modifierPlaylist(idCurrentPlaylist);  				
+				$scope.playlists[idCurrentPlaylist]['name'] = $scope.name;
+				$scope.action = "";
 			} else {
-			
 			$scope.action = "create";
 			$scope.tracks = 0;
 			$.ajax({
@@ -56,14 +58,14 @@ var currentTracks;
 			$scope.album='';
 			$scope.artist='';
 			$scope.playlists[$scope.idCurrentPlaylist].trackList = $scope.tracklist;
+			$scope.modifierPlaylist($scope.idCurrentPlaylist);
 		};
 		
 		$scope.del = function ( idx ) {
 			  var trackToDelete = $scope.tracklist[idx];		
-			  
-			  
 			  $scope.tracklist.splice(idx, 1);
 			  $scope.playlists[$scope.idCurrentPlaylist].trackList = $scope.tracklist;
+			  $scope.modifierPlaylist($scope.idCurrentPlaylist);
 			};
 			
 		$scope.delPlaylist = function ( idx ) {
@@ -108,15 +110,16 @@ var currentTracks;
               }	        });
 			};
 
-		$scope.editPlaylist = function (idx) {
+		$scope.editPlaylist = function (idx) {  // Pour modifier la playlist
+			/* On fill le formulaire et on modifie le currentPlaylist id pour changer l'action */
 			$scope.name = $scope.playlists[idx]['name'];
-			if($scope.action.equals("update")) {
+			if($scope.action.equals("update")) {  // Si on rappuie sur le bouton d'edit, on le cancel
 				$scope.action = "";
 			} else {
 				$scope.action = "update";
 				$scope.playlists[idx]['name'] = $scope.name;
             	$scope.tracklist = $scope.playlists[idx]['tracklist']; 
-            	
+            	$scope.idCurrentPlaylist = idx;
             	
             /* Affichage de la tracklist */
     			var tab = document.getElementById("tabPlaylist");
@@ -132,6 +135,35 @@ var currentTracks;
 				tracktab.hidden = false;
 				
 			}
+		},
+		
+		$scope.modifierPlaylist = function(idx) {
+			$.ajax({
+				method : "POST",	
+	            url : 'connectedServlet',
+	            data : {
+	            	action : $scope.action,
+	            	identifier : $scope.playlists[idx]['ident'],
+	                name : $scope.playlists[idx]['name'],
+	                creator : $scope.playlists[idx]['creator'],
+	                tracks : $scope.playlists[idx]['tracks'],
+	                tracklist : $scope.playlists[idx]['tracklist']
+	            },
+	            success : function(ident) {
+	            	console.log("success");
+	            	console.log(ident);
+	            	if(!ident.equals("Error")) {
+	            	$scope.playlists[idx]['name'] = $scope.name;
+	            	$scope.playlists[idx]['tracks'] = $scope.playlists[idx]['tracklist'].length;
+	            	$scope.playlists[idx]['tracklist'] = $scope.tracklist; // On utilise la variable intermediaire pour éviter les traitements douloureux.
+	            	} else {
+	            		// On envoie la notification de non création 
+	            	}
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                console.log(xhr.status);
+	                console.log(thrownError);
+	              }	        });
 		}
 			
 	});	
