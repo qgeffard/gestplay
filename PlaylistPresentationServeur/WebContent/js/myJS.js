@@ -13,6 +13,11 @@ var currentTracks;
 		$scope.idCurrentPlaylist = 0;  // Mis à jour dès qu'on affiche les tracks.
 		$scope.action;
 		$scope.addRow = function(){		
+			
+			if($scope.action.equals("update")) {
+				// Ici on modifie
+			} else {
+			
 			$scope.action = "create";
 			$scope.tracks = 0;
 			$.ajax({
@@ -38,10 +43,11 @@ var currentTracks;
                 console.log(xhr.status);
                 console.log(thrownError);
               }	        });
+			}
+			
 			$scope.name='';
 			$scope.creator='';
-			$scope.tracks='';		
-	
+			$scope.tracks='';
 		};
 		
 		$scope.addRowtl = function(){		
@@ -104,35 +110,28 @@ var currentTracks;
 
 		$scope.editPlaylist = function (idx) {
 			$scope.name = $scope.playlists[idx]['name'];
-			$scope.action = "update";
-			$.ajax({
-			method : "POST",	
-            url : 'connectedServlet',
-            data : {
-            	action : $scope.action,
-            	identifier : $scope.playlists[idx]['ident'],
-                name : $scope.playlists[idx]['name'],
-                creator : $scope.playlists[idx]['creator'],
-                tracks : $scope.playlists[idx]['tracks'],
-                tracklist : $scope.playlists[idx]['tracklist']
-            },
-            success : function(ident) {
-            	console.log("success");
-            	console.log(ident);
-            	if(!ident.equals("Error")) {
-            		$scope.playlists[idx]['name'] = $scope.name;
-            		$scope.tracklist = $scope.playlists[idx]['tracklist']; 
-
-            	} else {
-            		// Si on reçoit un message d'erreur
-            		// Envoie la notification de non modification.
-            	}
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-                console.log(xhr.status);
-                console.log(thrownError);
-            }
-        });
+			if($scope.action.equals("update")) {
+				$scope.action = "";
+			} else {
+				$scope.action = "update";
+				$scope.playlists[idx]['name'] = $scope.name;
+            	$scope.tracklist = $scope.playlists[idx]['tracklist']; 
+            	
+            	
+            /* Affichage de la tracklist */
+    			var tab = document.getElementById("tabPlaylist");
+    			var track = document.getElementById("tabTrack");
+    			var tracktab = document.getElementById("tracktab");
+    			
+    			$scope.idCurrentPlaylist = id;
+				tracklist = $scope.playlists[id].trackList;
+				$scope.tracklist = tracklist;
+				tab.style.postion = "relative";
+				tab.hidden = true;
+				track.hidden = false;
+				tracktab.hidden = false;
+				
+			}
 		}
 			
 	});	

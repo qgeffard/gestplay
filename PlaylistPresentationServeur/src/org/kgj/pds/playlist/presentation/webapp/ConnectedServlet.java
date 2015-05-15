@@ -98,6 +98,7 @@ public class ConnectedServlet extends HttpServlet {
 		listPlaylist.add(playlist);  		// On set la playlist à la liste de playlist
 		playlist.setTrackList(trackList);  	// On set la liste de track à la playlist
 		playlist.setTitle(request.getParameter("name"));
+		playlist.setCreator(session.getAttribute("user").toString());
 		System.out.println("Requête en cours d'envoi !");
 		status.setProgress("In progress");
 		
