@@ -41,3 +41,4 @@ local.properties
 /activemq-data/*
 /logs/*
 
+/target

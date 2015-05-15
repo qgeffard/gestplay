@@ -11,18 +11,19 @@ import org.kgj.pds.playlist.persistance.messagingProtocol.TrackListType;
 import org.kgj.pds.playlist.persistance.messagingProtocol.TrackType;
 import org.kgj.pds.playlist.persistance.messagingService.ClientAppMessagingServiceManager;
 import org.kgj.pds.playlist.persistance.model.PlaylistDAO;
+import org.kgj.pds.playlist.persistance.model.QueryDAO;
 import org.kgj.pds.playlist.persistance.model.TrackDAO;
 import org.kgj.pds.playlist.persistance.model.UsersDAO;
 
 public class Task {
 	private Query query;
-	private PlaylistDAO playlistDao;
+	private QueryDAO queryDao;
 	private TrackDAO trackDao;
 	private UsersDAO usersDao;
 	protected static final Logger logger = Logger.getLogger(Task.class);
 
 	public Task() {
-		playlistDao = new PlaylistDAO(); 
+		queryDao = new QueryDAO(); 
 		trackDao = new TrackDAO();
 		usersDao = new UsersDAO();
 	}
@@ -38,40 +39,47 @@ public class Task {
 		case "read":
 			sendGlobalPlaylistAndUser(query.getUserManager().getUser().getLogin());
 			break;
+			
+		case "create":
+			sendNewPlaylistSaved();
+			break;
+			
+		case "update":
+			sendModifiedPlaylist();
+			break;
+		
+		case "delete":
+			sendDeletedPlaylist();
+			break;
 
 		default:
 			break;
 		}
 	}
-
-	private void sendTrackById(int id) {
-		TrackEntity userTrack = trackDao.read(id);
-		PlaylistType playlistType = new PlaylistType();
-		TrackListType trackListType = new TrackListType();
-		TrackType trac = new TrackType();
-		trac = trackDao.convertToTrackType(userTrack);
-		trackListType.getTrack().add(trackDao.convertToTrackType(userTrack));
-		playlistType.setTrackList(trackListType);
-		query.getPlaylist().add(playlistType);
-		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
-		clAppMessServ.send(clAppMessServ.queryToString(query));	
+	
+	private void sendDeletedPlaylist() {
+		if(queryDao.delete(query)){
+			
+		}
 	}
 
+	private void sendModifiedPlaylist() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	//Create the playlist and return it with the new identifier
+	private void sendNewPlaylistSaved() {
+		query.getPlaylist().get(0).setIdentifier(Integer.toString(queryDao.create(query)));
+		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
+		logger.info("Message sending :" + clAppMessServ.queryToString(query));
+		clAppMessServ.send(clAppMessServ.queryToString(query));	
+	}
+	
+	//on read or login return all playlist of a specific user
 	private void sendGlobalPlaylistAndUser(String login){
-		List<PlaylistEntity> userPlaylist = playlistDao.getPlaylistByUser(login);
-		PlaylistType playlistType = new PlaylistType();
-		for (PlaylistEntity temp:userPlaylist){
-			playlistType = playlistDao.convertToListPlaylistType(temp);
-			TrackListType trackListType = new TrackListType();
-			for (int i=0; i<temp.getTracklist().size();i++){
-				TrackType trackType = new TrackType();
-				TrackEntity track = temp.getTracklist().get(i);
-				trackType = trackDao.convertToTrackType(track);
-				trackListType.getTrack().add(trackType);
-			}
-			playlistType.setTrackList(trackListType);
-			query.getPlaylist().add(playlistType);
-		}
+		Query querydb = queryDao.readByUser(login);
+		query.getPlaylist().addAll(querydb.getPlaylist());
 		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
 		logger.info("Message sending :" + clAppMessServ.queryToString(query));
 		clAppMessServ.send(clAppMessServ.queryToString(query));	
