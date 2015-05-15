@@ -96,7 +96,7 @@
 					</xsd:complexType>
 				</xsd:element>
 				
-				<xsd:element ref="xspf:playlist" minOccurs="0" maxOccurs="unbounded" />
+				<xsd:element ref="xspf:playlist" minOccurs="0" maxOccurs="1" />
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
