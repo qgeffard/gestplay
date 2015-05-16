@@ -13,8 +13,8 @@ var currentTracks;
 		$scope.idCurrentPlaylist = 0;  // Mis à jour dès qu'on affiche les tracks.
 		$scope.action = "";
 		$scope.addRow = function(){		
-			
-			if($scope.action.equals("update")) {
+			console.log($scope.action);
+			if($scope.action == "update") {
 				// Ici on modifie
 				$scope.modifierPlaylist(idCurrentPlaylist);  				
 				$scope.playlists[idCurrentPlaylist]['name'] = $scope.name;

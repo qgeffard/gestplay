@@ -143,9 +143,13 @@
     		if(null != request.getSession().getAttribute("playlist")) {
     			pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
     			TrackListType tL; 
-    			
-   			   	for(int i = 0; i < pT.size() ; i++) { 
+    			System.out.println("addplaylist 1");
+   			   	for(int i = 0; i < pT.size() ; i++) {
+   			   	System.out.println("addplaylist 2");
    			   		if(0 != pT.size()) {
+   			   		System.out.println("addplaylist 3");
+   			   		System.out.println(pT.get(i));
+   			   		System.out.println(pT.get(i).getIdentifier().toString());
    						tL = pT.get(i).getTrackList();
    						pT.get(i).getTitle();
    						String str = "<script>window.onload = loadPlaylist("+'"';

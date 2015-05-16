@@ -41,7 +41,7 @@ public class DispatcherViewSide {
 			int statusRequest = client.executeMethod(post);
 			
 			if (statusRequest != -1) {
-				logger.info("Acknowledge http request : "+ post.getResponseBodyAsString());
+				logger.error("Acknowledge http request : "+ post.getResponseBodyAsString());
 	        }
 			
 		} catch (IOException e) {

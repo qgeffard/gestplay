@@ -37,12 +37,11 @@ public class MyServlet extends HttpServlet {
 	private static final long serialVersionUID = -871399416795687851L;
 	private static final Logger logger = Logger.getLogger(MyServlet.class);
 	private SecureRandom random = new SecureRandom();
-	
-	/* 1 = connected
-	 * 2 = error message
-	 * 3 = list of playlist
- */	
-	private static Object ses[] = new Object[10];
+
+	/*
+	 * 1 = connected 2 = error message 3 = list of playlist
+	 */
+	private static Object ses[] = new Object[11];
 	private static Map<String, String> responseManager;
 
 	public void init(ServletConfig config) throws ServletException {
@@ -57,21 +56,21 @@ public class MyServlet extends HttpServlet {
 	 * Default constructor.
 	 */
 	public MyServlet() {
-		
+
 	}
-	
+
 	public static Object[] getSes() {
 		return ses;
 	}
-	
+
 	public static String getSes(int i) {
 		return ses[i].toString();
 	}
-	
+
 	public static void setSes(Object[] ses) {
 		MyServlet.ses = ses;
 	}
-	
+
 	public static void setSes(int i, Object s) {
 		MyServlet.ses[i] = s;
 	}
@@ -96,16 +95,15 @@ public class MyServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-			
+
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
 		String userAgent = request.getHeader("User-Agent");
 		String test = request.getParameter("test");
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute("id", login);
-		
+
 		String id = nextSessionId();
 		Thread.currentThread().setName(id);
 		String name = Thread.currentThread().getName();
@@ -113,10 +111,10 @@ public class MyServlet extends HttpServlet {
 
 		Query query = new Query();
 		Action action = new Action();
-		if(test == null) {
-		action.setNameAction("login");
+		if (test == null) {
+			action.setNameAction("login");
 		} else {
-		action.setNameAction("test");
+			action.setNameAction("test");
 		}
 
 		User user = new User();
@@ -126,58 +124,55 @@ public class MyServlet extends HttpServlet {
 		UserManager userManager = new UserManager();
 		userManager.setUser(user);
 
-		
 		// Add le status de la query
 		// Si erreur, message et source (d'o� �a bug, on s'en fou)
-		// 
-		
+		//
+
 		Status status = new Status();
 		status.setProgress("In progress");
-		
+
 		query.setAction(action);
 		query.setUserManager(userManager);
 		query.setQueryId(id);
 		query.setStatus(status);
-		
+
 		JAXBContext jaxbContext;
-		StringWriter str = new StringWriter() ;
+		StringWriter str = new StringWriter();
 		try {
 			jaxbContext = JAXBContext.newInstance("org.kgj.pds.playlist.presentation.messagingProtocol");
 			Marshaller mar = jaxbContext.createMarshaller();
 			mar.marshal(query, str);
-		} catch ( JAXBException e) {
+		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		WebappMessagingServiceManager.getInstance().send(str.toString());
-		
-			
+
 		synchronized (Thread.currentThread()) {
-	        try {
-	        	Thread.currentThread().wait();
-	        	if(ses[1].equals("-1")) {
-	        		session.setAttribute("connected", ses[1].toString());
-	        		session.setAttribute("erreur", ses[2].toString());
-	        		response.sendRedirect("index.jsp");
-	        	} else {
-	        	session.setAttribute("connected", ses[1].toString());
-	        	session.setAttribute("playlist", ses[3]);
-	        	session.setAttribute("token", ses[5]);
-	        	session.setAttribute("user", user.getLogin().toString());
-	        	session.setAttribute("pass", user.getPassword().toString());
-	        	response.sendRedirect("addPlaylist.jsp");
-	        	}
-	        } catch (Throwable e) {
-	            e.printStackTrace();
-	        }
-	    }
+			try {
+				Thread.currentThread().wait();
+				if (ses[1].equals("-1")) {
+					session.setAttribute("connected", ses[1].toString());
+					session.setAttribute("erreur", ses[2].toString());
+					response.sendRedirect("index.jsp");
+				} else {
+					session.setAttribute("connected", ses[1].toString());
+					session.setAttribute("playlist", ses[3]);
+					session.setAttribute("token", ses[5]);
+					session.setAttribute("user", user.getLogin().toString());
+					session.setAttribute("pass", user.getPassword().toString());
+					response.sendRedirect("addPlaylist.jsp");
+				}
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public static void sesSes(int i, UserManager userManager) {
 		MyServlet.ses[i] = userManager.getUser().getLogin();
 	}
-	
+
 	public static void sesSes(int i, List<PlaylistType> list) {
 		MyServlet.ses[i] = list;
 	}
@@ -185,6 +180,5 @@ public class MyServlet extends HttpServlet {
 	public static void sesSes(int i, String identifier) {
 		MyServlet.ses[i] = identifier;
 	}
-	
 
 }

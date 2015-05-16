@@ -58,3 +58,11 @@ CREATE TABLE IF NOT EXISTS users (
 	password 		VARCHAR(64),
 	image 			VARCHAR(64)
 );
+CREATE TABLE IF NOT EXISTS query (
+	id				INT,
+	version			INT,
+	statut			boolean,
+	creator			VARCHAR(64),
+	query			LONGTEXT,
+	PRIMARY KEY(id,version)
+);

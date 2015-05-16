@@ -3,6 +3,8 @@ package org.kgj.pds.playlist.persistance;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.kgj.pds.playlist.Utils.QueryManager;
+import org.kgj.pds.playlist.Utils.Source;
 import org.kgj.pds.playlist.persistance.entity.PlaylistEntity;
 import org.kgj.pds.playlist.persistance.entity.TrackEntity;
 import org.kgj.pds.playlist.persistance.messagingProtocol.PlaylistType;
@@ -23,7 +25,7 @@ public class Task {
 	protected static final Logger logger = Logger.getLogger(Task.class);
 
 	public Task() {
-		queryDao = new QueryDAO(); 
+		queryDao = new QueryDAO();
 		trackDao = new TrackDAO();
 		usersDao = new UsersDAO();
 	}
@@ -39,15 +41,15 @@ public class Task {
 		case "read":
 			sendGlobalPlaylistAndUser(query.getUserManager().getUser().getLogin());
 			break;
-			
+
 		case "create":
 			sendNewPlaylistSaved();
 			break;
-			
+
 		case "update":
 			sendModifiedPlaylist();
 			break;
-		
+
 		case "delete":
 			sendDeletedPlaylist();
 			break;
@@ -56,32 +58,46 @@ public class Task {
 			break;
 		}
 	}
-	
+
 	private void sendDeletedPlaylist() {
-		if(queryDao.delete(query)){
-			
+		if (queryDao.delete(query)) {
+			QueryManager.setStatusSucced(query);
+			QueryManager.flushPlaylist(query);
+		} else {
+			QueryManager.setStatusError(query, Source.PERSISTANCE.getName(), "Erreur delete");
 		}
+		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
+		logger.info("Message sending :" + clAppMessServ.queryToString(query));
+		clAppMessServ.send(clAppMessServ.queryToString(query));
 	}
 
 	private void sendModifiedPlaylist() {
-		// TODO Auto-generated method stub
-		
+		if (queryDao.updatePlaylist(query)) {
+			QueryManager.setStatusSucced(query);
+		} else {
+			QueryManager.setStatusError(query, Source.PERSISTANCE.getName(), "Erreur d'update");
+		}
+		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
+		logger.info("Message sending :" + clAppMessServ.queryToString(query));
+		clAppMessServ.send(clAppMessServ.queryToString(query));
 	}
 
-	//Create the playlist and return it with the new identifier
+	// Create the playlist and return it with the new identifier
 	private void sendNewPlaylistSaved() {
 		query.getPlaylist().get(0).setIdentifier(Integer.toString(queryDao.create(query)));
+		QueryManager.setStatusSucced(query);
 		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
 		logger.info("Message sending :" + clAppMessServ.queryToString(query));
-		clAppMessServ.send(clAppMessServ.queryToString(query));	
+		clAppMessServ.send(clAppMessServ.queryToString(query));
 	}
-	
-	//on read or login return all playlist of a specific user
-	private void sendGlobalPlaylistAndUser(String login){
+
+	// on read or login return all playlist of a specific user
+	private void sendGlobalPlaylistAndUser(String login) {
 		Query querydb = queryDao.readByUser(login);
 		query.getPlaylist().addAll(querydb.getPlaylist());
+		QueryManager.setStatusSucced(query);
 		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
 		logger.info("Message sending :" + clAppMessServ.queryToString(query));
-		clAppMessServ.send(clAppMessServ.queryToString(query));	
+		clAppMessServ.send(clAppMessServ.queryToString(query));
 	}
 }

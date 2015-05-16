@@ -23,8 +23,7 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 	public static Properties props;
 	static {
 		props = new Properties();
-		InputStream inStream = org.kgj.pds.playlist.persistance.model.TrackDAO.class
-				.getResourceAsStream("db.properties");
+		InputStream inStream = org.kgj.pds.playlist.persistance.model.TrackDAO.class.getResourceAsStream("db.properties");
 		try {
 			props.load(inStream);
 			String driverName = props.getProperty("driverName");
@@ -61,11 +60,17 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 			}
 
 			String sqlOrder2 = props.getProperty("queryInsert");
+			pStmt = connection.prepareStatement(sqlOrder2);
 			maxId++;
-
-			pStmt.setString(1, maxId + "," + 1 + "," + true + "," + query.getPlaylist().get(0).getCreator() + ","
-					+ ClientAppMessagingServiceManager.getInstance().queryToString(query));
-
+			query.getPlaylist().get(0).setIdentifier(Integer.toString(maxId));
+			pStmt.setInt(1, maxId);
+			pStmt.setInt(2, 1);
+			pStmt.setBoolean(3, true);
+			pStmt.setString(4, query.getPlaylist().get(0).getCreator());
+			pStmt.setString(5, ClientAppMessagingServiceManager.getInstance().queryToString(query));
+			logger.info(pStmt.toString());
+			logger.info(ClientAppMessagingServiceManager.getInstance().queryToString(query));
+			pStmt.executeUpdate();
 			return maxId;
 
 		} catch (SQLException e1) {
@@ -141,22 +146,43 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 
 			String sqlOrder = props.getProperty("queryEnableDisable");
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
-			
+
 			PlaylistType currentPlaylist = query.getPlaylist().get(0);
-//			private int id;
-//			private int version;
-//			private boolean statut;
-//			private String creator;
-//			private String query;
-			currentPlaylist.setVersion(currentPlaylist.getVersion()+1);
+			currentPlaylist.setVersion(currentPlaylist.getVersion() + 1);
 			pStmt.setString(1, currentPlaylist.getIdentifier() + "," + currentPlaylist.getVersion() + "," + false + "," + currentPlaylist.getCreator() + ","
 					+ ClientAppMessagingServiceManager.getInstance().queryToString(query));
 
 			ResultSet rs = pStmt.executeQuery();
+			return true;
 		} catch (Exception e) {
 
 		}
-
 		return false;
 	}
+
+	public boolean updatePlaylist(Query query) {
+		String urlDatabase = props.getProperty("urlDatabase");
+		String login = props.getProperty("login");
+		String password = props.getProperty("password");
+		ClientAppMessagingServiceManager clientAppMessagingService = ClientAppMessagingServiceManager.getInstance();
+
+		try {
+			Connection connection = DriverManager.getConnection(urlDatabase, login, password);
+
+			String sqlOrder = props.getProperty("queryEnableDisable");
+			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
+
+			PlaylistType currentPlaylist = query.getPlaylist().get(0);
+			currentPlaylist.setVersion(currentPlaylist.getVersion() + 1);
+			pStmt.setString(1, currentPlaylist.getIdentifier() + "," + currentPlaylist.getVersion() + "," + true + "," + currentPlaylist.getCreator() + ","
+					+ ClientAppMessagingServiceManager.getInstance().queryToString(query));
+
+			ResultSet rs = pStmt.executeQuery();
+			return true;
+		} catch (Exception e) {
+
+		}
+		return false;
+	}
+
 }

@@ -10,6 +10,8 @@ import org.kgj.pds.playlist.presentation.messagingProtocol.PlaylistType;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
 import org.kgj.pds.playlist.presentation.webapp.MyServlet;
 
+import com.sun.istack.internal.logging.Logger;
+
 public class Process {
 	Query query;
 	private static Map<String, String> responseManager;
@@ -59,7 +61,7 @@ public class Process {
 			MyServlet.setSes(1,"0");
 			MyServlet.setSes(3,(List<PlaylistType>) this.query.getPlaylist());
 			MyServlet.sesSes(4,this.query.getUserManager());
-			MyServlet.setSes(5,this.query.getUserManager().getConnectedToken().toString());
+//			MyServlet.setSes(5,this.query.getUserManager().getConnectedToken().toString());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());

@@ -92,7 +92,7 @@ public class ConnectedServlet extends HttpServlet {
 		User user = new User();
 		user.setLogin(session.getAttribute("user").toString());
 		user.setPassword(session.getAttribute("pass").toString());
-		userManager.setConnectedToken(session.getAttribute("token").toString());
+//		userManager.setConnectedToken(session.getAttribute("token").toString());
 		userManager.setUser(user);
 
 		listPlaylist.add(playlist);  		// On set la playlist à la liste de playlist
@@ -162,7 +162,8 @@ public class ConnectedServlet extends HttpServlet {
 	    			text = ses[10].toString();
 	    		} else if (action == "create") {  // Se fait lors de l'ajout d'une playlist
 	    			 text = ses[10].toString();
-	    		}	
+	    		}
+	        	System.out.println(text);
 	        	response.getWriter().write(text);       // Write response body.
 	            } else {
 	            	session.setAttribute("erreur", ses[2].toString());
