@@ -24,6 +24,8 @@ public class Process {
 	
 	
 	private void start() {
+		this.query.toString();
+		
 		switch (this.query.getAction().getNameAction()) {
 		
 		case "login":
@@ -79,7 +81,7 @@ public class Process {
 		System.out.println("Requête reçu : Create.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
-			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier());
+			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
@@ -93,7 +95,14 @@ public class Process {
 	 * All informations about the playlist will be reloaded when we made a change
 	 */
 	private void modify() {
-		System.out.println("Requête reçu : Modify");
+		System.out.println("Requête reçu : Update.");
+		if (this.query.getStatus().getSucced() != null) {
+			MyServlet.setSes(1,"0");
+			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
+		} else {
+			MyServlet.setSes(1,"-1");
+			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
+		}
 		notifyThread();
 	}
 	
@@ -103,10 +112,10 @@ public class Process {
 	 * If the answer is false, then the playlist will be displayed back and the user alerted
 	 */
 	private void delete() {
-		System.out.println("Requête reçu : Delete");
+		System.out.println("Requête reçu : Delete.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
-			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier());
+			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());

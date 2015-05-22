@@ -100,11 +100,11 @@
 		<th>Tracks</th>
 		<th></th>
 	</tr>
-	<tr ng-repeat="playlist in playlists" class="ng-scope" ng-click="editPlaylist($index)">
-		<td>{{playlist.name}}</td>
-		<td>{{playlist.creator}}</td>
-		<td>{{playlist.tracks}}</td>
-		<td class="ng-binding"><a ng-click="editPlaylistInfos($index)"><i class="icon-edit icon-2x"></i></a> <a ng-click="delPlaylist($index)"><i class="icon-remove-sign icon-2x"></i></a></td>
+	<tr ng-repeat="playlist in playlists" class="ng-scope">
+		<td ng-click="editPlaylistInfos($index)">{{playlist.name}}</td>
+		<td ng-click="editPlaylistInfos($index)">{{playlist.creator}}</td>
+		<td ng-click="editPlaylistInfos($index)">{{playlist.tracks}}</td>
+		<td class="ng-binding"><a ng-click="editPlaylist($index)"><i class="icon-edit icon-2x"></i></a> <a ng-click="delPlaylist($index)"><i class="icon-remove-sign icon-2x"></i></a></td>
 	</tr>
 </table>
 
@@ -165,13 +165,13 @@
    					
    					out.println(str); 
    						%>
-<script>   					
+				
 <%   			   		}
    			   	}
     		}
-    		String string = "window.onload = function() { user = "+"'"+request.getSession().getAttribute("id")+"'"+"; }";
+    		String string = "<script>window.onload = function() { user = "+"'"+request.getSession().getAttribute("id")+"'"+"; }</script>";
     		out.println(string);
    			%>
-   			</script>
+   			
 </body>
 </html>

@@ -107,15 +107,15 @@ public class ConnectedServlet extends HttpServlet {
 		String name = Thread.currentThread().getName();
 		responseManager.put(id, name);
 		
-		System.out.println(request.getParameter("tracklist"));
+		
 		
 		if(action.equals("update")) {  // Quand l'utilisateur sauvegarde la liste des tracks
-			System.out.println("update");
+			System.out.println("Update : "+request.getParameter("identifier").toString());
 			act.setNameAction("update");
 			playlist.setIdentifier(request.getParameter("identifier").toString());
 		// 	tracklist = request.getParameter("tracklist");
 		} else if (action.equals("delete")) {  // Quand l'utilisateur supprime une playlist
-			System.out.println("delete");
+			System.out.println("Delete : "+request.getParameter("identifier").toString());
 			act.setNameAction("delete");
 			playlist.setIdentifier(request.getParameter("identifier").toString());
 		} else if (action.equals("create")) {  // Se fait lors de l'ajout d'une playlist
@@ -154,15 +154,30 @@ public class ConnectedServlet extends HttpServlet {
 	            String text = "";
 	            
 	            if(ses[1].equals("0")) {
-	        		
+	            List<PlaylistType> pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
 	            
 	        	if(action == "update") {  // Quand l'utilisateur sauvegarde la liste des tracks
+	        		for(int i = 0; i < pT.size(); i++) {
+	    				if(pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
+	    					pT.get(i).setTitle(request.getParameter("name"));
+	    				}
+	    			}    	
 	        		text = ses[10].toString();
 	    		} else if (action == "delete") {  // Quand l'utilisateur supprime une playlist
+	    			for(int i = 0; i < pT.size(); i++) {
+	    				if(pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
+	    					pT.remove(i);
+	    				}
+	    			}    			
 	    			text = ses[10].toString();
-	    		} else if (action == "create") {  // Se fait lors de l'ajout d'une playlist
-	    			 text = ses[10].toString();
+	    		} else if (action == "create") {  // Se fait lors de l'ajout d'une playlist	
+	    			pT.add(playlist);
+	    			text = ses[10].toString();
 	    		}
+	        	// On modifie les variables de sessions correspondantes.
+	        	MyServlet.setSes(3,pT);
+    			request.getSession().setAttribute("playlist", ses[3]);
+    			
 	        	System.out.println(text);
 	        	response.getWriter().write(text);       // Write response body.
 	            } else {
