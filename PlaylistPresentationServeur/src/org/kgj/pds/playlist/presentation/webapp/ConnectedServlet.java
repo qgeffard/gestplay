@@ -99,7 +99,7 @@ public class ConnectedServlet extends HttpServlet {
 		playlist.setTrackList(trackList);  	// On set la liste de track à la playlist
 		playlist.setTitle(request.getParameter("name"));
 		playlist.setCreator(session.getAttribute("user").toString());
-		System.out.println("Requête en cours d'envoi !");
+		System.out.println("PRES : Requête en cours d'envoi !");
 		status.setProgress("In progress");
 		
 		String id = nextSessionId();
@@ -110,15 +110,15 @@ public class ConnectedServlet extends HttpServlet {
 		
 		
 		if(action.equals("update")) {  // Quand l'utilisateur sauvegarde la liste des tracks
-			System.out.println("Update : "+request.getParameter("identifier").toString());
+			System.out.println("PRES : Update : "+request.getParameter("identifier").toString());
 			act.setNameAction("update");
 			playlist.setIdentifier(request.getParameter("identifier").toString());
 		// 	tracklist = request.getParameter("tracklist");
-		} else if (action.equals("delete")) {  // Quand l'utilisateur supprime une playlist
+		} else if (action.equals("PRES : delete")) {  // Quand l'utilisateur supprime une playlist
 			System.out.println("Delete : "+request.getParameter("identifier").toString());
 			act.setNameAction("delete");
 			playlist.setIdentifier(request.getParameter("identifier").toString());
-		} else if (action.equals("create")) {  // Se fait lors de l'ajout d'une playlist
+		} else if (action.equals("PRES : create")) {  // Se fait lors de l'ajout d'une playlist
 			System.out.println("create");
 			act.setNameAction("create");
 		}
@@ -148,9 +148,7 @@ public class ConnectedServlet extends HttpServlet {
 		synchronized (Thread.currentThread()) {
 	        try {
 	        	Thread.currentThread().wait();
-	        	System.out.println("J'ai été notify");
-	        	response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-	            response.setCharacterEncoding("UTF-8"); // For world domination.
+	        	System.out.println("PRES : Transmission Process - Servlet : OK.");
 	            String text = "";
 	            
 	            if(ses[1].equals("0")) {
@@ -160,25 +158,28 @@ public class ConnectedServlet extends HttpServlet {
 	        		for(int i = 0; i < pT.size(); i++) {
 	    				if(pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
 	    					pT.get(i).setTitle(request.getParameter("name"));
+	    					text = pT.get(i).getIdentifier();
 	    				}
 	    			}    	
-	        		text = ses[10].toString();
 	    		} else if (action == "delete") {  // Quand l'utilisateur supprime une playlist
 	    			for(int i = 0; i < pT.size(); i++) {
 	    				if(pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
 	    					pT.remove(i);
+	    					text = pT.get(i).getIdentifier();
 	    				}
 	    			}    			
-	    			text = ses[10].toString();
+
 	    		} else if (action == "create") {  // Se fait lors de l'ajout d'une playlist	
 	    			pT.add(playlist);
-	    			text = ses[10].toString();
+	    			text = playlist.getIdentifier();
 	    		}
 	        	// On modifie les variables de sessions correspondantes.
 	        	MyServlet.setSes(3,pT);
     			request.getSession().setAttribute("playlist", ses[3]);
     			
-	        	System.out.println(text);
+	        	System.out.println("PRES : Identifier : "+text);
+	        	response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+	            response.setCharacterEncoding("UTF-8"); // For world domination.
 	        	response.getWriter().write(text);       // Write response body.
 	            } else {
 	            	session.setAttribute("erreur", ses[2].toString());

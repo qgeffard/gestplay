@@ -24,7 +24,7 @@ public class Process {
 	
 	
 	private void start() {
-		this.query.toString();
+		System.out.println("PRES : Identifier toString : "+this.query.getPlaylist().get(0).getIdentifier().toString());
 		
 		switch (this.query.getAction().getNameAction()) {
 		
@@ -58,7 +58,7 @@ public class Process {
 	 */
 	@SuppressWarnings("unused")
 	private void login() {
-		System.out.println("login");
+		System.out.println("PRES : Requête reçu : Login");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
 			MyServlet.setSes(3,(List<PlaylistType>) this.query.getPlaylist());
@@ -78,7 +78,7 @@ public class Process {
 	 * if the create fail, alert the user and delete it in the view
 	 */
 	private void create() {
-		System.out.println("Requête reçu : Create.");
+		System.out.println("PRES : Requête reçu : Create.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
 			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
@@ -95,7 +95,7 @@ public class Process {
 	 * All informations about the playlist will be reloaded when we made a change
 	 */
 	private void modify() {
-		System.out.println("Requête reçu : Update.");
+		System.out.println("PRES : Requête reçu : Update.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
 			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
@@ -112,7 +112,7 @@ public class Process {
 	 * If the answer is false, then the playlist will be displayed back and the user alerted
 	 */
 	private void delete() {
-		System.out.println("Requête reçu : Delete.");
+		System.out.println("PRES : Requête reçu : Delete.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
 			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());

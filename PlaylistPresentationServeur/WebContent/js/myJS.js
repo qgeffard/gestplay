@@ -31,7 +31,7 @@ var currentTracks;
 		                tracklist : $scope.playlists[$scope.idCurrentPlaylist]['tracklist']
 		            },
 		            success : function(ident) {
-		            	console.log("Function Success");
+		            	console.log($scope.action+" Success");
 		            	console.log("Ident : "+ident);
 		            	if(!ident.equals("Error")) {
 		            	$scope.playlists[$scope.idCurrentPlaylist]['name'] = $scope.name;
@@ -50,7 +50,7 @@ var currentTracks;
 				
 			$scope.action = "";
 				
-			} else {
+			} else {  // Et ici on ajoute
 			$scope.action = "create";
 			$scope.tracks = 0;
 			$.ajax({
@@ -64,12 +64,13 @@ var currentTracks;
                 tracklist : $scope.tracklist
             },
             success : function(ident) {
-            	console.log("Function Success");
+            	console.log($scope.action+" Success");
             	console.log("Ident : "+ident);
             	if(ident != "Error") {
-           		console.log("lol");
             	$scope.playlists.push({ 'ident':ident, 'name':name, 'creator': user, 'tracks':0, 'trackList':[] });		
             	$scope.action = "";
+            	
+            	$scope.$apply(); // Allez, on se motive, le scope a changé
             	} else {
             		// On envoie la notification de non création 
             	}
@@ -115,7 +116,7 @@ var currentTracks;
                 tracklist : $scope.playlists[idx]['tracklist']
             },
             success : function(ident) {
-            	console.log("Function Success");
+            	console.log($scope.action+" Success");
             	console.log("Ident : "+ident);
             	if(!ident == "Error") {
               var trackToDelete = $scope.playlists[idx];		
@@ -199,7 +200,7 @@ var currentTracks;
 	                tracklist : $scope.playlists[idx]['tracklist']
 	            },
 	            success : function(ident) {
-	            	console.log("Function Success");
+	            	console.log($scope.action+" Success");
 	            	console.log("Ident : "+ident);
 	            	if(!ident.equals("Error")) {
 	            	$scope.playlists[idx]['name'] = $scope.name;
