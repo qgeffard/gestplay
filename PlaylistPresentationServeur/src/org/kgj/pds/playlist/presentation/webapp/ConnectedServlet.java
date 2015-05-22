@@ -141,53 +141,50 @@ public class ConnectedServlet extends HttpServlet {
 		}
 		WebappMessagingServiceManager.getInstance().send(str.toString());
 
-		response.setContentType("text/html;charset=UTF-8");
+		
 		PrintWriter out = response.getWriter();
 
 		synchronized (Thread.currentThread()) {
 			try {
 				Thread.currentThread().wait();
 				System.out.println("PRES : Transmission Process - Servlet : OK.");
-				String text = "";
+				int text = 0;
 
 				if (ses[1].equals("0")) {
 					List<PlaylistType> pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
 
-					if (action.equals("update")) { // Quand l'utilisateur sauvegarde
-												// la liste des tracks
+					if (action.equals("update")) { // Quand l'utilisateur sauvegarde la liste des tracks
+						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
 						for (int i = 0; i < pT.size(); i++) {
 							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
 								pT.get(i).setTitle(request.getParameter("name"));
-								text = pT.get(i).getIdentifier();
+								text = i;
 							}
 						}
-					} else if (action.equals("delete")) { // Quand l'utilisateur
-														// supprime une playlist
+					} else if (action.equals("delete")) { // Quand l'utilisateur supprime une playlist
+						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
 						for (int i = 0; i < pT.size(); i++) {
 							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
 								pT.remove(i);
-								text = pT.get(i).getIdentifier();
+								text = i;
 							}
 						}
 
-					} else if (action.equals("create")) { // Se fait lors de l'ajout
-														// d'une playlist
+					} else if (action.equals("create")) { // Se fait lors de l'ajout d'une playlist
+						playlist.setIdentifier(MyServlet.getSes(10));
 						pT.add(playlist);
-						text = playlist.getIdentifier();
+						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
+						text = pT.size();
 					}
+					
 					// On modifie les variables de sessions correspondantes.
 					MyServlet.setSes(3, pT);
 					request.getSession().setAttribute("playlist", ses[3]);
-
 					System.out.println("PRES : Identifier : " + text);
-					response.setContentType("text/plain"); // Set content type
-															// of the response
-															// so that jQuery
-															// knows what it can
-															// expect.
-					response.setCharacterEncoding("UTF-8"); // For world
-															// domination.
+					
+					response.setContentType("text/html;charset=UTF-8"); // For world domination					
 					response.getWriter().write(text); // Write response body.
+					
 				} else {
 					session.setAttribute("erreur", ses[2].toString());
 					response.getWriter().write("Error");
