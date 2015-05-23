@@ -64,6 +64,7 @@ public class Task {
 			QueryManager.setStatusSucced(query);
 			QueryManager.flushPlaylist(query);
 		} else {
+			logger.error("Erreur delete");
 			QueryManager.setStatusError(query, Source.PERSISTANCE.getName(), "Erreur delete");
 		}
 		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();
@@ -75,6 +76,7 @@ public class Task {
 		if (queryDao.updatePlaylist(query)) {
 			QueryManager.setStatusSucced(query);
 		} else {
+			logger.error("Erreur update");
 			QueryManager.setStatusError(query, Source.PERSISTANCE.getName(), "Erreur d'update");
 		}
 		ClientAppMessagingServiceManager clAppMessServ = ClientAppMessagingServiceManager.getInstance();

@@ -91,7 +91,6 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
 			pStmt.setString(1, username);
-			pStmt.setString(2, username);
 
 			ResultSet rs = pStmt.executeQuery();
 			if (rs.next()) {
@@ -139,7 +138,6 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 		String urlDatabase = props.getProperty("urlDatabase");
 		String login = props.getProperty("login");
 		String password = props.getProperty("password");
-		ClientAppMessagingServiceManager clientAppMessagingService = ClientAppMessagingServiceManager.getInstance();
 
 		try {
 			Connection connection = DriverManager.getConnection(urlDatabase, login, password);
@@ -148,41 +146,80 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
 
 			PlaylistType currentPlaylist = query.getPlaylist().get(0);
-			currentPlaylist.setVersion(currentPlaylist.getVersion() + 1);
-			pStmt.setString(1, currentPlaylist.getIdentifier() + "," + currentPlaylist.getVersion() + "," + false + "," + currentPlaylist.getCreator() + ","
-					+ ClientAppMessagingServiceManager.getInstance().queryToString(query));
+			
+			int maxVersion = getMaxVersionByID(Integer.valueOf(currentPlaylist.getIdentifier()));
+			currentPlaylist.setVersion(String.valueOf(maxVersion+1));
 
-			ResultSet rs = pStmt.executeQuery();
+			pStmt.setInt(1, Integer.valueOf(currentPlaylist.getIdentifier()));
+			pStmt.setInt(2, Integer.valueOf(currentPlaylist.getVersion()));
+			pStmt.setBoolean(3, false);
+			pStmt.setString(4, currentPlaylist.getCreator());
+			pStmt.setString(5, ClientAppMessagingServiceManager.getInstance().queryToString(query));
+
+			pStmt.executeUpdate();
 			return true;
 		} catch (Exception e) {
-
+			logger.error(e.getMessage());
 		}
 		return false;
 	}
 
 	public boolean updatePlaylist(Query query) {
+		logger.info("enter update");
+		logger.info(ClientAppMessagingServiceManager.getInstance().queryToString(query));
 		String urlDatabase = props.getProperty("urlDatabase");
 		String login = props.getProperty("login");
 		String password = props.getProperty("password");
-		ClientAppMessagingServiceManager clientAppMessagingService = ClientAppMessagingServiceManager.getInstance();
 
 		try {
 			Connection connection = DriverManager.getConnection(urlDatabase, login, password);
 
+			PlaylistType currentPlaylist = query.getPlaylist().get(0);
+
+			int maxVersion = getMaxVersionByID(Integer.valueOf(currentPlaylist.getIdentifier()));
+
 			String sqlOrder = props.getProperty("queryEnableDisable");
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
 
-			PlaylistType currentPlaylist = query.getPlaylist().get(0);
-			currentPlaylist.setVersion(currentPlaylist.getVersion() + 1);
-			pStmt.setString(1, currentPlaylist.getIdentifier() + "," + currentPlaylist.getVersion() + "," + true + "," + currentPlaylist.getCreator() + ","
-					+ ClientAppMessagingServiceManager.getInstance().queryToString(query));
-
-			ResultSet rs = pStmt.executeQuery();
+			currentPlaylist.setVersion(String.valueOf(maxVersion+1));
+			pStmt.setInt(1, Integer.valueOf(currentPlaylist.getIdentifier()));
+			pStmt.setInt(2, Integer.valueOf(currentPlaylist.getVersion()));
+			pStmt.setBoolean(3, true);
+			pStmt.setString(4, currentPlaylist.getCreator());
+			pStmt.setString(5, ClientAppMessagingServiceManager.getInstance().queryToString(query));
+			pStmt.executeUpdate();
 			return true;
 		} catch (Exception e) {
-
+			logger.error(e.getMessage());
 		}
 		return false;
+	}
+
+	public int getMaxVersionByID(int id) {
+
+		String urlDatabase = props.getProperty("urlDatabase");
+		String login = props.getProperty("login");
+		String password = props.getProperty("password");
+
+		Connection connection;
+		int maxVersion = 0;
+		try {
+			connection = DriverManager.getConnection(urlDatabase, login, password);
+
+			String sqlOrder = props.getProperty("queryMaxVersion");
+			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
+			pStmt.setInt(1, id);
+			ResultSet rs = pStmt.executeQuery();
+			if (rs.next()) {
+				maxVersion = Integer.valueOf(rs.getString("version"));
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return maxVersion;
 	}
 
 }

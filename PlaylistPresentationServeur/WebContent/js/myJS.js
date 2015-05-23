@@ -25,7 +25,7 @@ var currentTracks;
 		            data : {
 		            	action : $scope.action,
 		            	identifier : $scope.playlists[$scope.idCurrentPlaylist]['ident'],
-		                name : $scope.playlists[$scope.idCurrentPlaylist]['name'],
+		                name : name,
 		                creator : $scope.playlists[$scope.idCurrentPlaylist]['creator'],
 		                tracks : $scope.playlists[$scope.idCurrentPlaylist]['tracks'],
 		                tracklist : $scope.playlists[$scope.idCurrentPlaylist]['tracklist']
