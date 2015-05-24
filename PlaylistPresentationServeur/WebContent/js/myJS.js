@@ -39,6 +39,7 @@ var currentTracks;
 		            	$scope.playlists[$scope.idCurrentPlaylist]['tracklist'] = $scope.tracklist; // On utilise la variable intermediaire pour éviter les traitements douloureux.
 		            	$scope.action = "";
 		            	$scope.playlists[$scope.idCurrentPlaylist]['name'] = $scope.name;
+		            	$scope.$apply(); // Allez, on se motive, le scope a changé
 		            	} else {
 		            		// On envoie la notification de non création 
 		            	}
@@ -134,6 +135,7 @@ var currentTracks;
    					tracktab.hidden = true;
    				}
    			$scope.action = "";
+   			$scope.$apply(); // Allez, on se motive, le scope a changé
             	} else {
             		// Si on reçoit un message d'erreur
             		// Envoie la notification de non suppresion.
@@ -207,6 +209,7 @@ var currentTracks;
 	            	$scope.playlists[idx]['tracks'] = $scope.playlists[idx]['tracklist'].length;
 	            	$scope.playlists[idx]['tracklist'] = $scope.tracklist; // On utilise la variable intermediaire pour éviter les traitements douloureux.
 	            	$scope.action = "";
+	            	$scope.$apply(); // Allez, on se motive, le scope a changé
 	            	} else {
 	            		// On envoie la notification de non création 
 	            	}
