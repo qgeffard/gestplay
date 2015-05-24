@@ -23,20 +23,21 @@ public class Process {
 	}
 	
 	
-	private void start() {
-		System.out.println("PRES : Identifier toString : "+this.query.getPlaylist().get(0).getIdentifier().toString());
-		
+	private void start() {		
 		switch (this.query.getAction().getNameAction()) {
 		
 		case "login":
+			System.out.println("PRES : Identifier toString : "+this.query.getPlaylist().get(0).getIdentifier().toString());
 			login();
 			break;
 			
 		case "test":
+			System.out.println("PRES : Identifier toString : "+this.query.getPlaylist().get(0).getIdentifier().toString());
 			login();
 			break;
 		
 		case "create":
+			System.out.println("PRES : Identifier toString : "+this.query.getPlaylist().get(0).getIdentifier().toString());
 			create();
 			break;
 		
@@ -114,7 +115,7 @@ public class Process {
 		System.out.println("PRES : Requête reçu : Delete.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
-			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
+		//	MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
