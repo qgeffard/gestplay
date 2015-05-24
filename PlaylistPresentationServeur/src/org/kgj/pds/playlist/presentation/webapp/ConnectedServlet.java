@@ -185,7 +185,7 @@ public class ConnectedServlet extends HttpServlet {
 					System.out.println("PRES : Identifier : " + text);
 					
 					response.setContentType("text/html;charset=UTF-8"); // For world domination					
-					response.getWriter().write(text); // Write response body.
+					response.getWriter().write(Integer.toString(text)); // Write response body.
 					
 				} else {
 					session.setAttribute("erreur", ses[2].toString());

@@ -18,6 +18,7 @@ var currentTracks;
 			name = $scope.name;
 			console.log($scope.action);
 			if($scope.action == "update") {
+				console.log("On est dans le update")
 				// Ici on modifie
 				$.ajax({
 					method : "POST",	
@@ -33,7 +34,7 @@ var currentTracks;
 		            success : function(ident) {
 		            	console.log($scope.action+" Success");
 		            	console.log("Ident : "+ident);
-		            	if(!ident.equals("Error")) {
+		            	if(ident != "Error") {
 		            	$scope.playlists[$scope.idCurrentPlaylist]['name'] = $scope.name;
 		            	$scope.playlists[$scope.idCurrentPlaylist]['tracks'] = $scope.playlists[idx]['tracklist'].length;
 		            	$scope.playlists[$scope.idCurrentPlaylist]['tracklist'] = $scope.tracklist; // On utilise la variable intermediaire pour éviter les traitements douloureux.
@@ -105,6 +106,7 @@ var currentTracks;
 			
 		$scope.delPlaylist = function ( idx ) {
 			$scope.action = "delete";
+			$scope.idCurrentPlaylist = idx;
 			$.ajax({
 			method : "POST",	
             url : 'connectedServlet',
@@ -118,11 +120,9 @@ var currentTracks;
             },
             success : function(ident) {
             	console.log($scope.action+" Success");
-            	console.log("Ident : "+ident);
-            	if(!ident == "Error") {
-              var trackToDelete = $scope.playlists[idx];		
-   			  $scope.playlists.splice(idx, 1);
-   			  
+            	console.log("Ident : "+idx);
+            	if(ident != "Error") {
+              $scope.playlists.splice(idx, 1);
    			  var tab = document.getElementById("tabPlaylist");
    			  var track = document.getElementById("tabTrack");
    			  var tracktab = document.getElementById("tracktab");
