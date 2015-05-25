@@ -13,7 +13,8 @@
 	<modules>
    		<module>PlaylistMetierServeurHttpViewSide</module>
 		<module>PlaylistMetierServeurHttpPersistenceSide</module>
-		<module>PlaylistPersistanceApplication</module>
+		<module>PlaylistPersistanceApplicationServer</module>
+		<module>PlaylistPersistanceApplicationClient</module>
   	</modules>
 
 	<build>
