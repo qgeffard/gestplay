@@ -24,6 +24,7 @@ public class Process {
 	
 	
 	private void start() {		
+		System.out.println("PRES : Requête reçu - Dispatching...");
 		switch (this.query.getAction().getNameAction()) {
 		
 		case "login":
@@ -41,8 +42,8 @@ public class Process {
 			create();
 			break;
 		
-		case "modify":
-			modify();
+		case "update":
+			update();
 			break;
 		
 		case "delete":
@@ -94,7 +95,7 @@ public class Process {
 	 * also the modification of the name and other basic informations
 	 * All informations about the playlist will be reloaded when we made a change
 	 */
-	private void modify() {
+	private void update() {
 		System.out.println("PRES : Requête reçu : Update.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");

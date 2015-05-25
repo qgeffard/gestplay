@@ -113,7 +113,7 @@
 
 <tr id="tracktab" hidden="true"><td></td><td>Tracklist <br/><br/>
 
-<form id="submitTrack" action="connectedServlet?action=saveTrack" method="post">
+<form id="submitTrack" ng-submit="updatePlaylist()" role="form">
 <table class="table" ng-model="clicked">
 	<tr>
 		<th>Name</th>

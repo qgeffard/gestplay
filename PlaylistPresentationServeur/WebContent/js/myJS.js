@@ -16,30 +16,27 @@ var currentTracks;
 		$scope.action = "";
 		$scope.addRow = function(){		
 			name = $scope.name;
-			console.log($scope.action);
 			if($scope.action == "update") {
-				console.log("On est dans le update")
-				// Ici on modifie
+					// Ici on modifie
 				$.ajax({
 					method : "POST",	
 		            url : 'connectedServlet',
 		            data : {
 		            	action : $scope.action,
 		            	identifier : $scope.playlists[$scope.idCurrentPlaylist]['ident'],
-		                name : name,
+		                name : $scope.name,
 		                creator : $scope.playlists[$scope.idCurrentPlaylist]['creator'],
 		                tracks : $scope.playlists[$scope.idCurrentPlaylist]['tracks'],
 		                tracklist : $scope.playlists[$scope.idCurrentPlaylist]['tracklist']
 		            },
 		            success : function(ident) {
-		            	console.log($scope.action+" Success");
-		            	console.log("Ident : "+ident);
 		            	if(ident != "Error") {
 		            	$scope.playlists[$scope.idCurrentPlaylist]['name'] = $scope.name;
-		            	$scope.playlists[$scope.idCurrentPlaylist]['tracks'] = $scope.playlists[idx]['tracklist'].length;
 		            	$scope.playlists[$scope.idCurrentPlaylist]['tracklist'] = $scope.tracklist; // On utilise la variable intermediaire pour éviter les traitements douloureux.
+		            //	$scope.playlists[$scope.idCurrentPlaylist]['tracks'] = $scope.playlists[$scope.idCurrentPlaylist]['tracklist'].length;
+		            	
+		            	$scope.playlists[$scope.idCurrentPlaylist]['name'] = name;
 		            	$scope.action = "";
-		            	$scope.playlists[$scope.idCurrentPlaylist]['name'] = $scope.name;
 		            	$scope.$apply(); // Allez, on se motive, le scope a changé
 		            	} else {
 		            		// On envoie la notification de non création 
@@ -66,8 +63,6 @@ var currentTracks;
                 tracklist : $scope.tracklist
             },
             success : function(ident) {
-            	console.log($scope.action+" Success");
-            	console.log("Ident : "+ident);
             	if(ident != "Error") {
             	$scope.playlists.push({ 'ident':ident, 'name':name, 'creator': user, 'tracks':0, 'trackList':[] });		
             	$scope.action = "";
@@ -94,14 +89,12 @@ var currentTracks;
 			$scope.album='';
 			$scope.artist='';
 			$scope.playlists[$scope.idCurrentPlaylist].trackList = $scope.tracklist;
-			$scope.modifierPlaylist($scope.idCurrentPlaylist);
 		};
 		
 		$scope.del = function ( idx ) {
 			  var trackToDelete = $scope.tracklist[idx];		
 			  $scope.tracklist.splice(idx, 1);
 			  $scope.playlists[$scope.idCurrentPlaylist].trackList = $scope.tracklist;
-			  $scope.modifierPlaylist($scope.idCurrentPlaylist);
 			};
 			
 		$scope.delPlaylist = function ( idx ) {
@@ -119,8 +112,6 @@ var currentTracks;
                 tracklist : $scope.playlists[idx]['tracklist']
             },
             success : function(ident) {
-            	console.log($scope.action+" Success");
-            	console.log("Ident : "+idx);
             	if(ident != "Error") {
               $scope.playlists.splice(idx, 1);
    			  var tab = document.getElementById("tabPlaylist");
@@ -155,6 +146,7 @@ var currentTracks;
 				$scope.action = "";
 				$scope.name = "";
 				$scope.idCurrentPlaylist = "";
+				$scope.editPlaylistInfos($scope.idCurrentPlaylist);
 			} else {
 				$scope.action = "update";
 				$scope.playlists[idx]['name'] = $scope.name;
@@ -162,8 +154,8 @@ var currentTracks;
             	$scope.idCurrentPlaylist = idx;
 			}
 		},
+		
 		$scope.editPlaylistInfos = function (idx) {
-			console.log(idx);
 			/* Affichage de la tracklist */
 			var tab = document.getElementById("tabPlaylist");
 			var track = document.getElementById("tabTrack");
@@ -171,24 +163,29 @@ var currentTracks;
 			
 			if(tracktab.hidden == true) {  // Ici on affiche la tracklist 
 				$scope.idCurrentPlaylist = idx;
-				tracklist = $scope.playlists[idx].trackList;
+				tracklist = $scope.playlists[idx]['trackList'];
 				$scope.tracklist = tracklist;
 				tab.style.postion = "relative";
 				tab.hidden = true;
 				track.hidden = false;
 				tracktab.hidden = false;
+				$scope.action = "update";
 			}
 			else {   // Ici on cache la tracklist
 				tracklist = [];
-				$scope.tracklist = []
+				$scope.tracklist = [];
 				tab.hidden = false;
 				track.style.postion = "relative";
 				track.hidden = true;
 				tracktab.hidden = true;
+				$scope.action = "";
 			}
 		},		
 
-		
+		$scope.updatePlaylist = function() {
+			$scope.playlists[$scope.idCurrentPlaylist]['trackList'] = $scope.tracklist;
+			$scope.modifierPlaylist($scope.idCurrentPlaylist);
+		},
 		$scope.modifierPlaylist = function(idx) {
 			$.ajax({
 				method : "POST",	
@@ -199,12 +196,10 @@ var currentTracks;
 	                name : $scope.playlists[idx]['name'],
 	                creator : $scope.playlists[idx]['creator'],
 	                tracks : $scope.playlists[idx]['tracks'],
-	                tracklist : $scope.playlists[idx]['tracklist']
+	                tracklist : JSON.stringify($scope.playlists[idx]['tracklist'])
 	            },
 	            success : function(ident) {
-	            	console.log($scope.action+" Success");
-	            	console.log("Ident : "+ident);
-	            	if(!ident.equals("Error")) {
+	            	if(ident != "Error") {
 	            	$scope.playlists[idx]['name'] = $scope.name;
 	            	$scope.playlists[idx]['tracks'] = $scope.playlists[idx]['tracklist'].length;
 	            	$scope.playlists[idx]['tracklist'] = $scope.tracklist; // On utilise la variable intermediaire pour éviter les traitements douloureux.
@@ -253,6 +248,7 @@ var currentTracks;
 			
 function loadPlaylist(ident, name, creator, tracks) {
 	playlists.push({ 'ident':ident, 'name':name, 'creator': creator, 'tracks':tracks, 'trackList':tracklist });  
+	tracklist = [];
 }
 
 function addTrackToPlaylist(name, album, artist) {

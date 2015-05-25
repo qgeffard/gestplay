@@ -24,14 +24,13 @@ import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.Utils.QueryManager;
 import org.kgj.pds.playlist.presentation.messagingProtocol.PlaylistType;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query;
-import org.kgj.pds.playlist.presentation.messagingProtocol.Query.Action;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.Status;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager;
 import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager.User;
 import org.kgj.pds.playlist.presentation.messagingProtocol.TrackListType;
 import org.kgj.pds.playlist.presentation.messagingProtocol.TrackType;
 import org.kgj.pds.playlist.presentation.messagingService.WebappMessagingServiceManager;
-
+import org.json.*;
 /**
  * Servlet implementation class ConnectedServlet
  */
@@ -86,7 +85,8 @@ public class ConnectedServlet extends HttpServlet {
 		List<TrackType> track = new ArrayList<TrackType>();
 		TrackListType trackList = new TrackListType();
 		PlaylistType playlist = new PlaylistType();
-
+		List<PlaylistType> pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
+		
 		User user = new User();
 		user.setLogin(session.getAttribute("user").toString());
 		user.setPassword(session.getAttribute("pass").toString());
@@ -96,8 +96,7 @@ public class ConnectedServlet extends HttpServlet {
 		userManager.setUser(user);
 
 		listPlaylist.add(playlist); // On set la playlist à la liste de playlist
-		playlist.setTrackList(trackList); // On set la liste de track à la
-											// playlist
+		playlist.setTrackList(trackList); // On set la liste de track à la playlist
 		System.out.println("--------------");
 		System.out.println(request.getParameter("name"));
 		playlist.setTitle(request.getParameter("name"));
@@ -111,14 +110,38 @@ public class ConnectedServlet extends HttpServlet {
 
 		switch (action) {
 		case "update":
+			System.out.println("PRES : Update");
+		/*	for (int i = 0; i < pT.size(); i++) {
+				String v1 = pT.get(i).getIdentifier().toString();
+				String v2 = request.getParameter("identifier").toString();
+				if(v1.equals(v2)) {
+					System.out.println("On est dans le if");
+					TrackType thisTrack = new TrackType();
+					String tl = request.getParameter("tracklist");
+					System.out.println(tl);
+					JSONObject obj = new JSONObject(tl);
+					String value = obj.getString("name");
+					thisTrack.setTitle(value);
+					value = obj.getString("album");
+					thisTrack.setAlbum(value);
+					value = obj.getString("artist");
+					thisTrack.setCreator(value);
+					System.out.println("Artist ? "+value);
+					pT.get(i).getTrackList().getTrack().add(pT.get(i).getTrackList().getTrack().size()+1, thisTrack);
+					playlist = pT.get(i);
+				}
+			}
+		*/
 			playlist.setIdentifier(request.getParameter("identifier").toString());
 			QueryManager.setActionUpdate(query);
 			break;
 		case "delete":
+			System.out.println("PRES : Delete");
 			playlist.setIdentifier(request.getParameter("identifier").toString());
 			QueryManager.setActionDelete(query);
 			break;
 		case "create":
+			System.out.println("PRES : Create");
 			QueryManager.setActionCreate(query);
 			break;
 		default:
@@ -153,13 +176,13 @@ public class ConnectedServlet extends HttpServlet {
 				int text = 0;
 
 				if (ses[1].equals("0")) {
-					List<PlaylistType> pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
+					
 
 					if (action.equals("update")) { // Quand l'utilisateur sauvegarde la liste des tracks
 						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
 						for (int i = 0; i < pT.size(); i++) {
 							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
-								pT.get(i).setTitle(request.getParameter("name"));
+								pT.get(i).setTitle(playlist.getTitle());
 								text = i;
 							}
 						}
