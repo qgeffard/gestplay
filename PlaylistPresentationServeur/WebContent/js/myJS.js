@@ -84,7 +84,7 @@ var currentTracks;
 		                name : $scope.name,
 		                creator : $scope.playlists[$scope.idCurrentPlaylist]['creator'],
 		                tracks : $scope.playlists[$scope.idCurrentPlaylist]['tracks'],
-		                tracklist : $scope.playlists[$scope.idCurrentPlaylist]['tracklist']
+		                tracklist : JSON.stringify($scope.playlists[$scope.idCurrentPlaylist].trackList)
 		            },
 		            success : function(ident) {
 		            	if(ident != "Error") {

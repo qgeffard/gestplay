@@ -90,10 +90,6 @@ public class ConnectedServlet extends HttpServlet {
 		PlaylistType playlist = new PlaylistType();
 		List<PlaylistType> pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
 		
-		User user = new User();
-		user.setLogin(session.getAttribute("user").toString());
-		user.setPassword(session.getAttribute("pass").toString());
-		userManager.setUser(user);
 		QueryManager.setUserManagerLoginPassword(query, session.getAttribute("user").toString(), session.getAttribute("pass").toString());
 		
 		listPlaylist.add(playlist); // On set la playlist � la liste de playlist
@@ -127,21 +123,18 @@ public class ConnectedServlet extends HttpServlet {
 				if (jsonArray != null) { 
 				   int len = jsonArray.length();
 				   String value = "";
-				   TrackType thisTrack = new TrackType();
 				   for (int i1=0;i1<len;i1++){ 
-					   System.out.println(jsonArray.getJSONObject(i1));
-			
-						value = jsonArray.getJSONObject(i1).get("name").toString();
-						thisTrack.setTitle(value); 
-	
-						value = jsonArray.getJSONObject(i1).get("album").toString();
-						thisTrack.setAlbum(value); 
-
-						value = jsonArray.getJSONObject(i1).get("artist").toString();
-						thisTrack.setCreator(value); 
+					    TrackType thisTrack = new TrackType();
+					   	System.out.println(jsonArray.getJSONObject(i1));
+					   	playlist.getTrackList().getTrack().add(thisTrack);
+					   	playlist.getTrackList().getTrack().get(i1).setTitle(jsonArray.getJSONObject(i1).get("name").toString()); 
+					   	playlist.getTrackList().getTrack().get(i1).setAlbum(jsonArray.getJSONObject(i1).get("album").toString()); 
+					   	playlist.getTrackList().getTrack().get(i1).setCreator(jsonArray.getJSONObject(i1).get("artist").toString()); 
+						
 						System.out.println("1 Playlist de plus : "+thisTrack.getTitle());
-						playlist.getTrackList().getTrack().add(thisTrack);
-						System.out.println(playlist.getTrackList().getTrack().get(0).toString());
+						
+						System.out.println(playlist.getTrackList().getTrack().get(i1).toString());
+						
 				   } 
 				}
 					playlist.setTitle(request.getParameter("name"));
