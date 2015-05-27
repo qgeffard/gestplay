@@ -73,10 +73,15 @@ public class Task extends UnicastRemoteObject implements IFTask{
 
 	@Override
 	public String undoUpdate(String queryStr, String login) throws RemoteException {
+		logger.info(login);
+		logger.info(queryStr);
 		Query query = QueryMarshaller.stringToQuery(queryStr);
+		logger.info(query);
 		Query querydb = queryDao.undoUpdate(query, login);
+		logger.info(querydb);
 		query.getPlaylist().addAll(querydb.getPlaylist());
 		QueryManager.setStatusSucced(query);
+		logger.info(query);
 		return QueryMarshaller.queryToString(query);
 	}
 }
