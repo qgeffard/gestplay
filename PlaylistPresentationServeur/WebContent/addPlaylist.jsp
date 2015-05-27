@@ -56,8 +56,9 @@
 	
 	<div class="form-group">								
 		<div style="padding-left:110px">
-			<input id="submitNewPlaylist" type="submit" value="{{submit}}" class="btn btn-primary"/>
-			
+		<button id="submitNewPlaylist" type="submit" class="btn btn-primary">
+		{{language_Current.submit}}  
+		</button> 
 		</div>
 	</div>
 </form>	
@@ -86,7 +87,10 @@
 	</div>
 	<div class="form-group">								
 		<div style="padding-left:110px">
-			<input type="submit" ng-value="language_Current.submit" class="btn btn-primary"/>
+			<button type="submit" class="myBtn blue btn pull-right">
+					{{language_Current.submit}}  <i class="fa fa-sign-in"></i>
+				</button> 
+
 		</div>
 	</div>
 	</form>

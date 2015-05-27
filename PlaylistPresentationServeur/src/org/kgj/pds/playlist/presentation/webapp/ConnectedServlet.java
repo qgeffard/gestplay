@@ -32,7 +32,6 @@ import org.kgj.pds.playlist.presentation.messagingProtocol.TrackType;
 import org.kgj.pds.playlist.presentation.messagingService.WebappMessagingServiceManager;
 import org.kgj.pds.playlist.presentation.json.*;
 
-import sun.org.mozilla.javascript.internal.json.JsonParser;
 
 /**
  * Servlet implementation class ConnectedServlet
