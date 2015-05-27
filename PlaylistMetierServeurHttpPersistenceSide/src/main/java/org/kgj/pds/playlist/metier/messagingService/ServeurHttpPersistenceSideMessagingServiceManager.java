@@ -42,6 +42,10 @@ public class ServeurHttpPersistenceSideMessagingServiceManager extends
 			messageContent = ((TextMessage) message).getText();
 			Query query = stringToQuery(messageContent);
 			
+			if(!query.getStatus().getSucced().isEmpty() && !query.getResponseId().equals("undo")){
+				checker.saveCommand(query);
+			}
+			
 			dispatcher.sendToVS(query);
 			
 		} catch (JMSException e) {

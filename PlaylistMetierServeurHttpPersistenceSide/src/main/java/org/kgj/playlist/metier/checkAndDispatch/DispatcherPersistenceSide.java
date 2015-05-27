@@ -9,8 +9,7 @@ import org.kgj.pds.playlist.metier.messagingProtocol.Query;
 import org.kgj.pds.playlist.metier.messagingService.ServeurHttpPersistenceSideMessagingServiceManager;
 
 public class DispatcherPersistenceSide {
-	private static final Logger logger = Logger
-			.getLogger(DispatcherPersistenceSide.class);
+	private static final Logger logger = Logger.getLogger(DispatcherPersistenceSide.class);
 
 	public final String WEBAPP_PROTOCOL = "http://";
 	public final String WEBAPP_VS_HOSTNAME = "localhost";
@@ -31,9 +30,9 @@ public class DispatcherPersistenceSide {
 		String playlist = "<ns2:playlist version=\"1\"><ns2:title>title</ns2:title><ns2:creator>foo</ns2:creator><ns2:annotation>annotation</ns2:annotation><ns2:info>http://tempuri.org</ns2:info><ns2:location>http://tempuri.org</ns2:location><ns2:identifier>http://tempuri.org</ns2:identifier><ns2:image>http://tempuri.org</ns2:image><ns2:date>2001-12-31T12:00:00</ns2:date><ns2:license>http://tempuri.org</ns2:license><ns2:attribution><ns2:identifier>http://tempuri.org</ns2:identifier></ns2:attribution><ns2:link rel=\"http://tempuri.org\">http://tempuri.org</ns2:link><ns2:meta rel=\"http://tempuri.org\">meta</ns2:meta><ns2:extension application=\"http://tempuri.org\" /><ns2:trackList><ns2:track><ns2:location>file:///C:/music/foo.mp3</ns2:location><ns2:title>Windows Path</ns2:title><ns2:creator>Creator after</ns2:creator><ns2:album>Album first</ns2:album><ns2:duration>2976018</ns2:duration></ns2:track><ns2:track><ns2:location>file:///media/music/foo.mp3</ns2:location><ns2:title>Linux Path</ns2:title><ns2:creator>Creator after</ns2:creator><ns2:album>Album first</ns2:album><ns2:duration>2976018</ns2:duration></ns2:track><ns2:track><ns2:location>music/foo.mp3</ns2:location><ns2:title>Relative Path</ns2:title><ns2:creator>Creator after</ns2:creator><ns2:album>Album first</ns2:album><ns2:duration>2976018</ns2:duration></ns2:track><ns2:track><ns2:location>http://www.example.com/music/bar.ogg</ns2:location><ns2:title>External Example</ns2:title><ns2:creator>Creator after</ns2:creator><ns2:album>Album first</ns2:album><ns2:duration>2976018</ns2:duration></ns2:track></ns2:trackList></ns2:playlist>";
 		logger.warn(queryString);
 		logger.warn(playlist);
-		
+
 		String finale = queryString.split("</ns2:query>")[0].concat(playlist).concat("</ns2:query>").toString();
-		
+
 		sendToVS(finale);
 	}
 
@@ -50,8 +49,7 @@ public class DispatcherPersistenceSide {
 	}
 
 	public void sendToPersistence(Query query) {
-		ServeurHttpPersistenceSideMessagingServiceManager messageManager = ServeurHttpPersistenceSideMessagingServiceManager
-				.getInstance();
+		ServeurHttpPersistenceSideMessagingServiceManager messageManager = ServeurHttpPersistenceSideMessagingServiceManager.getInstance();
 		messageManager.send(messageManager.queryToString(query));
 	}
 
@@ -60,23 +58,18 @@ public class DispatcherPersistenceSide {
 		HttpClient client = new HttpClient();
 		PostMethod post = new PostMethod(getUrlViewSide());
 
-		post.addParameter("query",
-				ServeurHttpPersistenceSideMessagingServiceManager.getInstance()
-						.queryToString(query));
+		post.addParameter("query", ServeurHttpPersistenceSideMessagingServiceManager.getInstance().queryToString(query));
 
 		try {
 			int statusRequest = client.executeMethod(post);
 
 			if (statusRequest != -1) {
-				logger.info("Acknowledge http request : "
-						+ post.getResponseBodyAsString());
+				logger.info("Acknowledge http request : " + post.getResponseBodyAsString());
 			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		// TODO Auto-generated method stub
 
 	}
 
@@ -91,8 +84,7 @@ public class DispatcherPersistenceSide {
 			int statusRequest = client.executeMethod(post);
 
 			if (statusRequest != -1) {
-				logger.info("Acknowledge http request : "
-						+ post.getResponseBodyAsString());
+				logger.info("Acknowledge http request : " + post.getResponseBodyAsString());
 			}
 
 		} catch (IOException e) {

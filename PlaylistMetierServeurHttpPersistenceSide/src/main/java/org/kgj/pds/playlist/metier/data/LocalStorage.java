@@ -14,15 +14,15 @@ import org.kgj.pds.playlist.metier.messagingProtocol.PlaylistType;
 public class LocalStorage {
 	private static final Logger logger = Logger.getLogger(LocalStorage.class);
 	
-	
-	private Map<String, Map<Integer, PlaylistType>> data;
+	private Map<String, Map<Integer, String>> commandUndo;
+	private Map<String, Map<Integer, String>> commandRedo;
 	private Map<String, String> users;
 	
 	private Properties prop;
 	private InputStream input;
 
 	public LocalStorage() {
-		data  = new ConcurrentHashMap<String, Map<Integer,PlaylistType>>();
+		commandUndo  = new ConcurrentHashMap<String, Map<Integer,String>>();
 		users = new LinkedHashMap<String, String>();
 		
 		//load users
@@ -47,31 +47,56 @@ public class LocalStorage {
 		
 	}
 
-	public Map<String, Map<Integer, PlaylistType>> getData() {
-		return data;
+	public Map<String, Map<Integer, String>> getData() {
+		return commandUndo;
 	}
 
-	public void setData(Map<String, Map<Integer, PlaylistType>> data) {
-		this.data = data;
+	public void setData(Map<String, Map<Integer, String>> command) {
+		this.commandUndo = command;
 	}
 
-	public void addPlaylistToUser(String userToken, PlaylistType newPlaylist) {
-		Map<Integer, PlaylistType> existingPlaylist = getPlaylistByUser(userToken);
+	public void addQueryToCommandUndo(String userToken, String query) {
+		Map<Integer, String> existingCommandUndo = getCommandUndoByUser(userToken);
 		
-		if (existingPlaylist == null) {
-			existingPlaylist = new ConcurrentHashMap<Integer, PlaylistType>();
-			existingPlaylist.put(new Integer(1), newPlaylist);
+		if (existingCommandUndo == null) {
+			existingCommandUndo = new ConcurrentHashMap<Integer, String>();
+			existingCommandUndo.put(new Integer(1), query);
 		} else {
-			Integer newID = Collections.max(existingPlaylist.keySet())+1;
-			existingPlaylist.put(newID, newPlaylist);
+			Integer newID = Collections.max(existingCommandUndo.keySet())+1;
+			existingCommandUndo.put(newID, query);
 		}
 		
-		this.data.put(userToken, existingPlaylist);
+		this.commandUndo.put(userToken, existingCommandUndo);
+	}
+	
+	public void addQueryToCommandRedo(String userToken, String query) {
+		Map<Integer, String> existingCommandRedo = getCommandRedoByUser(userToken);
+		
+		if (existingCommandRedo == null) {
+			existingCommandRedo = new ConcurrentHashMap<Integer, String>();
+			existingCommandRedo.put(new Integer(1), query);
+		} else {
+			Integer newID = Collections.max(existingCommandRedo.keySet())+1;
+			existingCommandRedo.put(newID, query);
+		}
+		
+		this.commandRedo.put(userToken, existingCommandRedo);
+	}
+	
+	public void deleteTheMaxRedoCommand(String user){
+		getCommandRedoByUser(user).remove(Collections.max(getCommandRedoByUser(user).keySet()));
 	}
 
-	public Map<Integer, PlaylistType> getPlaylistByUser(String userToken) {
-		if (data.containsKey(userToken)) {
-			return data.get(userToken);
+	public Map<Integer, String> getCommandUndoByUser(String userToken) {
+		if (commandUndo.containsKey(userToken)) {
+			return commandUndo.get(userToken);
+		}
+		return null;
+	}
+	
+	public Map<Integer, String> getCommandRedoByUser(String userToken) {
+		if (commandRedo.containsKey(userToken)) {
+			return commandRedo.get(userToken);
 		}
 		return null;
 	}
