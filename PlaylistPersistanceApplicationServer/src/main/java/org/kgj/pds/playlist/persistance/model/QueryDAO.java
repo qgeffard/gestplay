@@ -234,7 +234,7 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
 			pStmt.setString(1, username);
 			pStmt.setString(2, query.getPlaylist().get(0).getIdentifier());
-			ResultSet rs = pStmt.executeQuery();
+			int rs = pStmt.executeUpdate();
 			
 			String sqlOrder1 = props.getProperty("queryReadById");
 			PreparedStatement pStmt1 = connection.prepareStatement(sqlOrder1);
