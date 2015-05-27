@@ -232,14 +232,14 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 
 			String sqlOrder = props.getProperty("queryDeleteById");
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
-			pStmt.setString(1, username);
-			pStmt.setString(2, query.getPlaylist().get(0).getIdentifier());
+			pStmt.setString(2, username);
+			pStmt.setString(1, query.getPlaylist().get(0).getIdentifier());
 			int rs = pStmt.executeUpdate();
 			
 			String sqlOrder1 = props.getProperty("queryReadById");
 			PreparedStatement pStmt1 = connection.prepareStatement(sqlOrder1);
-			pStmt1.setString(1, username);
-			pStmt1.setString(2, query.getPlaylist().get(0).getIdentifier());
+			pStmt1.setString(2, username);
+			pStmt1.setString(1, query.getPlaylist().get(0).getIdentifier());
 			ResultSet rs1 = pStmt1.executeQuery();
 			if (rs1.next()) {
 				Query query1 = QueryMarshaller.stringToQuery(rs1.getString("query"));
