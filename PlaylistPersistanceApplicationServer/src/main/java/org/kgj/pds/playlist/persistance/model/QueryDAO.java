@@ -144,9 +144,9 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
 
 			PlaylistType currentPlaylist = query.getPlaylist().get(0);
-			
+
 			int maxVersion = getMaxVersionByID(Integer.valueOf(currentPlaylist.getIdentifier()));
-			currentPlaylist.setVersion(String.valueOf(maxVersion+1));
+			currentPlaylist.setVersion(String.valueOf(maxVersion + 1));
 
 			pStmt.setInt(1, Integer.valueOf(currentPlaylist.getIdentifier()));
 			pStmt.setInt(2, Integer.valueOf(currentPlaylist.getVersion()));
@@ -179,7 +179,7 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 			String sqlOrder = props.getProperty("queryEnableDisable");
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
 
-			currentPlaylist.setVersion(String.valueOf(maxVersion+1));
+			currentPlaylist.setVersion(String.valueOf(maxVersion + 1));
 			pStmt.setInt(1, Integer.valueOf(currentPlaylist.getIdentifier()));
 			pStmt.setInt(2, Integer.valueOf(currentPlaylist.getVersion()));
 			pStmt.setBoolean(3, true);
@@ -220,4 +220,39 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 		return maxVersion;
 	}
 
+	public Query undoUpdate(Query query, String username) {
+		String urlDatabase = props.getProperty("urlDatabase");
+		String login = props.getProperty("login");
+		String password = props.getProperty("password");
+
+		Connection connection;
+		int maxVersion = 0;
+		try {
+			connection = DriverManager.getConnection(urlDatabase, login, password);
+
+			String sqlOrder = props.getProperty("queryDeleteById");
+			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
+			pStmt.setString(1, username);
+			pStmt.setString(2, query.getPlaylist().get(0).getIdentifier());
+			ResultSet rs = pStmt.executeQuery();
+			
+			String sqlOrder1 = props.getProperty("queryReadById");
+			PreparedStatement pStmt1 = connection.prepareStatement(sqlOrder1);
+			pStmt1.setString(1, username);
+			pStmt1.setString(2, query.getPlaylist().get(0).getIdentifier());
+			ResultSet rs1 = pStmt1.executeQuery();
+			if (rs1.next()) {
+				Query query1 = QueryMarshaller.stringToQuery(rs1.getString("query"));
+				while (rs1.next()) {
+					Query subQuery = QueryMarshaller.stringToQuery(rs1.getString("query"));
+					query1.getPlaylist().addAll(subQuery.getPlaylist());
+				}
+				return query1;
+			}
+			return null;
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+		return null;
+	}
 }

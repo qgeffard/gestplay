@@ -16,4 +16,6 @@ public interface IFTask extends Remote{
 
 	// on read or login return all playlist of a specific user
 	public String sendGlobalPlaylistAndUser(String query, String login) throws RemoteException;
+	
+	public String undoUpdate(String query, String login) throws RemoteException;
 }

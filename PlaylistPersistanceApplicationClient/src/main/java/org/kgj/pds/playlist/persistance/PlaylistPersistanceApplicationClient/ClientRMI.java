@@ -79,6 +79,14 @@ public class ClientRMI {
 			}
 			break;
 
+		case "undo":
+			try {
+				ClientAppMessagingServiceManager.getInstance().send(taskRemote.undoUpdate(QueryMarshaller.queryToString(query), query.getUserManager().getUser().getLogin()));
+			} catch (RemoteException e) {
+				logger.error(e.getMessage());
+			}
+			break;
+			
 		default:
 			break;
 		}
