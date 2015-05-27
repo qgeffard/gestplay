@@ -243,8 +243,8 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 			
 			String sqlOrder2 = props.getProperty("deleteByMaxVersion");
 			PreparedStatement pStmt2 = connection.prepareStatement(sqlOrder2);
-			pStmt.setString(1, username);
-			pStmt.setInt(1, maxVersion);
+			pStmt2.setString(1, username);
+			pStmt2.setInt(2, maxVersion);
 			int rs2 = pStmt2.executeUpdate();
 			
 			String sqlOrder1 = props.getProperty("queryReadById");

@@ -23,6 +23,7 @@ public class LocalStorage {
 
 	public LocalStorage() {
 		commandUndo  = new ConcurrentHashMap<String, Map<Integer,String>>();
+		commandRedo  = new ConcurrentHashMap<String, Map<Integer,String>>();
 		users = new LinkedHashMap<String, String>();
 		
 		//load users

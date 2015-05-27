@@ -16,7 +16,7 @@ public class QueryMarshaller {
 		JAXBContext jaxbContext;
 		try {
 			jaxbContext = JAXBContext
-					.newInstance("org.kgj.pds.playlist.persistance.messagingProtocol");
+					.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			return (Query) unmarshaller
 					.unmarshal(new StringReader(queryString));
@@ -32,7 +32,7 @@ public class QueryMarshaller {
 		StringWriter wrt = new StringWriter();
 		try {
 			jaxbContext = JAXBContext
-					.newInstance("org.kgj.pds.playlist.persistance.messagingProtocol");
+					.newInstance("org.kgj.pds.playlist.metier.messagingProtocol");
 			Marshaller mar = jaxbContext.createMarshaller();
 			mar.marshal(query, wrt);
 		} catch (JAXBException e) {

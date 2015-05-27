@@ -19,12 +19,36 @@ public class IntegrityChecker {
 	
 	public void entryPointCheckIntegrity(Query query, Message message) throws JMSException{
 		boolean forward = true;
-		//Check some point...
+		switch (query.getAction().getNameAction()) {
+		case "create":
+			forward = checkExistingPlaylist(query);
+			break;
+		case "delete":
+			forward = checkExistingPlaylist(query);
+			break;
+		case "update":
+			forward = checkExistingPlaylist(query);
+			break;
+		case "login":
+			forward = checkExistingLogin(query);
+			break;
+
+		default:
+			break;
+		}
 		
 		if (forward) 
 			dispatcher.sendToPS(query, message);
 		else
 			dispatcher.sendToView(query, message);
 		
+	}
+
+	private boolean checkExistingPlaylist(Query query) {
+		return (query.getPlaylist().size() != 0) ? true : false;
+	}
+
+	private boolean checkExistingLogin(Query query) {
+		return (query.getUserManager().getUser() != null) ? true : false;
 	}
 }

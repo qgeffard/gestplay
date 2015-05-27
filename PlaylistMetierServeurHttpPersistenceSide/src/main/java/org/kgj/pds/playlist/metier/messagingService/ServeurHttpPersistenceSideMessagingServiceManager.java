@@ -42,7 +42,10 @@ public class ServeurHttpPersistenceSideMessagingServiceManager extends
 			messageContent = ((TextMessage) message).getText();
 			Query query = stringToQuery(messageContent);
 			
-			if(query.getStatus().getSucced() != null && query.getResponseId() != null){
+			logger.info("Query recu de la persistance : ");
+			logger.info(messageContent);
+			
+			if(query.getStatus().getSucced() != null && query.getResponseId() == null && !query.getAction().getNameAction().equals("login")){
 				checker.saveCommand(query);
 			}
 			

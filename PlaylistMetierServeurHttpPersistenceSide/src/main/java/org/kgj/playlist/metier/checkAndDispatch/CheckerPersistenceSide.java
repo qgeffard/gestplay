@@ -40,59 +40,67 @@ public class CheckerPersistenceSide {
 		if (query.getAction().getNameAction().equals("undo")) {
 
 			Map<Integer, String> commandUndo = localStorage.getCommandUndoByUser(query.getUserManager().getUser().getLogin());
-			String commandToUndo = commandUndo.get(Collections.max(commandUndo.keySet()));
-			Query queryUndo = QueryMarshaller.stringToQuery(commandToUndo);
+			if (commandUndo != null) {
+				String commandToUndo = commandUndo.get(Collections.max(commandUndo.keySet()));
+				logger.info("Query a undo :");
+				logger.info(commandToUndo);
+				
+				Query queryUndo = QueryMarshaller.stringToQuery(commandToUndo);
 
-			switch (queryUndo.getAction().getNameAction()) {
+				switch (queryUndo.getAction().getNameAction()) {
 				case "create":
 					localStorage.addQueryToCommandRedo(query.getUserManager().getUser().getLogin(), commandToUndo);
 					QueryManager.setActionDelete(query);
 					query.getPlaylist().addAll(queryUndo.getPlaylist());
 					break;
-	
+
 				case "update":
 					localStorage.addQueryToCommandRedo(query.getUserManager().getUser().getLogin(), commandToUndo);
 					query.getPlaylist().addAll(queryUndo.getPlaylist());
 					break;
-	
+
 				case "delete":
 					localStorage.addQueryToCommandRedo(query.getUserManager().getUser().getLogin(), commandToUndo);
 					QueryManager.setActionCreate(query);
 					query.getPlaylist().addAll(queryUndo.getPlaylist());
 					break;
-	
+
 				default:
 					break;
+				}
+				query.setResponseId("undo");
+			} else {
+				logger.error("nothing to undo");
+				QueryManager.setStatusError(query, Source.METIER.getName(), "Nothing to undo");
 			}
-			query.setResponseId("undo");
 
 		} else {
-			
+
 			Map<Integer, String> commandRedo = localStorage.getCommandRedoByUser(query.getUserManager().getUser().getLogin());
 			String commandToRedo = commandRedo.get(Collections.max(commandRedo.keySet()));
 			Query queryRedo = QueryMarshaller.stringToQuery(commandToRedo);
 
 			switch (queryRedo.getAction().getNameAction()) {
-				case "create":
-					localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), commandToRedo);
-					QueryManager.setActionCreate(query);
-					query.getPlaylist().addAll(queryRedo.getPlaylist());
-					break;
-	
-				case "update":
-					localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), commandToRedo);
-					QueryManager.setActionUpdate(query);
-					query.getPlaylist().addAll(queryRedo.getPlaylist());
-					break;
-	
-				case "delete":
-					localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), commandToRedo);
-					QueryManager.setActionDelete(query);
-					query.getPlaylist().addAll(queryRedo.getPlaylist());
-					break;
-	
-				default:
-					break;
+			case "create":
+				localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), commandToRedo);
+				QueryManager.setActionCreate(query);
+				query.getPlaylist().addAll(queryRedo.getPlaylist());
+				break;
+
+			case "update":
+				localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), commandToRedo);
+				QueryManager.setActionUpdate(query);
+				query.getPlaylist().addAll(queryRedo.getPlaylist());
+				break;
+
+			case "delete":
+				localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), commandToRedo);
+				QueryManager.setActionDelete(query);
+				query.getPlaylist().addAll(queryRedo.getPlaylist());
+				break;
+
+			default:
+				break;
 			}
 			query.setResponseId("undo");
 			localStorage.deleteTheMaxRedoCommand(query.getUserManager().getUser().getLogin());
@@ -100,6 +108,8 @@ public class CheckerPersistenceSide {
 	}
 
 	public void saveCommand(Query query) {
+		logger.info(query);
+		logger.info(QueryMarshaller.queryToString(query));
 		localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), QueryMarshaller.queryToString(query));
 	}
 
