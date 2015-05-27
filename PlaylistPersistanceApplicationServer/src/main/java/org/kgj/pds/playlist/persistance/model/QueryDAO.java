@@ -223,6 +223,13 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 	}
 
 	public Query undoUpdate(Query query, String username) {
+		
+		logger.info(QueryMarshaller.queryToString(query));
+		logger.info(query.getPlaylist());
+		logger.info(query.getPlaylist().size());
+		logger.info(query.getPlaylist().get(0));
+		logger.info(query.getPlaylist().get(0).getIdentifier());
+		
 		String urlDatabase = props.getProperty("urlDatabase");
 		String login = props.getProperty("login");
 		String password = props.getProperty("password");

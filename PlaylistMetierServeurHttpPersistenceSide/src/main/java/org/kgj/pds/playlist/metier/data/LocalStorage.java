@@ -59,7 +59,7 @@ public class LocalStorage {
 	public void addQueryToCommandUndo(String userToken, String query) {
 		Map<Integer, String> existingCommandUndo = getCommandUndoByUser(userToken);
 		
-		if (existingCommandUndo == null) {
+		if (existingCommandUndo == null || existingCommandUndo.size() == 0) {
 			existingCommandUndo = new ConcurrentHashMap<Integer, String>();
 			existingCommandUndo.put(new Integer(1), query);
 		} else {
@@ -72,8 +72,7 @@ public class LocalStorage {
 	
 	public void addQueryToCommandRedo(String userToken, String query) {
 		Map<Integer, String> existingCommandRedo = getCommandRedoByUser(userToken);
-		
-		if (existingCommandRedo == null) {
+		if (existingCommandRedo == null || existingCommandRedo.size() == 0) {
 			existingCommandRedo = new ConcurrentHashMap<Integer, String>();
 			existingCommandRedo.put(new Integer(1), query);
 		} else {
@@ -86,6 +85,10 @@ public class LocalStorage {
 	
 	public void deleteTheMaxRedoCommand(String user){
 		getCommandRedoByUser(user).remove(Collections.max(getCommandRedoByUser(user).keySet()));
+	}
+	
+	public void deleteTheMaxUndoCommand(String user){
+		getCommandUndoByUser(user).remove(Collections.max(getCommandUndoByUser(user).keySet()));
 	}
 
 	public Map<Integer, String> getCommandUndoByUser(String userToken) {

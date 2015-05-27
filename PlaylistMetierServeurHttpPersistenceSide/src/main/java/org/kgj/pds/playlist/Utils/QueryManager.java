@@ -135,4 +135,11 @@ public class QueryManager {
 
 		return query;
 	}
+	
+	public static Query flushPlaylist(Query query) {
+		
+		query.getPlaylist().clear();
+
+		return query;
+	}
 }

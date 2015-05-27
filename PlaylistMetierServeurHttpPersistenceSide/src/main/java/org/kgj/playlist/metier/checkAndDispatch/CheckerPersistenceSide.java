@@ -49,17 +49,20 @@ public class CheckerPersistenceSide {
 
 				switch (queryUndo.getAction().getNameAction()) {
 				case "create":
+					QueryManager.flushPlaylist(query);
 					localStorage.addQueryToCommandRedo(query.getUserManager().getUser().getLogin(), commandToUndo);
 					QueryManager.setActionDelete(query);
 					query.getPlaylist().addAll(queryUndo.getPlaylist());
 					break;
 
 				case "update":
+					QueryManager.flushPlaylist(query);
 					localStorage.addQueryToCommandRedo(query.getUserManager().getUser().getLogin(), commandToUndo);
 					query.getPlaylist().addAll(queryUndo.getPlaylist());
 					break;
 
 				case "delete":
+					QueryManager.flushPlaylist(query);
 					localStorage.addQueryToCommandRedo(query.getUserManager().getUser().getLogin(), commandToUndo);
 					QueryManager.setActionCreate(query);
 					query.getPlaylist().addAll(queryUndo.getPlaylist());
@@ -69,6 +72,7 @@ public class CheckerPersistenceSide {
 					break;
 				}
 				query.setResponseId("undo");
+				localStorage.deleteTheMaxUndoCommand(query.getUserManager().getUser().getLogin());
 			} else {
 				logger.error("nothing to undo");
 				QueryManager.setStatusError(query, Source.METIER.getName(), "Nothing to undo");
@@ -82,18 +86,21 @@ public class CheckerPersistenceSide {
 
 			switch (queryRedo.getAction().getNameAction()) {
 			case "create":
+				QueryManager.flushPlaylist(query);
 				localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), commandToRedo);
 				QueryManager.setActionCreate(query);
 				query.getPlaylist().addAll(queryRedo.getPlaylist());
 				break;
 
 			case "update":
+				QueryManager.flushPlaylist(query);
 				localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), commandToRedo);
 				QueryManager.setActionUpdate(query);
 				query.getPlaylist().addAll(queryRedo.getPlaylist());
 				break;
 
 			case "delete":
+				QueryManager.flushPlaylist(query);
 				localStorage.addQueryToCommandUndo(query.getUserManager().getUser().getLogin(), commandToRedo);
 				QueryManager.setActionDelete(query);
 				query.getPlaylist().addAll(queryRedo.getPlaylist());
