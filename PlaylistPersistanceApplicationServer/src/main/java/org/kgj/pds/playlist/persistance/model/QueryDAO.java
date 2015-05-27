@@ -22,7 +22,7 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 	public static Properties props;
 	static {
 		props = new Properties();
-		InputStream inStream = org.kgj.pds.playlist.persistance.model.TrackDAO.class.getResourceAsStream("db.properties");
+		InputStream inStream = org.kgj.pds.playlist.persistance.model.QueryDAO.class.getResourceAsStream("db.properties");
 		try {
 			props.load(inStream);
 			String driverName = props.getProperty("driverName");
