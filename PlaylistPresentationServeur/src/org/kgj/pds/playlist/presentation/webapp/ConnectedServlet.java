@@ -20,13 +20,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
-import javax.json.JsonValue;
-import javax.json.JsonWriter;
-
 import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.Utils.QueryManager;
 import org.kgj.pds.playlist.presentation.messagingProtocol.PlaylistType;
@@ -37,7 +30,7 @@ import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager.Use
 import org.kgj.pds.playlist.presentation.messagingProtocol.TrackListType;
 import org.kgj.pds.playlist.presentation.messagingProtocol.TrackType;
 import org.kgj.pds.playlist.presentation.messagingService.WebappMessagingServiceManager;
-
+import org.kgj.pds.playlist.presentation.json.*;
 import sun.org.mozilla.javascript.internal.json.JsonParser;
 
 /**
@@ -122,40 +115,31 @@ public class ConnectedServlet extends HttpServlet {
 				String v1 = pT.get(i).getIdentifier().toString();
 				String v2 = request.getParameter("identifier").toString();
 				if(v1.equals(v2)) {
-				playlist = pT.get(i);
-				
-				/*	
-				JsonObject tl = request.getParameter("tracklist");
+				playlist.setCreator(pT.get(i).getCreator());				
+				String tl = request.getParameter("tracklist");
 				System.out.println(tl);
-			
-	
-					JsonWriter writer;
-					JsonObject obj;
-					writer.writeObject(obj);
-					TrackType thisTrack = new TrackType();
-					String value;
-					System.out.println(tl);
-					
-					JsonObject jsObj = tl;
-					String vl = tl.getString("name");
-					
-					
-				//lookup the key 'key_2' under Json Block 'samplejson'
-				//	 Object value = jsonData.get(0);					
-				//	 thisTrack = (TrackType) value;
-					System.out.println(jsonData.get("name").toString());
-					System.out.println(jsonData.get(0).toString());
-					value = jsonData.get("name").toString();
-					thisTrack.setTitle(value);
-					value = jsonData.get("album").toString();
-					thisTrack.setAlbum(value);
-					value = jsonData.get("artist").toString();
-					thisTrack.setCreator(value);
-					System.out.println("Artist ? "+value);
-					pT.get(i).getTrackList().getTrack().add(pT.get(i).getTrackList().getTrack().size()+1, thisTrack);
-					
-			*/
-					playlist = pT.get(i);
+				// JSONObject obj = new JSONObject(request.getParameter("tracklist"));
+				ArrayList<String> list = new ArrayList<String>();  
+				JSONArray jsonArray = null;
+				if(tl != null)
+				jsonArray = new JSONArray(tl); 
+				if (jsonArray != null) { 
+				   int len = jsonArray.length();
+				   String value = "";
+				   TrackType thisTrack = new TrackType();
+				   for (int i1=0;i1<len;i1++){ 
+					   if(jsonArray.getJSONObject(i1).get("name") != null) {
+						value = jsonArray.getJSONObject(i1).get("name").toString();
+						thisTrack.setTitle(value); }
+						if(jsonArray.getJSONObject(i1).get("album") != null) {
+						value = jsonArray.getJSONObject(i1).get("album").toString();
+						thisTrack.setAlbum(value); }
+						if(jsonArray.getJSONObject(i1).get("artist") != null) {
+						value = jsonArray.getJSONObject(i1).get("artist").toString();
+						thisTrack.setCreator(value); }
+						playlist.getTrackList().getTrack().add(thisTrack);
+				   } 
+				}
 					playlist.setTitle(request.getParameter("name"));
 				}
 			}
@@ -219,8 +203,11 @@ public class ConnectedServlet extends HttpServlet {
 						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
 						for (int i = 0; i < pT.size(); i++) {
 							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
-								pT.get(i).setTitle(playlist.getTitle());
+								pT.get(i).getTrackList().getTrack().clear();
+								for(int j = 0; j < playlist.getTrackList().getTrack().size(); j++)
+								pT.get(i).getTrackList().getTrack().add(playlist.getTrackList().getTrack().get(j));
 								text = i;
+								
 							}
 						}
 						break;
