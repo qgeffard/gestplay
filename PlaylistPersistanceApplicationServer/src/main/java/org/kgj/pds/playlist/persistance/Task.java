@@ -27,7 +27,7 @@ public class Task extends UnicastRemoteObject implements IFTask{
 		Query query = QueryMarshaller.stringToQuery(queryStr);
 		if (queryDao.delete(query)) {
 			QueryManager.setStatusSucced(query);
-			QueryManager.flushPlaylist(query);
+//			QueryManager.flushPlaylist(query);
 		} else {
 			logger.error("Erreur delete");
 			QueryManager.setStatusError(query, Source.PERSISTANCE.getName(), "Erreur delete");
@@ -58,6 +58,23 @@ public class Task extends UnicastRemoteObject implements IFTask{
 	public String sendGlobalPlaylistAndUser(String queryStr, String login) throws RemoteException{
 		Query query = QueryMarshaller.stringToQuery(queryStr);
 		Query querydb = queryDao.readByUser(login);
+		query.getPlaylist().addAll(querydb.getPlaylist());
+		QueryManager.setStatusSucced(query);
+		return QueryMarshaller.queryToString(query);
+	}
+	
+	public String delete(String queryStr, String login) throws RemoteException{
+		Query query = QueryMarshaller.stringToQuery(queryStr);
+		Query querydb = queryDao.readByUser(login);
+		query.getPlaylist().addAll(querydb.getPlaylist());
+		QueryManager.setStatusSucced(query);
+		return QueryMarshaller.queryToString(query);
+	}
+
+	@Override
+	public String undoUpdate(String queryStr, String login) throws RemoteException {
+		Query query = QueryMarshaller.stringToQuery(queryStr);
+		Query querydb = queryDao.undoUpdate(query, login);
 		query.getPlaylist().addAll(querydb.getPlaylist());
 		QueryManager.setStatusSucced(query);
 		return QueryMarshaller.queryToString(query);
