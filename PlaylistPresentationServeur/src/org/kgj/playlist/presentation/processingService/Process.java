@@ -24,7 +24,7 @@ public class Process {
 	
 	
 	private void start() {		
-		System.out.println("PRES : RequÍte reÁu - Dispatching...");
+		System.out.println("PRES : Requ√®te re√ßu - Dispatching...");
 		switch (this.query.getAction().getNameAction()) {
 		
 		case "login":
@@ -45,10 +45,19 @@ public class Process {
 		case "update":
 			update();
 			break;
-		
+			
 		case "delete":
 			delete();
-			break;			
+			break;
+			
+		case "undo":
+			undoRedo();
+			break;
+			
+		case "redo":
+			undoRedo();
+			break;
+			
 	}
 	}
 	
@@ -58,9 +67,8 @@ public class Process {
 	 * Then, notify the thread to log the user
 	 * If the login fail,  switch back the user to the login page
 	 */
-	@SuppressWarnings("unused")
 	private void login() {
-		System.out.println("PRES : RequÍte reÁu : Login");
+		System.out.println("PRES : Requ√®te re√ßu : Login");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
 			MyServlet.setSes(3,(List<PlaylistType>) this.query.getPlaylist());
@@ -79,7 +87,7 @@ public class Process {
 	 * if the create fail, alert the user and delete it in the view
 	 */
 	private void create() {
-		System.out.println("PRES : RequÍte reÁu : Create.");
+		System.out.println("PRES : Requ√®te re√ßu : Create.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
 			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
@@ -96,7 +104,7 @@ public class Process {
 	 * All informations about the playlist will be reloaded when we made a change
 	 */
 	private void update() {
-		System.out.println("PRES : RequÍte reÁu : Update.");
+		System.out.println("PRES : Requ√®te re√ßu : Update.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
 			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
@@ -113,10 +121,21 @@ public class Process {
 	 * If the answer is false, then the playlist will be displayed back and the user alerted
 	 */
 	private void delete() {
-		System.out.println("PRES : RequÍte reÁu : Delete.");
+		System.out.println("PRES : Requ√®te re√ßu : Delete.");
 		if (this.query.getStatus().getSucced() != null) {
 			MyServlet.setSes(1,"0");
-		//	MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
+		} else {
+			MyServlet.setSes(1,"-1");
+			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());
+		}
+		notifyThread();
+	}
+	
+	private void undoRedo() {
+		System.out.println("PRES : Requ√®te re√ßu : "+this.query.getAction().getNameAction()+".");
+		if (this.query.getStatus().getSucced() != null) {
+			MyServlet.setSes(1,"0");
+			MyServlet.setSes(3,(List<PlaylistType>) this.query.getPlaylist());
 		} else {
 			MyServlet.setSes(1,"-1");
 			MyServlet.setSes(2,this.query.getStatus().getError().getMessage());

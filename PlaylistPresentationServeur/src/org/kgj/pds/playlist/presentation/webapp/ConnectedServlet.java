@@ -20,6 +20,13 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
+import javax.json.JsonWriter;
+
 import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.Utils.QueryManager;
 import org.kgj.pds.playlist.presentation.messagingProtocol.PlaylistType;
@@ -30,7 +37,9 @@ import org.kgj.pds.playlist.presentation.messagingProtocol.Query.UserManager.Use
 import org.kgj.pds.playlist.presentation.messagingProtocol.TrackListType;
 import org.kgj.pds.playlist.presentation.messagingProtocol.TrackType;
 import org.kgj.pds.playlist.presentation.messagingService.WebappMessagingServiceManager;
-import org.json.*;
+
+import sun.org.mozilla.javascript.internal.json.JsonParser;
+
 /**
  * Servlet implementation class ConnectedServlet
  */
@@ -75,7 +84,7 @@ public class ConnectedServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String action = request.getParameter("action");
-		// On fait un switch sur l'action qui est défini dans le formulaire
+		// On fait un switch sur l'action qui est dï¿½fini dans le formulaire
 
 		HttpSession session = request.getSession();
 		Query query = new Query();
@@ -95,13 +104,11 @@ public class ConnectedServlet extends HttpServlet {
 		QueryManager.setUserManagerConnected(query, "aaa");
 		userManager.setUser(user);
 
-		listPlaylist.add(playlist); // On set la playlist à la liste de playlist
-		playlist.setTrackList(trackList); // On set la liste de track à la playlist
+		listPlaylist.add(playlist); // On set la playlist ï¿½ la liste de playlist
+		playlist.setTrackList(trackList); // On set la liste de track ï¿½ la playlist
 		System.out.println("--------------");
-		System.out.println(request.getParameter("name"));
-		playlist.setTitle(request.getParameter("name"));
 		playlist.setCreator(session.getAttribute("user").toString());
-		System.out.println("PRES : Requête en cours d'envoi !");
+		System.out.println("PRES : RequÃ¨te en cours d'envoi !");
 
 		String id = nextSessionId();
 		Thread.currentThread().setName(id);
@@ -111,45 +118,75 @@ public class ConnectedServlet extends HttpServlet {
 		switch (action) {
 		case "update":
 			System.out.println("PRES : Update");
-		/*	for (int i = 0; i < pT.size(); i++) {
+			for (int i = 0; i < pT.size(); i++) {
 				String v1 = pT.get(i).getIdentifier().toString();
 				String v2 = request.getParameter("identifier").toString();
 				if(v1.equals(v2)) {
-					System.out.println("On est dans le if");
+				playlist = pT.get(i);
+				
+				/*	
+				JsonObject tl = request.getParameter("tracklist");
+				System.out.println(tl);
+			
+	
+					JsonWriter writer;
+					JsonObject obj;
+					writer.writeObject(obj);
 					TrackType thisTrack = new TrackType();
-					String tl = request.getParameter("tracklist");
+					String value;
 					System.out.println(tl);
-					JSONObject obj = new JSONObject(tl);
-					String value = obj.getString("name");
+					
+					JsonObject jsObj = tl;
+					String vl = tl.getString("name");
+					
+					
+				//lookup the key 'key_2' under Json Block 'samplejson'
+				//	 Object value = jsonData.get(0);					
+				//	 thisTrack = (TrackType) value;
+					System.out.println(jsonData.get("name").toString());
+					System.out.println(jsonData.get(0).toString());
+					value = jsonData.get("name").toString();
 					thisTrack.setTitle(value);
-					value = obj.getString("album");
+					value = jsonData.get("album").toString();
 					thisTrack.setAlbum(value);
-					value = obj.getString("artist");
+					value = jsonData.get("artist").toString();
 					thisTrack.setCreator(value);
 					System.out.println("Artist ? "+value);
 					pT.get(i).getTrackList().getTrack().add(pT.get(i).getTrackList().getTrack().size()+1, thisTrack);
+					
+			*/
 					playlist = pT.get(i);
+					playlist.setTitle(request.getParameter("name"));
 				}
 			}
-		*/
 			playlist.setIdentifier(request.getParameter("identifier").toString());
 			QueryManager.setActionUpdate(query);
 			break;
 		case "delete":
+			playlist.setTitle(request.getParameter("name"));
 			System.out.println("PRES : Delete");
 			playlist.setIdentifier(request.getParameter("identifier").toString());
 			QueryManager.setActionDelete(query);
 			break;
 		case "create":
+			playlist.setTitle(request.getParameter("name"));
 			System.out.println("PRES : Create");
 			QueryManager.setActionCreate(query);
+			break;
+		case "undo":
+			System.out.println("PRES : Undo");
+			QueryManager.setActionUndo(query);
+			break;
+		case "redo":
+			System.out.println("PRES : Redo");
+			QueryManager.setActionRedo(query);
 			break;
 		default:
 			logger.error("No action specified");
 			break;
 		}
 
-		// On se sert désormais du connected token, et non plus du userManager
+		// On se sert dï¿½sormais du connected token, et non plus du userManager
 		// query.setUserManager(userManager);
 		query.setQueryId(id);
 		QueryManager.setStatusInProgress(query);
@@ -177,7 +214,43 @@ public class ConnectedServlet extends HttpServlet {
 
 				if (ses[1].equals("0")) {
 					
-
+					switch(action) {
+					case "update":
+						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
+						for (int i = 0; i < pT.size(); i++) {
+							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
+								pT.get(i).setTitle(playlist.getTitle());
+								text = i;
+							}
+						}
+						break;
+					case "delete":
+						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
+						for (int i = 0; i < pT.size(); i++) {
+							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
+								pT.remove(i);
+								text = i;
+							}
+						}
+						break;
+					case "create":
+						playlist.setIdentifier(MyServlet.getSes(10));
+						pT.add(playlist);
+						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
+						text = pT.size();
+						break;
+					case "undo":
+						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
+						text = 1;
+						break;
+					case "redo":
+						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
+						text = 1;
+						break;
+						
+					}
+					
+					/*
 					if (action.equals("update")) { // Quand l'utilisateur sauvegarde la liste des tracks
 						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
 						for (int i = 0; i < pT.size(); i++) {
@@ -201,7 +274,7 @@ public class ConnectedServlet extends HttpServlet {
 						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
 						text = pT.size();
 					}
-					
+					*/
 					// On modifie les variables de sessions correspondantes.
 					MyServlet.setSes(3, pT);
 					request.getSession().setAttribute("playlist", ses[3]);

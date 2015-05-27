@@ -90,7 +90,48 @@ var currentTracks;
 			$scope.artist='';
 			$scope.playlists[$scope.idCurrentPlaylist].trackList = $scope.tracklist;
 		};
-		
+		$scope.undo = function() {
+			$scope.action = "undo";
+			$.ajax({
+				method : "POST",	
+	            url : 'connectedServlet',
+	            data : {
+	            	action : $scope.action
+	            },
+	            success : function(ident) {
+	            	if(ident != "Error") {
+	            		location.reload();
+	            	} else {
+	            		// Si on reçoit un message d'erreur
+	            		// Envoie la notification de non suppresion.
+	            	}
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                console.log(xhr.status);
+	                console.log(thrownError);
+	              }	        });
+		}
+		$scope.redo = function() {
+			$scope.action = "redo";
+			$.ajax({
+				method : "POST",	
+	            url : 'connectedServlet',
+	            data : {
+	            	action : $scope.action
+	            },
+	            success : function(ident) {
+	            	if(ident != "Error") {
+	            		location.reload();
+	            	} else {
+	            		// Si on reçoit un message d'erreur
+	            		// Envoie la notification de non suppresion.
+	            	}
+	            },
+	            error: function (xhr, ajaxOptions, thrownError) {
+	                console.log(xhr.status);
+	                console.log(thrownError);
+	              }	        });
+		}
 		$scope.del = function ( idx ) {
 			  var trackToDelete = $scope.tracklist[idx];		
 			  $scope.tracklist.splice(idx, 1);
@@ -187,22 +228,22 @@ var currentTracks;
 			$scope.modifierPlaylist($scope.idCurrentPlaylist);
 		},
 		$scope.modifierPlaylist = function(idx) {
+			console.log(JSON.stringify($scope.playlists[idx].trackList));
 			$.ajax({
 				method : "POST",	
 	            url : 'connectedServlet',
 	            data : {
 	            	action : $scope.action,
-	            	identifier : $scope.playlists[idx]['ident'],
-	                name : $scope.playlists[idx]['name'],
-	                creator : $scope.playlists[idx]['creator'],
-	                tracks : $scope.playlists[idx]['tracks'],
-	                tracklist : JSON.stringify($scope.playlists[idx]['tracklist'])
+	            	identifier : $scope.playlists[idx].ident,
+	                name : $scope.playlists[idx].name,
+	                creator : $scope.playlists[idx].creator,
+	                tracks : $scope.playlists[idx].tracks,
+	                tracklist : JSON.stringify($scope.playlists[idx].trackList)
 	            },
 	            success : function(ident) {
 	            	if(ident != "Error") {
-	            	$scope.playlists[idx]['name'] = $scope.name;
-	            	$scope.playlists[idx]['tracks'] = $scope.playlists[idx]['tracklist'].length;
 	            	$scope.playlists[idx]['tracklist'] = $scope.tracklist; // On utilise la variable intermediaire pour éviter les traitements douloureux.
+	            	$scope.playlists[idx]['tracks'] = $scope.playlists[idx]['tracklist'].length;
 	            	$scope.action = "";
 	            	$scope.$apply(); // Allez, on se motive, le scope a changé
 	            	} else {

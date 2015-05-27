@@ -12,9 +12,9 @@
 	
 	<link href="CSS/bootstrap.min.css" rel="stylesheet">
 	<link href="CSS/style.css" rel="stylesheet">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 	<link href="CSS/myCSS.css" rel="stylesheet">
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script	src="js/jquery.min.js"></script>
 	
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,7 +40,7 @@
 				<label class="control-label visible-ie8 visible-ie9">Identifiant</label>
 				<div class="controls">
 					<div class="input-icon left">
-						<i class="fa fa-user"></i>
+						<i class="icon-user"></i>
 						<input class="m-wrap placeholder-no-fix" autocomplete="off" placeholder="Identifiant" name="login" type="text">
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 				<label class="control-label visible-ie8 visible-ie9">Mot de passe</label>
 				<div class="controls">
 					<div class="input-icon left">
-						<i class="fa fa-lock"></i>
+						<i class="icon-lock"></i>
 						<input class="m-wrap placeholder-no-fix" autocomplete="off" placeholder="Mot de passe" name="password" type="password">
 					</div>
 				</div>

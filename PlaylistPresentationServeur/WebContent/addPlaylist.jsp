@@ -10,9 +10,9 @@
 <link href="CSS/myCSS.css" rel="stylesheet">
 <link href="CSS/bootstrap.min.css" rel="stylesheet">
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
-<script	src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.17/angular.min.js"></script>
+<script	src="js/jquery.min.js"></script>
+<script	src="js/bootstrap.js"></script>
+<script	src="js/angular.min.js"></script>
 <script src="js/myPrimeJS.js"></script>
 
 </head>
@@ -29,8 +29,8 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="myNavbar navbar-brand" href="#">Actions</a>
-      <a class="navbarSelected myNavbar navbar-brand" href="#">Manage playlists</a>
+      <a class="myNavbar navbar-brand" ng-click="undo()"><i class="icon-refresh"></i></a>
+      <a class="myNavbar navbar-brand" ng-click="redo()"><i class="icon-repeat"></i></a>
     </div>
 
    
