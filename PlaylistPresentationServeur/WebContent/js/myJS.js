@@ -5,9 +5,66 @@ var user = "";
 var name = "";
 var currentTracks;
 
-
-
 	currentApp.controller("ctrlPlaylist", function($scope) {
+		$scope.language_EN = 
+		{
+			"welcome": "Welcome",
+			"addPL": "Add a playlist",
+			"addTL": "Add a track",
+			"submit": "Submit",
+			"savePL": "Save playlist",
+			"trackL": "Tracklist",
+			"name":"Name",
+			"creator":"Creator",
+			"tracks":"Tracks",
+			"album":"Album",
+			"artist":"Artist",
+			"h1":"Your music without limit..",
+			"h2":"Create and edit your playlists to infinity.  ",
+			"h3":"Connect now and enjoy.",
+			"connection":"Sign-in",
+			"login":"Log-in",
+			"id":"Username",
+			"pass":"Password"
+		};
+
+		$scope.language_FR = 
+		{
+		    "welcome": "Bienvenue",
+		    "addPL": "Ajouter une playlist",
+		    "addTL": "Ajouter une musique",
+		    "submit": "Envoyer",
+		    "savePL": "Sauvegarder",
+		    "trackL": "Liste des musiques",
+		    "name":"Titre",
+		    "creator":"Créateur",
+		    "tracks":"Taille",
+		    "album":"Album",
+		    "artist":"Artiste",
+		    "h1":"Votre musique en illimité..",
+		    "h2":"Créer et modifier vos playlists à l'infini.  ",
+		    "h3":"Connectez-vous dès maintenant pour en profiter.",
+		    "connection":"Se connecter",
+		    "login":"Log-in",
+		    "id":"Identifiant",
+		    "pass":"Mot de passe"
+		};
+		$scope.language_Current = $scope.language_EN;
+		
+		$scope.changeLanguage = function(lang) {
+			switch(lang) {
+			case "FR":
+				console.log("FR");
+				$scope.language_Current = $scope.language_FR;
+				break;
+			case "EN":
+				console.log("EN");
+				$scope.language_Current = $scope.language_EN;
+				break;
+			}
+			
+		};
+		
 		$scope.user = user;
 		$scope.ident = 0;
 		$scope.playlists = playlists;

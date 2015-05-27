@@ -35,7 +35,9 @@
 
    
       <ul class="nav navbar-nav navbar-right">
-        <li><a class="myNavbar navbar-brand" href="#">Welcome <% out.println(request.getSession().getAttribute("id"));  %></a></li>
+        <li><a class="myNavbar navbar-brand" >{{language_Current.welcome}} <% out.println(request.getSession().getAttribute("id"));  %></a></li>
+        <li><a ng-click="changeLanguage('EN')"><img src="img/USA-usa.png" ></img></a></li>
+        <li><a ng-click="changeLanguage('FR')"><img src="img/FR-fr.png"  ></img></a></li>
       </ul>
   </div><!-- /.container-fluid -->
 </nav>
@@ -43,9 +45,9 @@
 
 <table style="width:100%"><tbody><tr><td style="width:45%;padding-left:40px;vertical-align: top">
 <form id="tabPlaylist" class="form-horizontal" role="form" ng-submit="addRow()" >
-<div>Add a playlist</div><br>
+<div>{{language_Current.addPL}}</div><br>
 	<div class="form-group">
-		<label class="col-md-2 control-label">Name</label>
+		<label class="col-md-2 control-label">{{language_Current.name}}</label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" name=""
 				ng-model="name" />
@@ -54,28 +56,29 @@
 	
 	<div class="form-group">								
 		<div style="padding-left:110px">
-			<input id="submitNewPlaylist" type="submit" value="Submit" class="btn btn-primary"/>
+			<input id="submitNewPlaylist" type="submit" value="{{submit}}" class="btn btn-primary"/>
+			
 		</div>
 	</div>
 </form>	
 <form hidden="true" id="tabTrack" class="form-horizontal" role="form" ng-submit="addRowtl()" >
-<div>Add a track</div>	<br/>
+<div>{{language_Current.addTL}}</div>	<br/>
 	<div class="form-group">
-		<label class="col-md-2 control-label">Name</label>
+		<label class="col-md-2 control-label">{{language_Current.name}}</label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" name="name"
 				ng-model="name" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-md-2 control-label">Album</label>
+		<label class="col-md-2 control-label">{{language_Current.album}}</label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" name="album"
 				ng-model="album" />
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-md-2 control-label">Artist</label>
+		<label class="col-md-2 control-label">{{language_Current.artist}}</label>
 		<div class="col-md-4">
 			<input type="text" class="form-control" name="artist"
 				ng-model="artist" />
@@ -83,7 +86,7 @@
 	</div>
 	<div class="form-group">								
 		<div style="padding-left:110px">
-			<input type="submit" value="Submit" class="btn btn-primary"/>
+			<input type="submit" ng-value="language_Current.submit" class="btn btn-primary"/>
 		</div>
 	</div>
 	</form>
@@ -95,9 +98,9 @@
 
 <table class="table" ng-model="clicked">
 	<tr>
-		<th>Name</th>
-		<th>Creator</th>
-		<th>Tracks</th>
+		<th>{{language_Current.name}}</th>
+		<th>{{language_Current.creator}}</th>
+		<th>{{language_Current.tracks}}</th>
 		<th></th>
 	</tr>
 	<tr ng-repeat="playlist in playlists" class="ng-scope">
@@ -111,14 +114,14 @@
 
 </td></tr>
 
-<tr id="tracktab" hidden="true"><td></td><td>Tracklist <br/><br/>
+<tr id="tracktab" hidden="true"><td></td><td>{{language_Current.trackL}} <br/><br/>
 
 <form id="submitTrack" ng-submit="updatePlaylist()" role="form">
 <table class="table" ng-model="clicked">
 	<tr>
-		<th>Name</th>
-		<th>Album</th>
-		<th>Artist</th>
+		<th>{{language_Current.name}}</th>
+		<th>{{language_Current.album}}</th>
+		<th>{{language_Current.artist}}</th>
 		<th></th>
 	</tr>
 	<tr ng-repeat="track in tracklist" class="ng-scope">
@@ -169,6 +172,6 @@
     		String string = "<script>window.onload = function() { user = "+"'"+request.getSession().getAttribute("id")+"'"+"; }</script>";
     		out.println(string);
    			%>
-   			
+ 
 </body>
 </html>
