@@ -10,6 +10,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+import javax.lang.model.type.IntersectionType;
+
 import org.apache.log4j.Logger;
 import org.kgj.pds.playlist.Utils.QueryMarshaller;
 import org.kgj.pds.playlist.persistance.entity.QueryEntity;
@@ -230,11 +232,20 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 		try {
 			connection = DriverManager.getConnection(urlDatabase, login, password);
 
-			String sqlOrder = props.getProperty("queryDeleteById");
+			String sqlOrder = props.getProperty("selectVersion");
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
-			pStmt.setString(2, username);
-			pStmt.setString(1, query.getPlaylist().get(0).getIdentifier());
-			int rs = pStmt.executeUpdate();
+			pStmt.setString(1, username);
+			ResultSet rs = pStmt.executeQuery();
+			while (rs.next()) {
+				if (rs.getInt("version") > maxVersion );
+					maxVersion = rs.getInt("version");
+			}
+			
+			String sqlOrder2 = props.getProperty("deleteByMaxVersion");
+			PreparedStatement pStmt2 = connection.prepareStatement(sqlOrder2);
+			pStmt.setString(1, username);
+			pStmt.setInt(1, maxVersion);
+			int rs2 = pStmt2.executeUpdate();
 			
 			String sqlOrder1 = props.getProperty("queryReadById");
 			PreparedStatement pStmt1 = connection.prepareStatement(sqlOrder1);
