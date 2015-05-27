@@ -236,7 +236,6 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 			PreparedStatement pStmt = connection.prepareStatement(sqlOrder);
 			pStmt.setString(1, query.getPlaylist().get(0).getIdentifier());
 			pStmt.setString(2, username);
-			
 			ResultSet rs = pStmt.executeQuery();
 			while (rs.next()) {
 				if (rs.getInt("version") > maxVersion );
@@ -248,22 +247,21 @@ public class QueryDAO implements IDAOService<QueryEntity> {
 			pStmt2.setString(1, query.getPlaylist().get(0).getIdentifier());
 			pStmt2.setInt(2, maxVersion);
 			pStmt2.setString(3, username);
-			int rs2 = pStmt2.executeUpdate();
-			
-			
+			pStmt2.executeUpdate();
 			
 			String sqlOrder1 = props.getProperty("queryReadById");
 			PreparedStatement pStmt1 = connection.prepareStatement(sqlOrder1);
 			pStmt1.setString(1, query.getPlaylist().get(0).getIdentifier());
 			pStmt1.setInt(2, maxVersion-1);
 			pStmt1.setString(3, username);
+			logger.info(query.getPlaylist().get(0).getIdentifier());
+			logger.info(maxVersion-1);
+			logger.info(username);
+			logger.info(pStmt1.toString());
 			ResultSet rs1 = pStmt1.executeQuery();
+			logger.info(rs1.toString());
 			if (rs1.next()) {
 				Query query1 = QueryMarshaller.stringToQuery(rs1.getString("query"));
-				while (rs1.next()) {
-					Query subQuery = QueryMarshaller.stringToQuery(rs1.getString("query"));
-					query1.getPlaylist().addAll(subQuery.getPlaylist());
-				}
 				return query1;
 			}
 			return null;
