@@ -94,7 +94,8 @@ public class ConnectedServlet extends HttpServlet {
 		user.setLogin(session.getAttribute("user").toString());
 		user.setPassword(session.getAttribute("pass").toString());
 		userManager.setUser(user);
-
+		QueryManager.setUserManagerLoginPassword(query, session.getAttribute("user").toString(), session.getAttribute("pass").toString());
+		
 		listPlaylist.add(playlist); // On set la playlist � la liste de playlist
 		playlist.setTrackList(trackList); // On set la liste de track � la playlist
 		System.out.println("--------------");
@@ -140,6 +141,7 @@ public class ConnectedServlet extends HttpServlet {
 						thisTrack.setCreator(value); 
 						System.out.println("1 Playlist de plus : "+thisTrack.getTitle());
 						playlist.getTrackList().getTrack().add(thisTrack);
+						System.out.println(playlist.getTrackList().getTrack().get(0).toString());
 				   } 
 				}
 					playlist.setTitle(request.getParameter("name"));
