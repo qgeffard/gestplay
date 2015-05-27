@@ -67,6 +67,7 @@
 		<% }
 			} %>
 		<div class="form-actions">
+
 				<button type="submit" class="myBtn blue btn pull-right">
 				{{language_Current.login}}  <i class="fa fa-sign-in"></i>
 				</button>            

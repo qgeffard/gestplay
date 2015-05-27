@@ -93,9 +93,6 @@ public class ConnectedServlet extends HttpServlet {
 		User user = new User();
 		user.setLogin(session.getAttribute("user").toString());
 		user.setPassword(session.getAttribute("pass").toString());
-		// userManager.setConnectedToken(session.getAttribute("token").toString());
-//		QueryManager.setUserManagerConnected(query, session.getAttribute("token").toString()); //TODO : ramener le token de session 
-		QueryManager.setUserManagerConnected(query, "aaa");
 		userManager.setUser(user);
 
 		listPlaylist.add(playlist); // On set la playlist � la liste de playlist
@@ -113,12 +110,14 @@ public class ConnectedServlet extends HttpServlet {
 		case "update":
 			System.out.println("PRES : Update");
 			for (int i = 0; i < pT.size(); i++) {
+				
 				String v1 = pT.get(i).getIdentifier().toString();
 				String v2 = request.getParameter("identifier").toString();
+					
 				if(v1.equals(v2)) {
 				playlist.setCreator(pT.get(i).getCreator());				
 				String tl = request.getParameter("tracklist");
-				System.out.println(tl);
+				System.out.println("Tracklist : "+tl);
 				// JSONObject obj = new JSONObject(request.getParameter("tracklist"));
 				ArrayList<String> list = new ArrayList<String>();  
 				JSONArray jsonArray = null;
@@ -129,15 +128,17 @@ public class ConnectedServlet extends HttpServlet {
 				   String value = "";
 				   TrackType thisTrack = new TrackType();
 				   for (int i1=0;i1<len;i1++){ 
-					   if(jsonArray.getJSONObject(i1).get("name") != null) {
+					   System.out.println(jsonArray.getJSONObject(i1));
+			
 						value = jsonArray.getJSONObject(i1).get("name").toString();
-						thisTrack.setTitle(value); }
-						if(jsonArray.getJSONObject(i1).get("album") != null) {
+						thisTrack.setTitle(value); 
+	
 						value = jsonArray.getJSONObject(i1).get("album").toString();
-						thisTrack.setAlbum(value); }
-						if(jsonArray.getJSONObject(i1).get("artist") != null) {
+						thisTrack.setAlbum(value); 
+
 						value = jsonArray.getJSONObject(i1).get("artist").toString();
-						thisTrack.setCreator(value); }
+						thisTrack.setCreator(value); 
+						System.out.println("1 Playlist de plus : "+thisTrack.getTitle());
 						playlist.getTrackList().getTrack().add(thisTrack);
 				   } 
 				}
@@ -206,9 +207,8 @@ public class ConnectedServlet extends HttpServlet {
 							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
 								pT.get(i).getTrackList().getTrack().clear();
 								for(int j = 0; j < playlist.getTrackList().getTrack().size(); j++)
-								pT.get(i).getTrackList().getTrack().add(playlist.getTrackList().getTrack().get(j));
-								text = i;
-								
+									pT.get(i).getTrackList().getTrack().add(playlist.getTrackList().getTrack().get(j));
+									text = i;
 							}
 						}
 						break;

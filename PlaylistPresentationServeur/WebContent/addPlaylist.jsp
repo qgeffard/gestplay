@@ -87,10 +87,9 @@
 	</div>
 	<div class="form-group">								
 		<div style="padding-left:110px">
-			<button type="submit" class="myBtn blue btn pull-right">
-					{{language_Current.submit}}  <i class="fa fa-sign-in"></i>
-				</button> 
-
+		<button type="submit" class="btn btn-primary">
+		{{language_Current.submit}} 
+		</button> 
 		</div>
 	</div>
 	</form>
@@ -135,7 +134,9 @@
 		<td><a ng-click="del($index)"><i class="icon-remove-sign icon-2x"></i></a></td>
 	</tr>
 </table>
-<input type="submit" value="Save playlist" class="alignright btn btn-primary"/>
+		<button type="submit" class="alignright btn btn-primary">
+		{{language_Current.savePL}} 
+		</button> 
 </form>
 
 </td></tr></tbody></table>

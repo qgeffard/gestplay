@@ -301,7 +301,6 @@ var currentTracks;
 	            	if(ident != "Error") {
 	            	$scope.playlists[idx]['tracklist'] = $scope.tracklist; // On utilise la variable intermediaire pour éviter les traitements douloureux.
 	            	$scope.playlists[idx]['tracks'] = $scope.playlists[idx]['tracklist'].length;
-	            	$scope.action = "";
 	            	$scope.$apply(); // Allez, on se motive, le scope a changé
 	            	} else {
 	            		// On envoie la notification de non création 
