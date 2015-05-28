@@ -152,13 +152,17 @@
     			pT = (List<PlaylistType>) request.getSession().getAttribute("playlist");
     			TrackListType tL; 
    			   	for(int i = 0; i < pT.size() ; i++) {  	
-   			   		if(0 != pT.size()) {   		
+   			   		if(0 != pT.size()) {   
+   			   			System.out.println(i);
    			   		System.out.println(pT.get(i));
    			   		System.out.println(pT.get(i).getIdentifier().toString());
    						tL = pT.get(i).getTrackList();
    						pT.get(i).getTitle();
    						String str = "<script>window.onload = loadPlaylist("+'"';
-   						str = str + pT.get(i).getIdentifier().toString()+'"'+','+'"'+pT.get(i).getTitle().toString()+'"'+','+'"'+pT.get(i).getCreator().toString()+'"'+','+'"'+pT.get(i).getTrackList().getTrack().size();
+   						str = str + pT.get(i).getIdentifier().toString()+'"';
+   						str = str +','+'"'+pT.get(i).getTitle().toString()+'"'+',';
+   						str = str +'"'+pT.get(i).getCreator().toString()+'"'+','+'"';
+   						str = str +pT.get(i).getTrackList().getTrack().size();
    						str = str + '"';
    						str = str + ");</script>";
    						 

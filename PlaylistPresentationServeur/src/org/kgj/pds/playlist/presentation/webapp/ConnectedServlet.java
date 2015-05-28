@@ -194,10 +194,10 @@ public class ConnectedServlet extends HttpServlet {
 				int text = 0;
 
 				if (ses[1].equals("0")) {
-					
+					action = MyServlet.getSes(5).toString();
 					switch(action) {
 					case "update":
-						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
+						System.out.println("PRES : "+action+" : Transmission Vue");
 						for (int i = 0; i < pT.size(); i++) {
 							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
 								pT.get(i).getTrackList().getTrack().clear();
@@ -208,7 +208,8 @@ public class ConnectedServlet extends HttpServlet {
 						}
 						break;
 					case "delete":
-						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
+						playlist.setIdentifier(MyServlet.getSes(10));
+						System.out.println("PRES : "+action+" : Transmission Vue");
 						for (int i = 0; i < pT.size(); i++) {
 							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
 								pT.remove(i);
@@ -218,8 +219,10 @@ public class ConnectedServlet extends HttpServlet {
 						break;
 					case "create":
 						playlist.setIdentifier(MyServlet.getSes(10));
+						playlist.setTitle(MyServlet.getSes(6));
+						playlist.setCreator(session.getAttribute("user").toString());
 						pT.add(playlist);
-						System.out.println("PRES : "+action+" : "+pT.get(0).getIdentifier()+" : Transmission Vue");
+						System.out.println("PRES : "+action+" : Transmission Vue");
 						text = pT.size();
 						break;
 					case "undo":
