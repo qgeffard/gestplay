@@ -5,10 +5,10 @@
 	  <meta charset="utf-8">
 	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
-	  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	 
 	<title>Log-In</title>
 	    
-	<!-- Bootstrap -->
+	<!-- CSS AND JS -->
 	
 	<link href="CSS/bootstrap.min.css" rel="stylesheet">
 	<link href="CSS/style.css" rel="stylesheet">
@@ -44,7 +44,7 @@
 				<div class="controls">
 					<div class="input-icon left">
 						<i class="icon-user"></i>
-						<input class="m-wrap placeholder-no-fix" autocomplete="off" placeholder="Identifiant" name="login" type="text">
+						<input class="m-wrap placeholder-no-fix" autocomplete="off" placeholder="{{language_Current.id}}" name="login" type="text">
 					</div>
 				</div>
 			</div>
@@ -55,7 +55,7 @@
 				<div class="controls">
 					<div class="input-icon left">
 						<i class="icon-lock"></i>
-						<input class="m-wrap placeholder-no-fix" autocomplete="off" placeholder="Mot de passe" name="password" type="password">
+						<input class="m-wrap placeholder-no-fix" autocomplete="off" placeholder="{{language_Current.pass}}" name="password" type="password">
 					</div>
 				</div>
 			</div>
@@ -63,11 +63,11 @@
 			<% if(null != session.getAttribute("erreur")) { %>
 			<%
 				if(request.getSession().getAttribute("connected").equals("-1")) { %>
-		<diV class="badlogin"><% out.println(request.getSession().getAttribute("erreur").toString()); %></diV>
+		<diV class="badlogin">{{language_Current.errorLogin}}</diV>
 		<% }
 			} %>
 		<div class="form-actions">
-
+			<input id="setLang" hidden="true" name="language" value="EN">
 				<button type="submit" class="myBtn blue btn pull-right">
 				{{language_Current.login}}  <i class="fa fa-sign-in"></i>
 				</button>            

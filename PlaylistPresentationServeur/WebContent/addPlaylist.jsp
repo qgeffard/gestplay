@@ -155,10 +155,7 @@
     			TrackListType tL; 
    			   	for(int i = 0; i < pT.size() ; i++) {  	
    			   		if(0 != pT.size()) {   
-   			   			System.out.println(i);
-   			   		System.out.println(pT.get(i));
-   			   		System.out.println(pT.get(i).getIdentifier().toString());
-   						tL = pT.get(i).getTrackList();
+   			   			tL = pT.get(i).getTrackList();
    						pT.get(i).getTitle();
    						String str = "<script>window.onload = loadPlaylist("+'"';
    						str = str + pT.get(i).getIdentifier().toString()+'"';
@@ -181,6 +178,8 @@
    			   	}
     		}
     		String string = "<script>window.onload = function() { user = "+"'"+request.getSession().getAttribute("id")+"'"+"; }</script>";
+    		out.println(string);
+    		string = "<script>window.onload = function() { defineLanguage("+request.getSession().getAttribute("lang")+"); } </script> ";
     		out.println(string);
    			%>
  

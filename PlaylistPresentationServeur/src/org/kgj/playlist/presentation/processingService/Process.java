@@ -89,6 +89,7 @@ public class Process {
 	private void create() {
 		System.out.println("PRES : Requète reçu : Create.");
 		if (this.query.getStatus().getSucced() != null) {
+			System.out.println("PRES : ID Playlist : "+this.query.getPlaylist().get(0).getIdentifier());
 			MyServlet.setSes(1,"0");
 			MyServlet.sesSes(10,this.query.getPlaylist().get(0).getIdentifier().toString());
 			MyServlet.setSes(5,this.query.getAction().getNameAction());

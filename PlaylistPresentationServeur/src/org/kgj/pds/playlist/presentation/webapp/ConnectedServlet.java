@@ -114,7 +114,7 @@ public class ConnectedServlet extends HttpServlet {
 				if(v1.equals(v2)) {
 				playlist.setCreator(pT.get(i).getCreator());				
 				String tl = request.getParameter("tracklist");
-				System.out.println("Tracklist : "+tl);
+				
 				// JSONObject obj = new JSONObject(request.getParameter("tracklist"));
 				ArrayList<String> list = new ArrayList<String>();  
 				JSONArray jsonArray = null;
@@ -125,16 +125,10 @@ public class ConnectedServlet extends HttpServlet {
 				   String value = "";
 				   for (int i1=0;i1<len;i1++){ 
 					    TrackType thisTrack = new TrackType();
-					   	System.out.println(jsonArray.getJSONObject(i1));
 					   	playlist.getTrackList().getTrack().add(thisTrack);
 					   	playlist.getTrackList().getTrack().get(i1).setTitle(jsonArray.getJSONObject(i1).get("name").toString()); 
 					   	playlist.getTrackList().getTrack().get(i1).setAlbum(jsonArray.getJSONObject(i1).get("album").toString()); 
-					   	playlist.getTrackList().getTrack().get(i1).setCreator(jsonArray.getJSONObject(i1).get("artist").toString()); 
-						
-						System.out.println("1 Playlist de plus : "+thisTrack.getTitle());
-						
-						System.out.println(playlist.getTrackList().getTrack().get(i1).toString());
-						
+					   	playlist.getTrackList().getTrack().get(i1).setCreator(jsonArray.getJSONObject(i1).get("artist").toString()); 						
 				   } 
 				}
 					playlist.setTitle(request.getParameter("name"));
@@ -194,6 +188,7 @@ public class ConnectedServlet extends HttpServlet {
 				int text = 0;
 
 				if (ses[1].equals("0")) {
+					
 					action = MyServlet.getSes(5).toString();
 					switch(action) {
 					case "update":
@@ -210,12 +205,17 @@ public class ConnectedServlet extends HttpServlet {
 					case "delete":
 						playlist.setIdentifier(MyServlet.getSes(10));
 						System.out.println("PRES : "+action+" : Transmission Vue");
+						List<PlaylistType> t1 = new ArrayList<PlaylistType>();
 						for (int i = 0; i < pT.size(); i++) {
-							if (pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
-								pT.remove(i);
-								text = i;
+							
+		
+							if (!pT.get(i).getIdentifier().equals(playlist.getIdentifier())) {
+								t1.add(pT.get(i));
+								System.out.println(pT.get(i).getTitle());
 							}
+							text = i;
 						}
+						pT = t1;
 						break;
 					case "create":
 						playlist.setIdentifier(MyServlet.getSes(10));

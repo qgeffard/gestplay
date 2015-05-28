@@ -16,7 +16,7 @@ import org.kgj.playlist.presentation.processingService.Process;
 @SuppressWarnings("unused")
 public class WebappMessagingServiceManager extends GenericMessageManager {
 
-	private static WebappMessagingServiceManager instance = new WebappMessagingServiceManager("tcp://localhost:61616", "consumerFromView", "producerToView");
+	private static WebappMessagingServiceManager instance = new WebappMessagingServiceManager("tcp://192.168.43.32:61616", "consumerFromView", "producerToView");
 	
 	public WebappMessagingServiceManager(String url, String producerQueue, String consumerQueue) {
 		super(url, producerQueue, consumerQueue);

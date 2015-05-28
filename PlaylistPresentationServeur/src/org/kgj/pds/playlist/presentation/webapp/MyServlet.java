@@ -100,7 +100,7 @@ public class MyServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String userAgent = request.getHeader("User-Agent");
 		String test = request.getParameter("test");
-
+		String language = request.getParameter("lang");
 		HttpSession session = request.getSession();
 		session.setAttribute("id", login);
 
@@ -154,6 +154,7 @@ public class MyServlet extends HttpServlet {
 				if (ses[1].equals("-1")) {
 					session.setAttribute("connected", ses[1].toString());
 					session.setAttribute("erreur", ses[2].toString());
+					session.setAttribute("lang", language);
 					response.sendRedirect("index.jsp");
 				} else {
 					session.setAttribute("connected", ses[1].toString());

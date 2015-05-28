@@ -4,6 +4,7 @@ var tracklist = [];
 var user = "";
 var name = "";
 var currentTracks;
+var currentLanguage = "EN";
 
 	currentApp.controller("ctrlPlaylist", function($scope, $sce) {
 		$scope.currentAlert = "";
@@ -42,7 +43,8 @@ var currentTracks;
 			"failCreate":"Sorry, an error occured during the creation of your playlist",
 			"successDelete":"Your playlist was successfully deleted.",
 			"successUpdate":"Your playlist was successfully updated.",
-			"successCreate":"Your playlist was successfully created."
+			"successCreate":"Your playlist was successfully created.",
+			"errorLogin":"Invalid ID"
 		};
 
 		$scope.language_FR = 
@@ -70,25 +72,28 @@ var currentTracks;
 			"failCreate":"Désolé, une erreur a été rencontré pendant la création de votre playlist",
 			"successDelete":"Votre playlist a été correctement supprimé",
 			"successUpdate":"Votre playlist a été correctement modifié",
-			"successCreate":"Votre playlist a été correctement créée"
-		    	
+			"successCreate":"Votre playlist a été correctement créée",
+			"errorLogin":"Identifiants invalides."
 		};
-		$scope.language_Current = $scope.language_EN;
+		
+		$scope.language_Current="";
 		
 		$scope.changeLanguage = function(lang) {
 			switch(lang) {
 			case "FR":
-				console.log("FR");
 				$scope.language_Current = $scope.language_FR;
+				if(document.getElementById("setLang") != null)
+				document.getElementById("setLang").setAttribute("value",lang);
 				break;
 			case "EN":
-				console.log("EN");
 				$scope.language_Current = $scope.language_EN;
+				if(document.getElementById("setLang") != null)
+				document.getElementById("setLang").setAttribute("value",lang);
 				break;
 			}
 			
 		};
-		
+		$scope.changeLanguage(currentLanguage);
 		$scope.user = user;
 		$scope.ident = 0;
 		$scope.playlists = playlists;
@@ -114,9 +119,7 @@ var currentTracks;
 		            	if(ident != "Error") {
 		            	$scope.playlists[$scope.idCurrentPlaylist]['name'] = $scope.name;
 		            	$scope.playlists[$scope.idCurrentPlaylist]['tracklist'] = $scope.tracklist; // On utilise la variable intermediaire pour éviter les traitements douloureux.
-		            //	$scope.playlists[$scope.idCurrentPlaylist]['tracks'] = $scope.playlists[$scope.idCurrentPlaylist]['tracklist'].length;
-		            	
-		            	$scope.playlists[$scope.idCurrentPlaylist]['name'] = name;
+		               	$scope.playlists[$scope.idCurrentPlaylist]['name'] = name;
 		            	$scope.action = "";
 		            	$scope.setAlertSuccess($scope.language_Current.successUpdate);
 		            	$scope.$apply(); // Allez, on se motive, le scope a changé
@@ -376,8 +379,13 @@ var currentTracks;
 function loadPlaylist(ident, name, creator, tracks) {
 	playlists.push({ 'ident':ident, 'name':name, 'creator': creator, 'tracks':tracks, 'trackList':tracklist });  
 	tracklist = [];
+	user = creator;
 }
 
 function addTrackToPlaylist(name, album, artist) {
 	tracklist.push({ 'name':name, 'album': album, 'artist':artist });
-} 
+}
+
+function defineLanguage(lang) {
+	currentLanguage = lang;
+}
