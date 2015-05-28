@@ -5,7 +5,18 @@ var user = "";
 var name = "";
 var currentTracks;
 
-	currentApp.controller("ctrlPlaylist", function($scope) {
+	currentApp.controller("ctrlPlaylist", function($scope, $sce) {
+		$scope.currentAlert = "";
+		$scope.setAlertError = function(error) {
+			document.getElementById("globalAlert").hidden = false;
+			 $scope.currentAlert = $sce.trustAsHtml('<div class="alert alert-danger alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> <div id="alert">'+error+'</div></div>');			}
+		$scope.setAlertSuccess = function(error) {
+			document.getElementById("globalAlert").hidden = false;
+			 $scope.currentAlert = $sce.trustAsHtml('<div class="alert alert-success alert-dismissible" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> <div id="alert">'+error+'</div></div>');			  
+		}
+		
+		
+		
 		$scope.language_EN = 
 		{
 			"welcome": "Welcome",
@@ -25,7 +36,13 @@ var currentTracks;
 			"connection":"Sign-in",
 			"login":"Log-in",
 			"id":"Username",
-			"pass":"Password"
+			"pass":"Password",
+			"failDelete":"Sorry, an error occured during the deletion of your playlist",
+			"failUpdate":"Sorry, an error occured during the update of your playlist",
+			"failCreate":"Sorry, an error occured during the creation of your playlist",
+			"successDelete":"Your playlist was successfully deleted.",
+			"successUpdate":"Your playlist was successfully updated.",
+			"successCreate":"Your playlist was successfully created."
 		};
 
 		$scope.language_FR = 
@@ -47,7 +64,14 @@ var currentTracks;
 		    "connection":"Se connecter",
 		    "login":"Log-in",
 		    "id":"Identifiant",
-		    "pass":"Mot de passe"
+		    "pass":"Mot de passe",
+		    "failDelete":"Désolé, une erreur a été rencontré pendant la suppresion de votre playlist",
+			"failUpdate":"Désolé, une erreur a été rencontré pendant la modification de votre playlist",
+			"failCreate":"Désolé, une erreur a été rencontré pendant la création de votre playlist",
+			"successDelete":"Votre playlist a été correctement supprimé",
+			"successUpdate":"Votre playlist a été correctement modifié",
+			"successCreate":"Votre playlist a été correctement créée"
+		    	
 		};
 		$scope.language_Current = $scope.language_EN;
 		
@@ -94,14 +118,16 @@ var currentTracks;
 		            	
 		            	$scope.playlists[$scope.idCurrentPlaylist]['name'] = name;
 		            	$scope.action = "";
+		            	$scope.setAlertSuccess($scope.language_Current.successUpdate);
 		            	$scope.$apply(); // Allez, on se motive, le scope a changé
 		            	} else {
-		            		// On envoie la notification de non création 
+		            	$scope.setAlertError($scope.language_Current.failUpdate);	// On envoie la notification de non création 
 		            	}
 		            },
 		            error: function (xhr, ajaxOptions, thrownError) {
 		                console.log(xhr.status);
 		                console.log(thrownError);
+		                $scope.setAlertError($scope.language_Current.failUpdate);
 		              }	        });
 				
 			$scope.action = "";
@@ -123,15 +149,16 @@ var currentTracks;
             	if(ident != "Error") {
             	$scope.playlists.push({ 'ident':ident, 'name':name, 'creator': user, 'tracks':0, 'trackList':[] });		
             	$scope.action = "";
-            	
+            	$scope.setAlertSuccess($scope.language_Current.successCreate);
             	$scope.$apply(); // Allez, on se motive, le scope a changé
             	} else {
-            		// On envoie la notification de non création 
+            		$scope.setAlertError($scope.language_Current.failCreate);	// On envoie la notification de non création 
             	}
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
+                $scope.setAlertError($scope.language_Current.failCreate);
               }	        });
 			}
 			
@@ -224,8 +251,10 @@ var currentTracks;
    					tracktab.hidden = true;
    				}
    			$scope.action = "";
+   			$scope.setAlertSuccess($scope.language_Current.successDelete);
    			$scope.$apply(); // Allez, on se motive, le scope a changé
             	} else {
+            		$scope.setAlertError($scope.language_Current.failDelete);
             		// Si on reçoit un message d'erreur
             		// Envoie la notification de non suppresion.
             	}
@@ -233,6 +262,7 @@ var currentTracks;
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
+                $scope.setAlertError($scope.language_Current.failDelete);
               }	        });
 			};
 

@@ -42,6 +42,8 @@
   </div><!-- /.container-fluid -->
 </nav>
 
+<div id="globalAlert" hidden="true"><p ng-bind-html="currentAlert"></p></div>
+
 
 <table style="width:100%"><tbody><tr><td style="width:45%;padding-left:40px;vertical-align: top">
 <form id="tabPlaylist" class="form-horizontal" role="form" ng-submit="addRow()" >
